@@ -1,0 +1,54 @@
+body {
+  min-height:100vh; margin:0; position:relative; 
+  background:  radial-gradient(ellipse at center, #c6fae7 0, #a8cec0 100%);
+  position: relative;
+}
+.topnav {
+    background-color: #1B94A1;
+    overflow: hidden;
+  }
+  
+  .topnav {
+    background-color: #04AA6D;
+    overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .topnav p {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+  
+
+  
+  /* Add a color to the active/current link */
+  .topnav a.active {
+    background-color: #04AA6D;
+    color: white;
+  }
+
+
+.tutorial-btn {
+    color: white; 
+    font-family: 'Exo 2'; 
+    display: inline; 
+    font-size: 18px; 
+    position: absolute; 
+    right: 0px; 
+    padding-top:25px;
+    padding-right:30px;
+    margin-right: 25px;
+    padding-left:25px;
+    padding-bottom: 16px;
+    
+  }
+  
+  .tutorial-btn:hover{
+    background-color: #6fd2dd;
+    color:white;
+    text-decoration: none;
+  }
