@@ -30,19 +30,40 @@
   .zone {
     margin: auto;
  display: block;
- background:  radial-gradient(ellipse at center, #1B94A1 0, #096e79 100%);
+ background:  radial-gradient(ellipse at center, #43cf7b 0, #62ad80 100%);
 
     width: 80%;
     height: 50%;
-    border: 5px dashed white;
+    border-radius: 10px;
+    margin-top: 50px;
     text-align: center;
     color: white;
     z-index: 20;
     transition: all 0.3s ease-out;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 0 0.25em 0 rgba(0, 0, 0, 0.25);
     margin-bottom: 15px;
-    padding: 20px;
+   
   }
+
+  .epe-zone {
+    margin: auto;
+ display: block;
+ background:  radial-gradient(ellipse at center, #43cf7b 0, #62ad80 100%);
+
+    width: 80%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 50px;
+    text-align: center;
+    color: white;
+    z-index: 20;
+    transition: all 0.3s ease-out;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 0 0.25em 0 rgba(0, 0, 0, 0.25);
+    margin-bottom: 15px;
+   
+  }
+
+  
   .zone .btnCompression .active {
     background: #096e79;
     color: white;
