@@ -72,22 +72,22 @@
 
    <div class="tab">
 <div style="text-align: left; padding: 50px;">
-    <h3>Step Two: Setup Questions for Review</h3>
+    <h3>Step Two: Setup Criteria for Review</h3>
     <div class="question-select-div">
      <select id="epeQuestionSelect" class="question-select form-select">
-         <option>---Questions to Add---</option>
+         <option>---Criteria to Add---</option>
      </select>
      <button onclick="addQuestion()" style="display: inline !important;">Add</button>
     </div>
-    <div><button class="mid-btns" onclick="showCustomQuestion()">Add Custom Question</button> <button class="mid-btns">Use Suggested Questions</button></div>
+    <div><button class="mid-btns" onclick="showCustomQuestion()">Add Custom Criterion</button> <button onclick="useSuggestedQuestions()" class="mid-btns">Use Suggested Criteria</button> <button class="mid-btns" style="background-color: tomato;" onclick="clearQuestionDiv()">Clear</button></div>
 <div id="customQuestion" class="custom-question-div">
    <hr>
     <a class="x" onclick="hideCustomQuestion()">X</a>
-    <select onchange="checkForCustomCat()" id="epeCatSelect" class="form-select"><option>---Question Category---</option><option>CUSTOM CATEGORY</option></select>
+    <select onchange="checkForCustomCat()" id="epeCatSelect" class="form-select"><option>---Criterion Category---</option><option>CUSTOM CATEGORY</option></select>
     <br>
     <div id="customCatDiv" style="display: none;" ><input id="customCat" class="form-control" placeholder="Enter Custom Category"/></div>
     <textarea id="customQuestionHtml" placeholder="Enter your question here..." class="questions-div"></textarea>
-    <button onclick="addCustomQuestion()">Add Question</button>
+    <button onclick="addCustomQuestion()">Add Criterion</button>
     <hr>
 </div>
      <div id="epeQuestions" class="questions-div">
@@ -100,6 +100,84 @@
 
    </div>
 
+   <div class="tab">
+    <div style="text-align: left; padding: 50px;">
+    <h3>Step Three: Finalize the Document</h3> 
+
+    <div class="form-check form-switch">
+        <input style="height: 25px; width: 45px;" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+        <label style="font-size: 20px; margin-left: 10px; margin-top: 2px;" class="form-check-label" >Add 'a performance goal setting for next review' section. </label>
+
+      </div>
+      <div>
+          <p>EXAMPLE:</p>
+          <hr>
+          <p><b>PART FOUR A: PERFORMANCE GOALS FOR NEXT REVIEW PERIOD</b></p>
+          <hr>
+        <p>Supervisor identifies goals for the upcoming review period to ensure continued contributions from the employee for success within the organization.</p>
+           <textarea disabled class="questions-div"></textarea>
+      </div>
+
+      <div>
+        <hr>
+        <p><b>PART FOUR B: GOALS FOR/AND PROGRESS ON PROFESSIONAL DEVELOPMENT</b></p>
+        <hr>  
+        <p>Supervisor lists goals related to the employee’s professional (or managerial) development. Consider
+                the employee’s performance improvement needs and action plan, training recommendations, future
+                goals and expectations.</p>
+         <textarea disabled class="questions-div"></textarea>
+    </div>
+    </div>
+   </div>
+   <div class="tab">
+    <div style="text-align: left; padding: 50px;">
+        <h3>PREVIEW OF EVALUATION</h3>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="inputReviewingSupervisor"><b>Reviewing Supervisor</b></label>
+                <p id="reviewingSupOutput">Test Name</p>
+            </div>
+            <div class="col-md-6">
+                <label for="inputReviewPeriod"><b>Review Period</b></label>
+                <p id="reviewingSupOutput">Test Period</p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="inputReviewingSupervisor"><b>Reviewing Supervisor</b></label>
+                <p id="reviewingSupOutput">Test Name</p>
+            </div>
+            <div class="col-md-6">
+                <label for="inputReviewPeriod"><b>Review Period</b></label>
+                <p id="reviewingSupOutput">Test Period</p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="inputReviewingSupervisor"><b>Reviewing Supervisor</b></label>
+                <p id="reviewingSupOutput">Test Name</p>
+            </div>
+            <div class="col-md-6">
+                <label for="inputReviewPeriod"><b>Review Period</b></label>
+                <p id="reviewingSupOutput">Test Period</p>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="inputReviewingSupervisor"><b>Reviewing Supervisor</b></label>
+                <p id="reviewingSupOutput">Test Name</p>
+            </div>
+            <div class="col-md-6">
+                <label for="inputReviewPeriod"><b>Review Period</b></label>
+                <p id="reviewingSupOutput">Test Period</p>
+            </div>
+        </div>
+        </div>
+        </div>
 
   
 </div>
@@ -108,6 +186,7 @@
     <button type="button" id="nextBtn" onclick="nextPrev(1)">Next</button>
     <button type="button" style="display: none;" id="submitBtn" onclick="SendEmail()">Send Email</button>
   </div>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script><script src="./assets/js/upload.js"></script>
 <script src="./assets/js/navigation.js"></script>
 <script src="./assets/js/tabs.js"></script>

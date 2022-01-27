@@ -251,34 +251,53 @@ const hideCustomQuestion = ()=>{
      }
   }
 let catFinder;
-
+let customCat = document.getElementById('customCat').value 
+const item = customCat.split(' ')
   const addCustomQuestion = ()=>{
     const itemToAdd =  document.getElementById('customQuestionHtml').value;
-    const questionsDiv = document.getElementById('epeQuestions')
-    const customCat = document.getElementById('customCat').value 
-    const item = customCat.split(' ')
-     catFinder = document.getElementById(item+'Div');
+    const questionsDiv = document.getElementById('epeQuestions');
     const index = makeid(4);
-    console.log(item)
-
-    if(questionsDiv.contains(catFinder)){
-        console.log(questionsDiv.innerHTML.indexOf(itemToAdd[0].question))
-        if(catFinder.innerHTML.indexOf(itemToAdd[0].question) > -1){
+    console.log(itemToAdd)
+if(document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text != 'CUSTOM CATEGORY'){
+    if(questionsDiv.contains(document.getElementById(catFinder))){
+  
+        if(document.getElementById(catFinder).innerHTML.indexOf(itemToAdd) > -1){
             alert('This question has already been added.')
         } else{
-        document.getElementById(item+'Div').innerHTML += `<p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p>`
+        document.getElementById(catFinder).innerHTML += `<p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p>`
         }
        
     } 
-    else if (document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text != 'CUSTOM CATEGORY'){
-        let cat = document.getElementById('epeCatSelect');
-        console.log('this')
-        document.getElementById('epeQuestions').innerHTML += `<div id=${cat.value}><p ><b>${cat.options[cat.selectedIndex].text.toUpperCase()}</b><span onclick="removeCat('${cat.value}')"> x</span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p></div>`
+    //  if (document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text != 'CUSTOM CATEGORY'){
+    //     let cat = document.getElementById('epeCatSelect');
+    //     console.log('this')
+    //     document.getElementById('epeQuestions').innerHTML += `<div id=${cat.value}><p ><b>${cat.options[cat.selectedIndex].text.toUpperCase()}</b><span onclick="removeCat('${cat.value}')"> x</span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p></div>`
   
-    }
+    // }
     else {
-        document.getElementById('epeQuestions').innerHTML += `<div id=${item+'Div'}><p ><b>${customCat.toUpperCase()}</b><span onclick="removeCat('${item+'Div'}')"> x</span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p></div>`
+        document.getElementById('epeQuestions').innerHTML += `<div id=${catFinder}><p ><b>${document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase()}</b><span onclick="removeCat('${catFinder}')"> x</span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p></div>`
     }
+} else {
+    let cat = document.getElementById('customCat').value;
+    if(questionsDiv.contains(document.getElementById(cat+'Div'))){
+  
+        if(document.getElementById(cat+'Div').innerHTML.indexOf(itemToAdd) > -1){
+            alert('This question has already been added.')
+        } else{
+        document.getElementById(cat+'Div').innerHTML += `<p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p>`
+        }
+       
+    }   else {
+        
+        console.log(cat.toUpperCase())
+        document.getElementById('epeQuestions').innerHTML += `<div id=${cat+'Div'}><p ><b>${cat.toUpperCase()}</b><span onclick="removeCat('${cat+'Div'}')"> x</span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${cat+'Div'}')"> x</span></p></div>`
+    }
+
+}
+document.getElementById('customQuestion').style.display = 'none';
+document.getElementById('customCat').value = '';
+document.getElementById('customQuestionHtml').value = '';
+
   }
 
   const removeQuestion = (a, b) =>{
@@ -299,10 +318,42 @@ let catFinder;
 
   const checkForCustomCat = ()=>{
       if(document.getElementById('epeCatSelect').value == 'CUSTOM CATEGORY'){
+      
+
           document.getElementById('customCatDiv').style.display = 'block';
+          catFinder = document.getElementById(item+'Div');
       } else {
         document.getElementById('customCatDiv').style.display = 'none';
         catFinder = document.getElementById('epeCatSelect').value
         console.log(catFinder)
       }
+  }
+
+
+  const useSuggestedQuestions = ()=>{
+    epeCats.map(i=>{
+        let cat = i.name;
+         let qs = [];
+      questionEPE.map(i=>{
+       let qarr = questionEPE.filter(i => cat.includes(i.category))
+    
+       qs = qarr.map(i=>{
+      return `<p id='${i.index}'>${i.question}<span onclick="removeQuestion('${i.index}')"> x</span></p>`
+       }).join("")
+    
+    
+        })
+        document.getElementById('epeQuestions').innerHTML += `<div id='${i.index}'><p><b>${i.name}</b><span onclick="removeQuestion('${i.index}')"> x</span></p>${qs}</div>`
+    
+      })
+  }
+
+
+  const clearQuestionDiv = ()=>{
+    let text;
+    if (confirm("Are you sure you would like to clear the current Criteria?") == true) {
+        document.getElementById('epeQuestions').innerHTML = ''
+
+   
+    }
   }
