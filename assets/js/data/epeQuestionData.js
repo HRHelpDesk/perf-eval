@@ -232,6 +232,17 @@ const hideCustomQuestion = ()=>{
     }
   
 
+    let employeeObj = {
+        employeefName:'',
+        employeelName:'',
+        jobTitle:'',
+        department:'',
+        reviewingSupervisor:'',
+        reviewPeriod:'',
+        periodSupervised:'',
+        timeInPosition:'',
+        questionsToSendArr:[]
+    }
 
   const addQuestion = ()=>{
      const itemToAdd =  questionEPE.filter(i=> document.getElementById('epeQuestionSelect').value == i.question)
@@ -249,8 +260,17 @@ const hideCustomQuestion = ()=>{
      } else {
          document.getElementById('epeQuestions').innerHTML += `<div id=${itemToAdd[0].div}><p ><b>${itemToAdd[0].category}</b><span onclick="removeCat('${itemToAdd[0].div}')"> x</span></p> <p id=${itemToAdd[0].index}>${itemToAdd[0].question}<span onclick="removeQuestion('${itemToAdd[0].index}', '${itemToAdd[0].div}')"> x</span></p></div>`
      }
+
+     employeeObj.questionsToSendArr.push({
+         index: itemToAdd[0].index,
+         category: itemToAdd[0].category,
+         question: itemToAdd[0].question,
+         div: itemToAdd[0].div
+     })
+     console.log(employeeObj)
   }
 let catFinder;
+
 let customCat = document.getElementById('customCat').value 
 const item = customCat.split(' ')
   const addCustomQuestion = ()=>{
@@ -265,6 +285,13 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
             alert('This question has already been added.')
         } else{
         document.getElementById(catFinder).innerHTML += `<p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p>`
+        employeeObj.questionsToSendArr.push({
+            index: index,
+            category: document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase(),
+            question: itemToAdd,
+            div: catFinder
+        })
+        console.log(employeeObj)
         }
        
     } 
@@ -276,6 +303,13 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
     // }
     else {
         document.getElementById('epeQuestions').innerHTML += `<div id=${catFinder}><p ><b>${document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase()}</b><span onclick="removeCat('${catFinder}')"> x</span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p></div>`
+        employeeObj.questionsToSendArr.push({
+            index: index,
+            category: document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase(),
+            question: itemToAdd,
+            div: catFinder
+        })
+        console.log(employeeObj)
     }
 } else {
     let cat = document.getElementById('customCat').value;
@@ -285,13 +319,28 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
             alert('This question has already been added.')
         } else{
         document.getElementById(cat+'Div').innerHTML += `<p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p>`
+        employeeObj.questionsToSendArr.push({
+            index: index,
+            category: cat.toUpperCase(),
+            question: itemToAdd,
+            div: cat+'Div'
+        })
+        console.log(employeeObj)
         }
        
     }   else {
         
         console.log(cat.toUpperCase())
         document.getElementById('epeQuestions').innerHTML += `<div id=${cat+'Div'}><p ><b>${cat.toUpperCase()}</b><span onclick="removeCat('${cat+'Div'}')"> x</span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${cat+'Div'}')"> x</span></p></div>`
+        employeeObj.questionsToSendArr.push({
+            index: index,
+            category: cat.toUpperCase(),
+            question: itemToAdd,
+            div: cat+'Div'
+        })
+        console.log(employeeObj)
     }
+    
 
 }
 document.getElementById('customQuestion').style.display = 'none';
@@ -331,21 +380,27 @@ document.getElementById('customQuestionHtml').value = '';
 
 
   const useSuggestedQuestions = ()=>{
-    epeCats.map(i=>{
-        let cat = i.name;
-         let qs = [];
-      questionEPE.map(i=>{
-       let qarr = questionEPE.filter(i => cat.includes(i.category))
-    
-       qs = qarr.map(i=>{
-      return `<p id='${i.index}'>${i.question}<span onclick="removeQuestion('${i.index}')"> x</span></p>`
-       }).join("")
-    
-    
-        })
-        document.getElementById('epeQuestions').innerHTML += `<div id='${i.index}'><p><b>${i.name}</b><span onclick="removeQuestion('${i.index}')"> x</span></p>${qs}</div>`
-    
-      })
+    if (confirm("This action will clear the current criteria and replace with suggested criteria. Are you sure you would like to do this?") == true) {
+        epeCats.map(i=>{
+            let cat = i.name;
+             let qs = [];
+           
+          questionEPE.map(i=>{
+           let qarr = questionEPE.filter(i => cat.includes(i.category))
+        
+           qs = qarr.map(i=>{
+          return `<p id='${i.index}'>${i.question}<span onclick="removeQuestion('${i.index}')"> x</span></p>`
+           }).join("")
+        
+        
+            })
+            document.getElementById('epeQuestions').innerHTML += `<div id='${i.index}'><p><b>${i.name}</b><span onclick="removeQuestion('${i.index}')"> x</span></p>${qs}</div>`
+        
+          })
+
+   
+    }
+  
   }
 
 
@@ -356,4 +411,17 @@ document.getElementById('customQuestionHtml').value = '';
 
    
     }
+  }
+
+
+  // Set Data
+
+  const setData = (e)=>{
+      let value =  e.target.getAttribute('value');
+      let name =  e.target.getAttribute('name');
+   if (name == 'inputFirstname'){
+       employeeObj.employeefName = value;
+
+   }
+console.log(employeeObj)
   }
