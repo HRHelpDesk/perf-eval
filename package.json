@@ -4,9 +4,9 @@
   "description": "",
   "homepage": "https://masonmerrell22.github.io/Performance-Evaluation/",
   "main": "index.js",
- 
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "gh-pages -d build"
   },
   "repository": {
     "type": "git",

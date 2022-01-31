@@ -34,7 +34,7 @@ style="padding-bottom:56.25%; position:relative; display:block; width: 100%">
  
   <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
   <p class="card__apply">
-    <a class="card__link" onclick="EPE()">Click to Start<i class="fas fa-arrow-right"></i></a>
+    <a class="card__link" href='./EPE.html'>Click to Start<i class="fas fa-arrow-right"></i></a>
   </p>
 </div>
 
@@ -52,7 +52,7 @@ style="padding-bottom:56.25%; position:relative; display:block; width: 100%">
          
           <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
           <p class="card__apply">
-            <a class="card__link" href='./EPE.html' onclick="PIP()">Click to Start<i class="fas fa-arrow-right"></i></a>
+            <a class="card__link"  onclick="PIP()">Click to Start<i class="fas fa-arrow-right"></i></a>
           </p>
         </div>
 
