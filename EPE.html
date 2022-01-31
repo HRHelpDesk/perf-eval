@@ -27,43 +27,43 @@
     <div class="form-group row">
         <div class="col-md-6">
             <label for="inputFirstname">First name</label>
-            <input onkeyup="setData(this)" type="text" class="form-control" name="inputFirstname" placeholder="First name">
+            <input onkeyup="setData(event)" type="text" class="form-control" name="inputFirstname" placeholder="First name">
         </div>
         <div class="col-md-6">
             <label for="inputLastname">Last name</label>
-            <input type="text" class="form-control" id="inputLastname" placeholder="Last name">
+            <input type="text" onkeyup="setData(event)" class="form-control" name="inputLastname" placeholder="Last name">
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
             <label for="inputJobTitle">Job Title</label>
-            <input type="text" class="form-control" id="inputJobTitle" placeholder="Job Title">
+            <input type="text" onkeyup="setData(event)" class="form-control" name="inputJobTitle" placeholder="Job Title">
         </div>
         <div class="col-md-6">
             <label for="inputDepartment">Department</label>
-            <input type="text" class="form-control" id="inputDepartment" placeholder="Last name">
+            <input type="text" onkeyup="setData(event)" class="form-control" name="inputDepartment" placeholder="Last name">
         </div>
     </div>
 
     <div class="form-group row">
         <div class="col-md-6">
             <label for="inputReviewingSupervisor">Reviewing Supervisor</label>
-            <input type="text" class="form-control" id="inputReviewingSupervisor" placeholder="Reviewing Supervisor">
+            <input type="text" onkeyup="setData(event)" class="form-control" name="inputReviewingSupervisor" placeholder="Reviewing Supervisor">
         </div>
         <div class="col-md-6">
             <label for="inputReviewPeriod">Review Period</label>
-            <input type="text" class="form-control" id="inputReviewPeriod" placeholder="Review Period">
+            <input type="text" onkeyup="setData(event)" class="form-control" name="inputReviewPeriod" placeholder="Review Period">
         </div>
     </div>
     <div class="form-group row">
         <div class="col-md-6">
             <label for="inputPeriodSupervised">Period Supervised by Reviewer</label>
-            <input type="text" class="form-control" id="inputPeriodSupervised" placeholder="Period Supervised by Reviewer">
+            <input type="text" onkeyup="setData(event)" class="form-control" name="inputPeriodSupervised" placeholder="Period Supervised by Reviewer">
         </div>
         <div class="col-md-6">
             <label for="inputTimeInPosition">Time in Position</label>
-            <input type="text" class="form-control" id="inputTimeInPosition" placeholder="Time in Position">
+            <input type="text" onkeyup="setData(event)" class="form-control" name="inputTimeInPosition" placeholder="Time in Position">
         </div>
        
     </div>
@@ -105,7 +105,7 @@
     <h3>Step Three: Finalize the Document</h3> 
 
     <div class="form-check form-switch">
-        <input style="height: 25px; width: 45px;" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+        <input onchange="addRemoveGoalSetting(event)" style="height: 25px; width: 45px;" class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
         <label style="font-size: 20px; margin-left: 10px; margin-top: 2px;" class="form-check-label" >Add 'a performance goal setting for next review' section. </label>
 
       </div>
@@ -135,47 +135,80 @@
 
         <div class="form-group row">
             <div class="col-md-6">
-                <label for="inputReviewingSupervisor"><b>Reviewing Supervisor</b></label>
-                <p id="reviewingSupOutput">Test Name</p>
+                <label for="inputReviewingSupervisor"><b>First Name</b></label>
+                <p id="outputFirstname">First Name</p>
             </div>
             <div class="col-md-6">
-                <label for="inputReviewPeriod"><b>Review Period</b></label>
-                <p id="reviewingSupOutput">Test Period</p>
+                <label for="inputReviewPeriod"><b>Last Name</b></label>
+                <p id="outputLastname">Last Name</p>
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-md-6">
-                <label for="inputReviewingSupervisor"><b>Reviewing Supervisor</b></label>
-                <p id="reviewingSupOutput">Test Name</p>
+                <label for="inputReviewPeriod"><b>Job Title</b></label>
+                <p id="outputJobTitle">Job Title</p>
             </div>
             <div class="col-md-6">
-                <label for="inputReviewPeriod"><b>Review Period</b></label>
-                <p id="reviewingSupOutput">Test Period</p>
+                <label for="inputReviewingSupervisor"><b>Department</b></label>
+                <p id="outputDepartment">Department</p>
             </div>
+         
         </div>
 
         <div class="form-group row">
             <div class="col-md-6">
                 <label for="inputReviewingSupervisor"><b>Reviewing Supervisor</b></label>
-                <p id="reviewingSupOutput">Test Name</p>
+                <p id="outputReviewingSupervisor"> </p>
             </div>
             <div class="col-md-6">
                 <label for="inputReviewPeriod"><b>Review Period</b></label>
-                <p id="reviewingSupOutput">Test Period</p>
+                <p id="outputReviewPeriod"> </p>
             </div>
         </div>
 
         <div class="form-group row">
             <div class="col-md-6">
-                <label for="inputReviewingSupervisor"><b>Reviewing Supervisor</b></label>
-                <p id="reviewingSupOutput">Test Name</p>
+                <label for="inputReviewingSupervisor"><b>Period Supervised by Reviewer</b></label>
+                <p id="outputPeriodSupervised">Test Name</p>
             </div>
             <div class="col-md-6">
-                <label for="inputReviewPeriod"><b>Review Period</b></label>
-                <p id="reviewingSupOutput">Test Period</p>
+                <label for="inputReviewPeriod"><b>Time in Position</b></label>
+                <p id="outputTimeInPosition">Test Period</p>
             </div>
         </div>
+        <hr>
+        <p><b>PART ONE: REVIEW OF PERFORMANCE ELEMENTS</b></p>
+        <hr>
+        <div id='sampleQuestionairre'>
+
+        </div>
+
+        <div>
+         
+            <hr>
+            <p><b>PART TWO: SUMMARY REVIEW OF EMPLOYEE PERFORMANCE</b></p>
+            <hr>
+          <p>Supervisor describes employee’s major assignments and accomplishments, key strengths, any
+            performance shortfalls, and other performance elements that characterize the employee’s performance
+            during the review period. Please include examples or supporting information below.</p>
+             <textarea disabled class="questions-div"></textarea>
+        </div>
+  
+        <div>
+          <hr>
+          <p><b>PART THREE: OVERALL PERFORMANCE RATING</b></p>
+          <hr>  
+          <select class="form-select">
+            <option>Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
+            <option>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
+            <option>Fully Meets Expectations (commendable performance that meets goals)</option>
+            <option>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
+            <option>Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option>
+        </select>
+      </div>
+
+      <div  id="showPartFour"></div>
         </div>
         </div>
 

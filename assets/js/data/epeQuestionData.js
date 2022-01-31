@@ -245,6 +245,7 @@ const hideCustomQuestion = ()=>{
     }
 
   const addQuestion = ()=>{
+    document.getElementById('sampleQuestionairre').innerHTML = '';
      const itemToAdd =  questionEPE.filter(i=> document.getElementById('epeQuestionSelect').value == i.question)
      const questionsDiv = document.getElementById('epeQuestions')
      const item = document.getElementById(itemToAdd[0].div)
@@ -255,9 +256,11 @@ const hideCustomQuestion = ()=>{
          if(questionsDiv.innerHTML.indexOf(itemToAdd[0].question) > -1){
              alert('This item has already been added.')
          } else{
+            document.getElementById('sampleQuestionairre').innerHTML = '';
          document.getElementById(itemToAdd[0].div).innerHTML += `<p id=${itemToAdd[0].index}>${itemToAdd[0].question}<span onclick="removeQuestion('${itemToAdd[0].index}', '${itemToAdd[0].div}')"> x</span></p>`
          }
      } else {
+        document.getElementById('sampleQuestionairre').innerHTML = '';
          document.getElementById('epeQuestions').innerHTML += `<div id=${itemToAdd[0].div}><p ><b>${itemToAdd[0].category}</b><span onclick="removeCat('${itemToAdd[0].div}')"> x</span></p> <p id=${itemToAdd[0].index}>${itemToAdd[0].question}<span onclick="removeQuestion('${itemToAdd[0].index}', '${itemToAdd[0].div}')"> x</span></p></div>`
      }
 
@@ -268,12 +271,42 @@ const hideCustomQuestion = ()=>{
          div: itemToAdd[0].div
      })
      console.log(employeeObj)
+     function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+let arrCats = employeeObj.questionsToSendArr.map(i=> {return i.category})
+var unique = arrCats.filter(onlyUnique);
+console.log(unique)
+     
+unique.map(g=>{
+       
+        let cat = g;
+         let qs = [];
+       
+         employeeObj.questionsToSendArr.map(i=>{
+            let qarr = employeeObj.questionsToSendArr.filter(i => cat.includes(i.category))
+         
+            qs = qarr.map(i=>{
+                return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select class="form-select"><option>---</option> <option>Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
+                <option>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
+                <option>Fully Meets Expectations (commendable performance that meets goals)</option>
+                <option>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
+                <option>Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option></select></div></div>`
+            }).join("")
+         
+        })
+       
+             document.getElementById('sampleQuestionairre').innerHTML += `<div ><p><b>${g}</b></p>${qs}</div>`
+         
+      })
+      
   }
 let catFinder;
 
 let customCat = document.getElementById('customCat').value 
 const item = customCat.split(' ')
   const addCustomQuestion = ()=>{
+    document.getElementById('sampleQuestionairre').innerHTML = '';
     const itemToAdd =  document.getElementById('customQuestionHtml').value;
     const questionsDiv = document.getElementById('epeQuestions');
     const index = makeid(4);
@@ -346,7 +379,34 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
 document.getElementById('customQuestion').style.display = 'none';
 document.getElementById('customCat').value = '';
 document.getElementById('customQuestionHtml').value = '';
-
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+let arrCats = employeeObj.questionsToSendArr.map(i=> {return i.category})
+var unique = arrCats.filter(onlyUnique);
+console.log(unique)
+ 
+unique.map(g=>{
+       
+    let cat = g;
+     let qs = [];
+   
+     employeeObj.questionsToSendArr.map(i=>{
+        let qarr = employeeObj.questionsToSendArr.filter(i => cat.includes(i.category))
+     
+        qs = qarr.map(i=>{
+            return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select class="form-select"><option>---</option> <option>Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
+            <option>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
+            <option>Fully Meets Expectations (commendable performance that meets goals)</option>
+            <option>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
+            <option>Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option></select></div></div>`
+        }).join("")
+     
+    })
+   
+         document.getElementById('sampleQuestionairre').innerHTML += `<div ><p><b>${g}</b></p>${qs}</div>`
+     
+  })
   }
 
   const removeQuestion = (a, b) =>{
@@ -355,14 +415,82 @@ document.getElementById('customQuestionHtml').value = '';
     console.log(element)
     if (element == 2 ){
         removeCat(b)
+        
     }
       elm.remove();
+      let adjustment = employeeObj.questionsToSendArr.filter(function( obj ) {
+        return obj.index !== a;
+    });
+    employeeObj.questionsToSendArr = adjustment;
+    console.log(employeeObj)
+    document.getElementById('sampleQuestionairre').innerHTML = '';
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+let arrCats = employeeObj.questionsToSendArr.map(i=> {return i.category})
+var unique = arrCats.filter(onlyUnique);
+console.log(unique)
+     
+unique.map(g=>{
+       
+    let cat = g;
+     let qs = [];
+   
+     employeeObj.questionsToSendArr.map(i=>{
+        let qarr = employeeObj.questionsToSendArr.filter(i => cat.includes(i.category))
+     
+        qs = qarr.map(i=>{
+            return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select class="form-select"><option>---</option> <option>Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
+            <option>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
+            <option>Fully Meets Expectations (commendable performance that meets goals)</option>
+            <option>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
+            <option>Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option></select></div></div>`
+        }).join("")
+     
+    })
+   
+         document.getElementById('sampleQuestionairre').innerHTML += `<div ><p><b>${g}</b></p>${qs}</div>`
+     
+  })
   }
 
   const removeCat = (a)=>{
 
     document.getElementById(a).remove()
-
+    let adjustment = employeeObj.questionsToSendArr.filter(function( obj ) {
+        return obj.div !== a;
+    });
+    employeeObj.questionsToSendArr = adjustment;
+    console.log(employeeObj)
+    document.getElementById('sampleQuestionairre').innerHTML = '';
+    function onlyUnique(value, index, self) {
+        return self.indexOf(value) === index;
+      }
+let arrCats = employeeObj.questionsToSendArr.map(i=> {return i.category})
+var unique = arrCats.filter(onlyUnique);
+console.log(unique)
+     
+unique.map(g=>{
+       
+    let cat = g;
+     let qs = [];
+   
+     employeeObj.questionsToSendArr.map(i=>{
+        let qarr = employeeObj.questionsToSendArr.filter(i => cat.includes(i.category))
+     
+        qs = qarr.map(i=>{
+            return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select class="form-select"><option>---</option> <option>Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
+            <option>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
+            <option>Fully Meets Expectations (commendable performance that meets goals)</option>
+            <option>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
+            <option>Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option></select></div></div>`
+        }).join("")
+     
+    })
+   
+         document.getElementById('sampleQuestionairre').innerHTML += `<div ><p><b>${g}</b></p>${qs}</div>`
+     
+  })
   }
 
   const checkForCustomCat = ()=>{
@@ -389,8 +517,8 @@ document.getElementById('customQuestionHtml').value = '';
            let qarr = questionEPE.filter(i => cat.includes(i.category))
         
            qs = qarr.map(i=>{
-          return `<p id='${i.index}'>${i.question}<span onclick="removeQuestion('${i.index}')"> x</span></p>`
-           }).join("")
+            return `<p id='${i.index}'>${i.question}<span onclick="removeQuestion('${i.index}')"> x</span></p>`
+        }).join("")
         
         
             })
@@ -398,8 +526,57 @@ document.getElementById('customQuestionHtml').value = '';
         
           })
 
+          questionEPE.map(i=>{
+               employeeObj.questionsToSendArr.push({
+                index: i.index,
+                category: i.category,
+                question: i.question,
+                div: i.div
+            })
+          })
+          document.getElementById('sampleQuestionairre').innerHTML = '';
+      
+           
+             function onlyUnique(value, index, self) {
+                return self.indexOf(value) === index;
+              }
+        let arrCats = employeeObj.questionsToSendArr.map(i=> {return i.category})
+        var unique = arrCats.filter(onlyUnique);
+        console.log(unique)
+             
+     unique.map(g=>{
+       
+        let cat = g;
+         let qs = [];
+       
+         employeeObj.questionsToSendArr.map(i=>{
+            let qarr = employeeObj.questionsToSendArr.filter(i => cat.includes(i.category))
+         
+            qs = qarr.map(i=>{
+           return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select class="form-select"><option>---</option> <option>Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
+           <option>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
+           <option>Fully Meets Expectations (commendable performance that meets goals)</option>
+           <option>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
+           <option>Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option></select></div></div>`
+            }).join("")
+         
+        })
+       
+             document.getElementById('sampleQuestionairre').innerHTML += `<div ><p><b>${g}</b></p>${qs}</div>`
+         
+      })
+           
+             
+
+
+          
+       
+        
+
+
    
     }
+  
   
   }
 
@@ -408,7 +585,7 @@ document.getElementById('customQuestionHtml').value = '';
     let text;
     if (confirm("Are you sure you would like to clear the current Criteria?") == true) {
         document.getElementById('epeQuestions').innerHTML = ''
-
+        employeeObj.questionsToSendArr = [];
    
     }
   }
@@ -416,12 +593,76 @@ document.getElementById('customQuestionHtml').value = '';
 
   // Set Data
 
-  const setData = (e)=>{
-      let value =  e.target.getAttribute('value');
-      let name =  e.target.getAttribute('name');
+  const setData = (event)=>{
+      let value =  event.target.value;
+      let name =  event.target.name;
    if (name == 'inputFirstname'){
        employeeObj.employeefName = value;
-
+       document.getElementById('outputFirstname').innerHTML = value;
    }
+
+   if (name == 'inputLastname'){
+    employeeObj.employeelName = value;
+document.getElementById('outputLastname').innerHTML = value;
+}
+
+if (name == 'inputJobTitle'){
+    employeeObj.jobTitle = value;
+    document.getElementById('outputJobTitle').innerHTML = value;
+}
+
+if (name == 'inputDepartment'){
+    employeeObj.department = value;
+    document.getElementById('outputDepartment').innerHTML = value;
+
+}
+
+if (name == 'inputReviewingSupervisor'){
+    employeeObj.reviewingSupervisor = value;
+    document.getElementById('outputReviewingSupervisor').innerHTML = value;
+}
+
+if (name == 'inputReviewPeriod'){
+    employeeObj.reviewPeriod = value;
+    document.getElementById('outputReviewPeriod').innerHTML = value;
+}
+
+if (name == 'inputPeriodSupervised'){
+    employeeObj.periodSupervised = value;
+    document.getElementById('outputPeriodSupervised').innerHTML = value;
+}
+if (name == 'inputTimeInPosition'){
+    employeeObj.timeInPosition = value;
+    document.getElementById('outputTimeInPosition').innerHTML = value;
+}
 console.log(employeeObj)
+  }
+
+  //Step 3
+
+  const addRemoveGoalSetting = (event)=>{
+    let isChecked = event.target.checked;
+
+   if (isChecked){
+       document.getElementById('showPartFour').innerHTML = ` <div>
+     
+       <hr>
+       <p><b>PART FOUR A: PERFORMANCE GOALS FOR NEXT REVIEW PERIOD</b></p>
+       <hr>
+     <p>Supervisor identifies goals for the upcoming review period to ensure continued contributions from the employee for success within the organization.</p>
+        <textarea disabled class="questions-div"></textarea>
+   </div>
+
+   <div>
+     <hr>
+     <p><b>PART FOUR B: GOALS FOR/AND PROGRESS ON PROFESSIONAL DEVELOPMENT</b></p>
+     <hr>  
+     <p>Supervisor lists goals related to the employee’s professional (or managerial) development. Consider
+             the employee’s performance improvement needs and action plan, training recommendations, future
+             goals and expectations.</p>
+      <textarea disabled class="questions-div"></textarea>
+ </div>`
+   } else {
+    document.getElementById('showPartFour').innerHTML = ``
+   }
   }
