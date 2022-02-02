@@ -1,6 +1,17 @@
 
 
-
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+  charactersLength));
+   }
+   return result;
+  }
+  
+  
   let questionEPE = [
     {
         index: '01',
@@ -241,7 +252,8 @@ const hideCustomQuestion = ()=>{
         reviewPeriod:'',
         periodSupervised:'',
         timeInPosition:'',
-        questionsToSendArr:[]
+        questionsToSendArr:[],
+        section4:null
     }
 
   const addQuestion = ()=>{
@@ -644,6 +656,7 @@ console.log(employeeObj)
     let isChecked = event.target.checked;
 
    if (isChecked){
+       employeeObj.section4 = true
        document.getElementById('showPartFour').innerHTML = ` <div>
      
        <hr>
@@ -663,6 +676,83 @@ console.log(employeeObj)
       <textarea disabled class="questions-div"></textarea>
  </div>`
    } else {
+       employeeObj.section4 = false;
     document.getElementById('showPartFour').innerHTML = ``
    }
   }
+
+
+const saveCritera = ()=>{
+    localStorage.setItem('savedData',JSON.stringify(employeeObj.questionsToSendArr))
+}
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+const loadCriteria = ()=>{
+  
+
+
+
+  document.getElementById('sampleQuestionairre').innerHTML = '';
+      
+  
+       
+              
+  let saved = localStorage.getItem('savedData');
+  let savedArr = JSON.parse(saved);    
+  employeeObj.questionsToSendArr = savedArr    
+  employeeObj.questionsToSendArr.push()
+        let arrCats = savedArr.map(i=> {return i.category})
+        console.log(arrCats)
+        var unique = arrCats.filter(onlyUnique);
+     
+        console.log(unique)
+     unique.map(g=>{
+       
+        let cat = g;
+         let qs = [];
+       
+         savedArr.map(i=>{
+            let qarr = savedArr.filter(i => cat.includes(i.category))
+         
+            qs = qarr.map(i=>{
+           return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select class="form-select"><option>---</option> <option>Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
+           <option>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
+           <option>Fully Meets Expectations (commendable performance that meets goals)</option>
+           <option>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
+           <option>Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option></select></div></div>`
+            }).join("")
+         
+        })
+       
+             document.getElementById('sampleQuestionairre').innerHTML += `<div ><p><b>${g}</b></p>${qs}</div>`
+         
+      })
+// Render to Builider
+      unique.map(g=>{
+        let id_m = makeid(4)
+        let cat = g;
+         let qs = [];
+       
+         
+            let qarr = employeeObj.questionsToSendArr.filter(i => cat.includes(i.category))
+            console.log(qarr)
+            qs = qarr.map(i=>{
+               
+                return `<p id='${i.index}'>${i.question}<span onclick="removeQuestion('${i.index}')"> x</span></p>`
+            }).join("")
+       
+        document.getElementById('epeQuestions').innerHTML += `<div id='${id_m}'><p><b>${g}</b><span onclick="removeQuestion('${id_m}')"> x</span></p>${qs}</div>`
+         
+
+
+      
+    })
+
+
+
+}
+
+const SendEmails = ()=>{
+    document.getElementById('linkDiv').innerHTML = `<a href='./EPEoutput.html?c=${JSON.stringify(employeeObj)}'>Click to go</a>`
+}
