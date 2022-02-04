@@ -1,3 +1,4 @@
+
 const goToCSVSection = ()=>{
     document.getElementById('startingSection').style.display = 'none';
     document.getElementById('nextButton').style.display = 'block';
@@ -34,7 +35,7 @@ style="padding-bottom:56.25%; position:relative; display:block; width: 100%">
  
   <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
   <p class="card__apply">
-    <a class="card__link" href='./EPE.html'>Click to Start<i class="fas fa-arrow-right"></i></a>
+    <a class="card__link" onclick='EPE(event)'>Click to Start<i class="fas fa-arrow-right"></i></a>
   </p>
 </div>
 
@@ -83,7 +84,13 @@ style="padding-bottom:56.25%; position:relative; display:block; width: 100%">
 </div>`;
 
 
-const LoadPage = ()=>{
+let pageThree = ``
+
+
+const LoadPage = (event)=>{
+
+
+  event.preventDefault();
     document.getElementById('render').innerHTML = pageRenderOne;
 
     document.getElementById('employeeUploadSection').style.display = 'none';
@@ -91,22 +98,28 @@ const LoadPage = ()=>{
 }
 
 
-const EPE = ()=>{
+const EPE = (event)=>{
+  event.preventDefault();
   console.log('EPE')
-  document.getElementById('employeeUploadSection').style.display = 'none';
-  document.getElementById('render').innerHTML = `<button onclick="LoadPage()">BACK</button><p>EPE</p>`
+ 
+
+ 
+  document.getElementById('render').style.display = 'none';
+  document.getElementById('EPEdiv').style.display = 'block';
+
 
 }
 
 
-const PE360 = ()=>{
+const PE360 = (e)=>{
+  e.preventDefault();
   console.log('PE360')
   document.getElementById('employeeUploadSection').style.display = 'none';
   document.getElementById('render').innerHTML = `<button onclick="LoadPage()">BACK</button><p>PE360</p>`
 
 }
 
-const PIP = ()=>{
+const PIP = (e)=>{
   console.log('PIP')
   document.getElementById('employeeUploadSection').style.display = 'none';
   document.getElementById('render').innerHTML = `<button onclick="LoadPage()">BACK</button><p>PIP</p>`
@@ -114,7 +127,7 @@ const PIP = ()=>{
 }
   
 
-const UE = ()=>{
+const UE = (e)=>{
   console.log('UE')
   document.getElementById('employeeUploadSection').style.display = 'none';
   document.getElementById('render').innerHTML = `<button onclick="LoadPage()">BACK</button><p>PIP</p>`

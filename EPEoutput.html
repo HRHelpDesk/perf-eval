@@ -30,6 +30,10 @@ var c = JSON.parse(url.searchParams.get("c"));
         rev_period: c.reviewPeriod,
         per_sup: c.periodSupervised,
         t_o_p: c.timeInPosition,
+        part_two_a: '',
+        overall_rating: '',
+        part_4_a:'',
+        part_4_b:'',
         categories:[]
     }
  window.onload = ()=>{
@@ -73,10 +77,10 @@ function onlyUnique(value, index, self) {
          
             qs = qarr.map(i=>{
            return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select onchange='setData(event, "${i.question}")' name='${i.div}' class="form-select"><option>---</option> <option>Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
-           <option>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
-           <option>Fully Meets Expectations (commendable performance that meets goals)</option>
-           <option>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
-           <option>Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option></select></div></div>`
+           <option value='Exceeds Expectations'>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
+           <option value='Fully Meets Expectations'>Fully Meets Expectations (commendable performance that meets goals)</option>
+           <option value='Partially Meets Expectations'>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
+           <option value='Does Not Meet Requirements'>Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option></select></div></div>`
             }).join("")
          
         })
@@ -95,7 +99,7 @@ if (c.section4){
        <p><b>PART FOUR A: PERFORMANCE GOALS FOR NEXT REVIEW PERIOD</b></p>
        <hr>
      <p>Supervisor identifies goals for the upcoming review period to ensure continued contributions from the employee for success within the organization.</p>
-        <textarea disabled class="questions-div"></textarea>
+        <textarea onkeyup='textAreaData(event)' name='part4a' class="questions-div"></textarea>
    </div>
 
    <div>
@@ -105,12 +109,36 @@ if (c.section4){
      <p>Supervisor lists goals related to the employee’s professional (or managerial) development. Consider
              the employee’s performance improvement needs and action plan, training recommendations, future
              goals and expectations.</p>
-      <textarea disabled class="questions-div"></textarea>
+      <textarea onkeyup='textAreaData(event)' name='part4b' class="questions-div"></textarea>
  </div>`
    } else {
     document.getElementById('showPartFour').innerHTML = ``
    }
     }
+function textAreaData(event){
+    let name = event.target.name;
+    let value = event.target.value;
+    console.log(value)
+    if(name == 'part2A'){
+        anObjArr.part_two_a = value;
+        console.log(anObjArr)
+    }
+
+    if(name == 'part3'){
+        anObjArr.overall_rating = value;
+        console.log(anObjArr)
+    }
+
+    if(name == 'part4a'){
+        anObjArr.part_4_a = value;
+        console.log(anObjArr)
+    }
+
+    if(name == 'part4b'){
+        anObjArr.part_4_b = value;
+        console.log(anObjArr)
+    }
+}
 
 
   
@@ -378,19 +406,20 @@ console.log(name)
               <p>Supervisor describes employee’s major assignments and accomplishments, key strengths, any
                 performance shortfalls, and other performance elements that characterize the employee’s performance
                 during the review period. Please include examples or supporting information below.</p>
-                 <textarea disabled class="questions-div"></textarea>
+                 <textarea onkeyup="textAreaData(event)" name="part2A" class="questions-div"></textarea>
             </div>
       
             <div>
               <hr>
               <p><b>PART THREE: OVERALL PERFORMANCE RATING</b></p>
               <hr>  
-              <select class="form-select">
-                <option>Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
-                <option>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
-                <option>Fully Meets Expectations (commendable performance that meets goals)</option>
-                <option>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
-                <option>Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option>
+              <select onchange="textAreaData(event)" name="part3" class="form-select">
+                <option>---</option>
+                <option value="Exceptional Performance">Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
+                <option value="Exceeds Expectations">Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
+                <option value="Fully Meets Expectations">Fully Meets Expectations (commendable performance that meets goals)</option>
+                <option value="Partially Meets Expectations">Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
+                <option value="Does Not Meet Requirements">Does Not Meet Requirements (goals unmet, skills not demonstrated, improvement needed)</option>
             </select>
           </div>
     
