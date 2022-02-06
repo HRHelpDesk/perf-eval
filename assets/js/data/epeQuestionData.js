@@ -683,6 +683,8 @@ console.log(employeeObj)
 
 
 const saveCritera = ()=>{
+    console.log(employeeObj)
+    
     localStorage.setItem('savedData',JSON.stringify(employeeObj.questionsToSendArr))
 }
 function onlyUnique(value, index, self) {
@@ -691,6 +693,7 @@ function onlyUnique(value, index, self) {
 const loadCriteria = ()=>{
   
 
+    document.getElementById('epeQuestions').innerHTML = ``
 
 
   document.getElementById('sampleQuestionairre').innerHTML = '';
