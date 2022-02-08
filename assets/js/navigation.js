@@ -41,6 +41,7 @@ const EPE = (event)=>{
    document.getElementById('pickHub').style.display = 'none';
 
    routing = 'EPE';
+   document.getElementById('evaluationType').innerHTML = '<b>EMPLOYEE PERFORMANCE EVALUATION</b>'
    console.log(routing)
 
 
@@ -49,6 +50,7 @@ const returnToPickHub = ()=>{
   document.getElementById('emailSetup').style.display = 'none';
 
   document.getElementById('pickHub').style.display = 'block';
+  document.getElementById('evaluationType').innerHTML = '<b></b>'
 }
 
 const returnToSenderSetup = ()=>{
@@ -82,6 +84,7 @@ if(routing === 'PIP'){
 const returnToStart =()=>{
   document.getElementById('epeHub').style.display = 'none';
   document.getElementById('pickHub').style.display = 'block';
+ 
 }
 
 const epeStepOne =()=>{
@@ -115,14 +118,14 @@ const PE360 = (e)=>{
   console.log('PE360')
   document.getElementById('employeeUploadSection').style.display = 'none';
   document.getElementById('render').innerHTML = `<button onclick="LoadPage()">BACK</button><p>PE360</p>`
-
 }
 
 const PIP = ()=>{
 
-  document.getElementById('emailSetup').style.display = 'block';
+  document.getElementById('senderSetup').style.display = 'block';
 
    document.getElementById('pickHub').style.display = 'none';
+   document.getElementById('evaluationType').innerHTML = '<b>PERFORMANCE IMPROVEMENT PLAN</b>'
 
    routing = 'PIP';
    console.log(routing)
