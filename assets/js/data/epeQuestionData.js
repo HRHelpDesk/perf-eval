@@ -244,8 +244,9 @@ const hideCustomQuestion = ()=>{
   
 
     let employeeObj = {
-        employeefName:'',
-        employeelName:'',
+        
+        employeeName:'',
+        employeeNo:'',
         jobTitle:'',
         department:'',
         reviewingSupervisor:'',
@@ -608,6 +609,28 @@ unique.map(g=>{
   const setData = (event)=>{
       let value =  event.target.value;
       let name =  event.target.name;
+
+      if (name == 'inputSenderName'){
+        senderObj.senderName = value;
+       
+    }
+
+    if (name == 'inputSenderTitle'){
+        senderObj.senderTitle = value;
+       
+    }
+
+    if (name == 'inputSenderEmail'){
+        senderObj.senderEmail = value;
+       
+    }
+
+    if (name == 'inputSenderCC'){
+        senderObj.senderCC = value;
+       
+    }
+ 
+
    if (name == 'inputFirstname'){
        employeeObj.employeefName = value;
        document.getElementById('outputFirstname').innerHTML = value;
@@ -647,6 +670,7 @@ if (name == 'inputTimeInPosition'){
     employeeObj.timeInPosition = value;
     document.getElementById('outputTimeInPosition').innerHTML = value;
 }
+console.log(senderObj)
 console.log(employeeObj)
   }
 

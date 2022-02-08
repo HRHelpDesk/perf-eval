@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+
+
+<html>
+
+
+<head>
+
+
+
+</head>
+
+
+<body>
+    <div class="epe-zone">
+    <div style="text-align: left; padding: 50px;">
+<h4>SETUP</h4>
+<p>This section is where you enter the information of to whom the evaluation will be returned to upon completion.</p>
+<p>You can also add anyone you would like the evaluation(s) carbon copied to by clicking .</p>
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="inputFirstname">Your Name</label>
+                <input onkeyup="setData(event)"  type="text" class="form-control" name="inputSenderName" placeholder="Name">
+            </div>
+            <div class="col-md-6">
+                <label for="inputLastname">Your Title</label>
+                <input type="text" onkeyup="setData(event)" class="form-control" name="inputSenderTitle" placeholder="Title">
+            </div>
+            <div class="col-lg">
+                <label for="inputLastname">Email</label>
+                <input type="text" onkeyup="setData(event)" class="form-control" name="inputSenderEmail" placeholder="Email">
+            </div>
+
+         
+        </div>
+        <div class="col-lg">
+            <label for="inputLastname">Carbon Copy Emails</label>
+            <input type="text" onkeyup="setData(event)" class="form-control" name="inputSenderCC" placeholder="JohnDoe@email.com, Jane@email.com (Separate Emails by a comma.)">
+        </div>
+        <div id="theBtns" style="float:right; margin-right: 100px;">
+            <button type="button" id="prevBtn" onclick="returnToPickHub()">Previous</button>
+            <button type="button" id="nextBtn" onclick="emailSetup()">Next</button>
+            <button type="button" style="display: none;" id="submitBtn" onclick="SendEmail()">Send Email</button>
+          </div>
+    </div>
+    
+</div>
+</body>
+</html>

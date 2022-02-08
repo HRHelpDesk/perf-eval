@@ -1,11 +1,13 @@
 
-/* Hide all steps by default: */
-.tab {
-  display: none;
- margin-top: 40px;
+.btn-group{
+  display:block; 
+ height: 100%;
+  margin-top: 20px;
+ 
 }
 
 button {
+
   background-color: #04AA6D;
   color: #ffffff;
   border: none;
@@ -22,25 +24,4 @@ button:hover {
 
 #prevBtn {
   background-color: tomato;
-}
-
-/* Make circles that indicate the steps of the form: */
-.step {
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: #bbbbbb;
-  border: none;  
-  border-radius: 50%;
-  display: inline-block;
-  opacity: 0.5;
-}
-
-.step.active {
-  opacity: 1;
-}
-
-/* Mark the steps that are finished and valid: */
-.step.finish {
-  background-color: #1B94A1;
 }

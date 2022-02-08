@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+
+
+<html>
+
+<head>
+
+</head>
+
+
+<body>
+    <div id="employeeUploadSection"  class="tab">
+   
+        <div style="padding: 50px;">
+            <div>
+            <h3>Manually enter in the employee information:</h3>
+ 
+            <input type="text" id="employeeFName" placeholder="first name">
+            <input type="text" id="employeeLName" placeholder="last name">
+            <input type="text" id="employeeEmail" placeholder="email">
+            <button onclick="AddEmployee()">Add to list</button>
+
+        </div>
+        <h1>Or</h1>
+         <div id="uploadCSVSection" class="container" style="margin-top: 30px; background-color: white; padding: 20px">
+             <div class="col-md-4">
+               <input type="file" id="fileToUpload" class="form-control">
+             </div>
+             <div class="col-md-4">
+               <button type="button" class="btn btn-info btn-lg" id="btnUploadFile">Upload File</button>
+             </div>
+             <div class="table-responsive col-md-12 csv-table" style="margin-top: 20px;">
+             
+             </div>
+            
+           </div>
+ 
+           <div id="inputNamesSection">
+               
+ <button onclick="sendEmail()">Send Emails</button>
+ <div style="background-color: white; padding: 20px;">
+   <table class="table">
+     <thead>
+       <tr>
+         <th scope="col">#</th>
+         <th scope="col">First</th>
+         <th scope="col">Last</th>
+         <th scope="col">Handle</th>
+       </tr>
+     </thead>
+     <tbody id="employeeTable">
+      
+     </tbody>
+   </table>
+ </div>
+           </div>
+
+
+
+           <div id="nextButton" class="nxt-btn">
+           <button onclick="LoadPage(event)">Next</button>
+          </div>
+ </div>
+
+ <div id="theBtns" style="float:right; margin-right: 100px;">
+    <button type="button" id="prevBtn" onclick="returnToSenderSetup()">Previous</button>
+    <button type="button" id="nextBtn" onclick="LoadBuilder()">Next</button>
+    <button type="button" style="display: none;" id="submitBtn" onclick="SendEmail()">Send Email</button>
+  </div>
+ </div>
+
+</body>
+
+</html>

@@ -67,28 +67,33 @@ function CSVToArray(strData, strDelimiter) {
   }
 
   arrData.forEach(i=>{
+    if(i[0] === '	ï»¿First Name'){
+
+    } else{
       employeeArr.push({
           id: makeid(8),
           fName: i[0],
           lName: i[1],
           email: i[2]
       })
+    }
   })
+
 
   console.log(employeeArr)
 employeeArr.shift()
   employeeArr.map(i =>{
-    document.getElementById('employeeCSVTable').innerHTML +=` <tr>
+    document.getElementById('employeeTable').innerHTML +=` <tr>
 <th scope="row">${i.id}</th>
 <td>${i.fName}</td>
 <td>${i.lName}</td>
-<td>${i.email}<span class='delete-btn' onclick='deleteCSVEmployee("${i.id}")'>delete</span></td>
+<td>${i.email}<span class='delete-btn' onclick='deleteEmployee("${i.id}")'>delete</span></td>
 </tr>`;
 localStorage.setItem('PE-Employee-List',JSON.stringify(employeeArr))
 
   })
 
-document.getElementById('employeeCSVTable').innerHTML += ``;
+document.getElementById('employeeTable').innerHTML += ``;
 
 
 

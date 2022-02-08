@@ -22,70 +22,6 @@ const goToCSVSection = ()=>{
   })
   }
 
-  let pageRenderOne = `<div style="padding: 20px 100px 0px 100px; text-align: center;">
-<div id="Container"
-style="padding-bottom:56.25%; position:relative; display:block; width: 100%"> 
-
-<br></br>
-<p style="font-size: 24px; font-weight: bold;">Select the type of evaluation you would like to perform:</p>
-<div class="cards">
-
-<div class="card card-color">
-<p class="card-title">EMPLOYEE PERFORMANCE EVALUATION </p>
- 
-  <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-  <p class="card__apply">
-    <a class="card__link" onclick='EPE(event)'>Click to Start<i class="fas fa-arrow-right"></i></a>
-  </p>
-</div>
-
-<div class="card card-color">
-  <p class="card-title">360 PERFORMANCE EVALUATION </p>
-     
-      <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-      <p class="card__apply">
-        <a class="card__link"onclick="PE360()">Click to Start<i class="fas fa-arrow-right"></i></a>
-      </p>
-    </div>
-
-    <div class="card card-color">
-      <p class="card-title">PERFORMANCE IMPROVEMENT PLAN </p>
-         
-          <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-          <p class="card__apply">
-            <a class="card__link"  onclick="PIP()">Click to Start<i class="fas fa-arrow-right"></i></a>
-          </p>
-        </div>
-
-        <div class="card card-color">
-          <p class="card-title">UPWARD EVALUATION</p>
-             
-              <h2 class="card__title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-              <p class="card__apply">
-                <a class="card__link" onclick="UE()">Click to Start<i class="fas fa-arrow-right"></i></a>
-              </p>
-            </div>
-
-            
-
-
-
-</div>
-</div>
-
- <div class="footer">
-
-         
-  <p class="company-name">
-      Andere Corporation &copy; 2021, ALL Rights Reserved
-  </p>
-
-</div>
-</div>`;
-
-
-let pageThree = ``
-
 
 const LoadPage = (event)=>{
 
@@ -97,18 +33,81 @@ const LoadPage = (event)=>{
  
 }
 
-
+let routing = '';
 const EPE = (event)=>{
   event.preventDefault();
-  console.log('EPE')
- 
+  document.getElementById('senderSetup').style.display = 'block';
 
- 
-  document.getElementById('render').style.display = 'none';
-  document.getElementById('EPEdiv').style.display = 'block';
+   document.getElementById('pickHub').style.display = 'none';
+
+   routing = 'EPE';
+   console.log(routing)
 
 
 }
+const returnToPickHub = ()=>{
+  document.getElementById('emailSetup').style.display = 'none';
+
+  document.getElementById('pickHub').style.display = 'block';
+}
+
+const returnToSenderSetup = ()=>{
+  document.getElementById('emailSetup').style.display = 'none';
+
+  document.getElementById('senderSetup').style.display = 'block';
+}
+
+const emailSetup = ()=>{
+  document.getElementById('senderSetup').style.display = 'none';
+  document.getElementById('epeHub').style.display = 'none';
+  document.getElementById('pipHub').style.display = 'none';
+  document.getElementById('emailSetup').style.display = 'block';
+
+}
+
+const LoadBuilder = ()=>{
+if(routing === 'EPE'){
+  document.getElementById('epeHub').style.display = 'block';
+  document.getElementById('emailSetup').style.display = 'none';
+}
+
+if(routing === 'PIP'){
+  document.getElementById('pipHub').style.display = 'block';
+  document.getElementById('emailSetup').style.display = 'none';
+}
+}
+
+
+
+const returnToStart =()=>{
+  document.getElementById('epeHub').style.display = 'none';
+  document.getElementById('pickHub').style.display = 'block';
+}
+
+const epeStepOne =()=>{
+  document.getElementById('epeStepOne').style.display = 'block';
+  document.getElementById('epeStepTwo').style.display = 'none';
+}
+
+const epeStepTwo =()=>{
+  document.getElementById('epeStepOne').style.display = 'none';
+  document.getElementById('epeStepTwo').style.display = 'block';
+  document.getElementById('epeStepThree').style.display = 'none';
+}
+
+const epeStepThree =()=>{
+  document.getElementById('epeStepTwo').style.display = 'none';
+  document.getElementById('epeStepThree').style.display = 'block';
+  document.getElementById('epeStepFour').style.display = 'none';
+
+  
+}
+
+const epeStepFour =()=>{
+  document.getElementById('epeStepThree').style.display = 'none';
+  document.getElementById('epeStepFour').style.display = 'block';
+}
+
 
 
 const PE360 = (e)=>{
@@ -119,11 +118,14 @@ const PE360 = (e)=>{
 
 }
 
-const PIP = (e)=>{
-  console.log('PIP')
-  document.getElementById('employeeUploadSection').style.display = 'none';
-  document.getElementById('render').innerHTML = `<button onclick="LoadPage()">BACK</button><p>PIP</p>`
+const PIP = ()=>{
 
+  document.getElementById('emailSetup').style.display = 'block';
+
+   document.getElementById('pickHub').style.display = 'none';
+
+   routing = 'PIP';
+   console.log(routing)
 }
   
 
@@ -134,3 +136,5 @@ const UE = (e)=>{
 
 }
   
+
+
