@@ -87,7 +87,7 @@ employeeArr.shift()
 <th scope="row">${i.id}</th>
 <td>${i.fName}</td>
 <td>${i.lName}</td>
-<td>${i.email}<span class='delete-btn' onclick='deleteEmployee("${i.id}")'>delete</span></td>
+<td>${i.email}<span class='delete-btn icon icon--trash--can' onclick='deleteEmployee("${i.id}")'>&nbsp &nbsp </span></td>
 </tr>`;
 localStorage.setItem('PE-Employee-List',JSON.stringify(employeeArr))
 

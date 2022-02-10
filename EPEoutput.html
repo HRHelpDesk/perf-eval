@@ -19,8 +19,49 @@
 
 </head>
 <script>
+    function loadFile(url, callback) {
+    PizZipUtils.getBinaryContent(url, callback);
+}
+function generate() {
+    loadFile(
+        "./example.docx",
+        function (error, content) {
+            if (error) {
+                throw error;
+            }
+            var zip = new PizZip(content);
+            var doc = new window.docxtemplater(zip, {
+                paragraphLoop: true,
+                linebreaks: true,
+            });
+
+            // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
+            doc.render(anObjArr);
+
+            var out = doc.getZip().generate({
+                type: "blob",
+                mimeType:
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                // compression: DEFLATE adds a compression step.
+                // For a 50MB output document, expect 500ms additional CPU time
+                compression: "DEFLATE",
+            });
+            // Output the document using Data-URI
+            saveAs(out, "output.docx");
+        }
+    );
+}
+
+
+
+
+
+
+    
+
             var url = new URL(window.location.href);
 var c = JSON.parse(url.searchParams.get("c"));
+var d = JSON.parse(url.searchParams.get("d"));
       let anObjArr = {
         emp_Name: c.employeefName + ' ' + c.employeelName,
         employee_id_no : c.employeelName,
@@ -34,7 +75,8 @@ var c = JSON.parse(url.searchParams.get("c"));
         overall_rating: '',
         part_4_a:'',
         part_4_b:'',
-        categories:[]
+        categories:[],
+        senderEmail: d.senderEmail
     }
  window.onload = ()=>{
 
@@ -425,12 +467,14 @@ console.log(name)
     
           <div  id="showPartFour"></div>
             </div>
-            <button onclick="generate()">Download Docx</button>
+            <button onclick="returnToSender()">Send Back</button>
         </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script><script src="./assets/js/upload.js"></script>
             <script src="./assets/js/navigation.js"></script>
             <script src='/assets/js/pizzip.js'></script>
             <script src="./assets/js/addEmployee.js"></script>
     <script src="./assets/js/data/createDocument.js"></script>
+    <script src="./assets/js/setupEmail.js"></script>
+    <script src="./assets/js/smtp.js"></script>
 </body>
 </html>

@@ -270,11 +270,11 @@ const hideCustomQuestion = ()=>{
              alert('This item has already been added.')
          } else{
             document.getElementById('sampleQuestionairre').innerHTML = '';
-         document.getElementById(itemToAdd[0].div).innerHTML += `<p id=${itemToAdd[0].index}>${itemToAdd[0].question}<span onclick="removeQuestion('${itemToAdd[0].index}', '${itemToAdd[0].div}')"> x</span></p>`
+         document.getElementById(itemToAdd[0].div).innerHTML += `<p class="cat-hide" id=${itemToAdd[0].index}>${itemToAdd[0].question}<span class='delete-btn hide-icon icon icon--trash--can'  onclick="removeQuestion('${itemToAdd[0].index}', '${itemToAdd[0].div}')"> </span></p>`
          }
      } else {
         document.getElementById('sampleQuestionairre').innerHTML = '';
-         document.getElementById('epeQuestions').innerHTML += `<div id=${itemToAdd[0].div}><p ><b>${itemToAdd[0].category}</b><span onclick="removeCat('${itemToAdd[0].div}')"> x</span></p> <p id=${itemToAdd[0].index}>${itemToAdd[0].question}<span onclick="removeQuestion('${itemToAdd[0].index}', '${itemToAdd[0].div}')"> x</span></p></div>`
+         document.getElementById('epeQuestions').innerHTML += `<div  id=${itemToAdd[0].div}><p class="cat-hide" ><b>${itemToAdd[0].category}</b><span class='delete-btn hide-icon icon icon--trash--can' onclick="removeCat('${itemToAdd[0].div}')"> </span></p> <p id=${itemToAdd[0].index}>${itemToAdd[0].question}<span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${itemToAdd[0].index}', '${itemToAdd[0].div}')"> </span></p></div>`
      }
 
      employeeObj.questionsToSendArr.push({
@@ -309,7 +309,7 @@ unique.map(g=>{
          
         })
        
-             document.getElementById('sampleQuestionairre').innerHTML += `<div ><p><b>${g}</b></p>${qs}</div>`
+             document.getElementById('sampleQuestionairre').innerHTML += `<div ><p class="cat-hide"><b>${g}</b></p>${qs}</div>`
          
       })
       
@@ -330,7 +330,7 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
         if(document.getElementById(catFinder).innerHTML.indexOf(itemToAdd) > -1){
             alert('This question has already been added.')
         } else{
-        document.getElementById(catFinder).innerHTML += `<p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p>`
+        document.getElementById(catFinder).innerHTML += `<p class="cat-hide" id=${index}>${itemToAdd}<span class='delete-btn icon icon--trash--can' onclick="removeQuestion('${index}', '${item+'Div'}')">  </span></p>`
         employeeObj.questionsToSendArr.push({
             index: index,
             category: document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase(),
@@ -348,7 +348,7 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
   
     // }
     else {
-        document.getElementById('epeQuestions').innerHTML += `<div id=${catFinder}><p ><b>${document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase()}</b><span onclick="removeCat('${catFinder}')"> x</span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p></div>`
+        document.getElementById('epeQuestions').innerHTML += `<div id=${catFinder}><p ><b>${document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase()}</b><span onclick="removeCat('${catFinder}')"> x</span></p> <p id=${index}>${itemToAdd}<span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p></div>`
         employeeObj.questionsToSendArr.push({
             index: index,
             category: document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase(),
@@ -364,7 +364,7 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
         if(document.getElementById(cat+'Div').innerHTML.indexOf(itemToAdd) > -1){
             alert('This question has already been added.')
         } else{
-        document.getElementById(cat+'Div').innerHTML += `<p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p>`
+        document.getElementById(cat+'Div').innerHTML += `<p class="cat-hide" id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p>`
         employeeObj.questionsToSendArr.push({
             index: index,
             category: cat.toUpperCase(),
@@ -377,7 +377,7 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
     }   else {
         
         console.log(cat.toUpperCase())
-        document.getElementById('epeQuestions').innerHTML += `<div id=${cat+'Div'}><p ><b>${cat.toUpperCase()}</b><span onclick="removeCat('${cat+'Div'}')"> x</span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${cat+'Div'}')"> x</span></p></div>`
+        document.getElementById('epeQuestions').innerHTML += `<div id=${cat+'Div'}><p class="cat-hide" ><b>${cat.toUpperCase()}</b><span onclick="removeCat('${cat+'Div'}')"> x</span></p> <p id=${index}>${itemToAdd}<span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${index}', '${cat+'Div'}')"> x</span></p></div>`
         employeeObj.questionsToSendArr.push({
             index: index,
             category: cat.toUpperCase(),
@@ -530,12 +530,12 @@ unique.map(g=>{
            let qarr = questionEPE.filter(i => cat.includes(i.category))
         
            qs = qarr.map(i=>{
-            return `<p id='${i.index}'>${i.question}<span onclick="removeQuestion('${i.index}')"> x</span></p>`
+            return `<p id='${i.index}'>${i.question}<span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${i.index}')"> </span></p>`
         }).join("")
         
         
             })
-            document.getElementById('epeQuestions').innerHTML += `<div id='${i.index}'><p><b>${i.name}</b><span onclick="removeQuestion('${i.index}')"> x</span></p>${qs}</div>`
+            document.getElementById('epeQuestions').innerHTML += `<div id='${i.index}'><p><b>${i.name}</b><span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${i.index}')"> </span></p>${qs}</div>`
         
           })
 
@@ -766,10 +766,10 @@ const loadCriteria = ()=>{
             console.log(qarr)
             qs = qarr.map(i=>{
                
-                return `<p id='${i.index}'>${i.question}<span onclick="removeQuestion('${i.index}')"> x</span></p>`
+                return `<p id='${i.index}'>${i.question}<span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${i.index}')"> </span></p>`
             }).join("")
        
-        document.getElementById('epeQuestions').innerHTML += `<div id='${id_m}'><p><b>${g}</b><span onclick="removeQuestion('${id_m}')"> x</span></p>${qs}</div>`
+        document.getElementById('epeQuestions').innerHTML += `<div id='${id_m}'><p><b>${g}</b><span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${id_m}')"> </span></p>${qs}</div>`
          
 
 
@@ -781,5 +781,5 @@ const loadCriteria = ()=>{
 }
 
 const SendEmails = ()=>{
-    document.getElementById('linkDiv').innerHTML = `<a href='./EPEoutput.html?c=${JSON.stringify(employeeObj)}'>Click to go</a>`
+    document.getElementById('linkDiv').innerHTML = `<a href='./EPEoutput.html?c=${JSON.stringify(employeeObj)}&d=${JSON.stringify(senderObj)}'>Click to go</a>`
 }

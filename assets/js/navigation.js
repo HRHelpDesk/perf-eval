@@ -68,6 +68,11 @@ const emailSetup = ()=>{
 }
 
 const LoadBuilder = ()=>{
+  if(employeeArr.length < 1){
+    alert("You haven't added anyone to send the evaluation to. Please add at least one person before moving on.")
+
+} else {
+
 if(routing === 'EPE'){
   document.getElementById('epeHub').style.display = 'block';
   document.getElementById('emailSetup').style.display = 'none';
@@ -77,6 +82,8 @@ if(routing === 'PIP'){
   document.getElementById('pipHub').style.display = 'block';
   document.getElementById('emailSetup').style.display = 'none';
 }
+}
+
 }
 
 

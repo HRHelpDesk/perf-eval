@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+
+<html>
+
+<script>
+    window.onload = ()=>{
+  const params = window.location.search;
+  const urlParams = new URLSearchParams(params);
+  let videoSRC = urlParams.get('vidsrc')
+  console.log(videoSRC)
+  document.getElementById('videoDiv').style.display = 'block'
+document.getElementById('videoDiv').innerHTML = `<video style="width: 100%; height: auto;" controls>
+        <source src='${videoSRC}' type="video/mp4">
+        <track label="English" kind="subtitles" srclang="en" src="WP-Gossip-Captions.vtt" default>
+    </video>`
+    }
+  
+</script>
+<body style="background-color: black;" >
+    <div style="display: none;" id="videoDiv"></div>
+
+</body>
+</html>

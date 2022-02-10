@@ -1,0 +1,20 @@
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    cursor: pointer;
+    }
+.icon--trash--can {
+    background-image: url(./trash-can.svg);
+    background-size: auto 100%;
+    }
+
+/* 
+    .hide-icon {
+        display: none;
+    }
+
+    .cat-hide:hover + .hide-icon {
+        display: block;
+    } */

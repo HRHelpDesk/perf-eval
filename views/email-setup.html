@@ -13,32 +13,19 @@
     <div id="employeeUploadSection"  class="tab">
    
         <div style="padding: 50px;">
-            <div>
-            <h3>Manually enter in the employee information:</h3>
- 
-            <input type="text" id="employeeFName" placeholder="first name">
-            <input type="text" id="employeeLName" placeholder="last name">
-            <input type="text" id="employeeEmail" placeholder="email">
-            <button onclick="AddEmployee()">Add to list</button>
+        
 
-        </div>
-        <h1>Or</h1>
-         <div id="uploadCSVSection" class="container" style="margin-top: 30px; background-color: white; padding: 20px">
-             <div class="col-md-4">
-               <input type="file" id="fileToUpload" class="form-control">
-             </div>
-             <div class="col-md-4">
-               <button type="button" class="btn btn-info btn-lg" id="btnUploadFile">Upload File</button>
-             </div>
-             <div class="table-responsive col-md-12 csv-table" style="margin-top: 20px;">
-             
-             </div>
-            
-           </div>
  
            <div id="inputNamesSection">
                
- <button onclick="sendEmail()">Send Emails</button>
+ <!-- <button onclick="sendEmail()">Send Emails</button> -->
+ <button type="button"  data-bs-toggle="modal" data-bs-target="#manualEntryModal">
+  Add Person Manually
+</button>
+
+<button type="button"  data-bs-toggle="modal" data-bs-target="#uploadModal">
+ Upload CSV
+</button>
  <div style="background-color: white; padding: 20px;">
    <table class="table">
      <thead>
@@ -69,7 +56,50 @@
     <button type="button" style="display: none;" id="submitBtn" onclick="SendEmail()">Send Email</button>
   </div>
  </div>
+<!-- Modal -->
+<div class="modal fade" id="manualEntryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h3>Manually enter in the employee information:</h3>
+ 
+        <input type="text" id="employeeFName" placeholder="first name"><br>
+        <input type="text" id="employeeLName" placeholder="last name"><br>
+        <input type="text" id="employeeEmail" placeholder="email">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" onclick="AddEmployee()" data-bs-dismiss="modal" class="btn btn-primary">Add to List</button>
+      </div>
+    </div>
+  </div>
+</div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-4">
+          <input type="file" id="fileToUpload" class="form-control">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="btnUploadFile" data-bs-dismiss="modal" class="btn btn-primary">Upload</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 
 </html>

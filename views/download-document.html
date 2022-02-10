@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.28.6/docxtemplater.js"></script>
+
+        <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip.js"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+        <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip-utils.js"></script>
+        
+    </head>
+<script>
+       var url = new URL(window.location.href);
+        var c = JSON.parse(url.searchParams.get("c"));
+
+      let anObjArr = {
+        emp_Name: c.emp_Name,
+        employee_id_no : c.employee_id_no,
+        job_title: c.job_title,
+        department: c.department,
+        rev_sup:c.rev_sup,
+        rev_period: c.rev_period,
+        per_sup: c.per_sup,
+        t_o_p: c.t_o_p,
+        part_two_a: c.part_two_a,
+        overall_rating: c.overall_rating,
+        part_4_a:c.part_4_a,
+        part_4_b:c.part_4_b,
+        
+       
+    }
+    window.onload = ()=>{
+     
+
+
+    generate()
+
+    return closeWindow()
+    }
+
+    let closeWindow = ()=>{
+      setTimeout(()=>{
+        window.close()
+      },5000)
+       
+    }
+</script>
+    <body>
+
+    </body>
+
+    <script >
+        function loadFile(url, callback) {
+    PizZipUtils.getBinaryContent(url, callback);
+}
+function generate() {
+    loadFile(
+        "./example.docx",
+        function (error, content) {
+            if (error) {
+                throw error;
+            }
+            var zip = new PizZip(content);
+            var doc = new window.docxtemplater(zip, {
+                paragraphLoop: true,
+                linebreaks: true,
+            });
+
+            // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
+            doc.render(anObjArr);
+
+            var out = doc.getZip().generate({
+                type: "blob",
+                mimeType:
+                    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                // compression: DEFLATE adds a compression step.
+                // For a 50MB output document, expect 500ms additional CPU time
+                compression: "DEFLATE",
+            });
+            // Output the document using Data-URI
+            saveAs(out, "output.docx");
+        }
+    );
+}
+
+
+
+
+
+
+    
+
+        
+        </script>
+</html>
