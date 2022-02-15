@@ -631,14 +631,14 @@ unique.map(g=>{
     }
  
 
-   if (name == 'inputFirstname'){
+   if (name == 'inputName'){
        employeeObj.employeefName = value;
-       document.getElementById('outputFirstname').innerHTML = value;
+       document.getElementById('outputFullname').innerHTML = value;
    }
 
-   if (name == 'inputLastname'){
+   if (name == 'inputEmployeeId'){
     employeeObj.employeelName = value;
-document.getElementById('outputLastname').innerHTML = value;
+document.getElementById('outputEmployeeId').innerHTML = value;
 }
 
 if (name == 'inputJobTitle'){
