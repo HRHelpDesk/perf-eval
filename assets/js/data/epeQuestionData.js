@@ -281,7 +281,9 @@ const hideCustomQuestion = ()=>{
          index: itemToAdd[0].index,
          category: itemToAdd[0].category,
          question: itemToAdd[0].question,
-         div: itemToAdd[0].div
+         div: itemToAdd[0].div,
+         itemId: makeid(7),
+         answer: ''
      })
      console.log(employeeObj)
      function onlyUnique(value, index, self) {
@@ -335,7 +337,9 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
             index: index,
             category: document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase(),
             question: itemToAdd,
-            div: catFinder
+            div: catFinder,
+            itemId: makeid(7),
+            answer: ''
         })
         console.log(employeeObj)
         }
@@ -353,7 +357,9 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
             index: index,
             category: document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase(),
             question: itemToAdd,
-            div: catFinder
+            div: catFinder,
+            itemId: makeid(7),
+            answer: ''
         })
         console.log(employeeObj)
     }
@@ -369,7 +375,9 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
             index: index,
             category: cat.toUpperCase(),
             question: itemToAdd,
-            div: cat+'Div'
+            div: cat+'Div',
+            itemId: makeid(7),
+            answer: ''
         })
         console.log(employeeObj)
         }
@@ -382,7 +390,9 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
             index: index,
             category: cat.toUpperCase(),
             question: itemToAdd,
-            div: cat+'Div'
+            div: cat+'Div',
+            itemId: makeid(7),
+            answer: ''
         })
         console.log(employeeObj)
     }
@@ -544,7 +554,9 @@ unique.map(g=>{
                 index: i.index,
                 category: i.category,
                 question: i.question,
-                div: i.div
+                div: i.div,
+                itemId: makeid(7),
+                answer: ''
             })
           })
           document.getElementById('sampleQuestionairre').innerHTML = '';

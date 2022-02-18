@@ -42,6 +42,7 @@ const returnToSender = ()=>{
         Email.send({
                 SecureToken : "1eb316ac-0aee-4c6c-b398-e2b8b78cd84d",
                 To : anObjArr.senderEmail,
+                CC: senderObj.senderCC,
                 From : 'support@helpdeskforhr.com',
                 
                
