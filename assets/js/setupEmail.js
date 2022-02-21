@@ -9,6 +9,7 @@ let successArr = [];
 const sendEmail = ()=>{
      
         employeeArr.forEach(i=>{
+                let empJSON = JSON.stringify(employeeObj)
                 Email.send({
                         SecureToken : "1eb316ac-0aee-4c6c-b398-e2b8b78cd84d",
                         To : i.email,
@@ -16,10 +17,11 @@ const sendEmail = ()=>{
                         CC: senderObj.senderCC,
                        
                            Subject : `${senderObj.senderName} - ${senderObj.senderTitle} has requested a Performance Evaluation for ${employeeObj.employeeName}.`,
-                           Body : `<a href='http://127.0.0.1:5503/EPEoutput.html?c=${JSON.stringify(employeeObj)}&d=${JSON.stringify(senderObj)}'>Click to go</a>`
+                           Body : `<a href='http://127.0.0.1:5503/EPEoutput.html?c=${empJSON}&d=${JSON.stringify(senderObj)}'>Click to go</a>`
                           
                        })
                        successArr.push('sent')
+                       console.log(empJSON)
                        
         })
 

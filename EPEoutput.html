@@ -61,10 +61,11 @@ function generate() {
 
             var url = new URL(window.location.href);
 var c = JSON.parse(url.searchParams.get("c"));
+console.log(c)
 var d = JSON.parse(url.searchParams.get("d"));
       let anObjArr = {
-        emp_Name: c.employeefName + ' ' + c.employeelName,
-        employee_id_no : c.employeelName,
+        emp_Name: c.employeeName,
+        employee_id_no : c.employeeId,
         job_title: c.jobTitle,
         department: c.department,
         rev_sup:c.reviewingSupervisor,
@@ -85,11 +86,11 @@ var d = JSON.parse(url.searchParams.get("d"));
 
 
 
-console.log(c);
+
 //Emmployee Information
 setTimeout(()=>{
-document.getElementById('outputFirstname').innerHTML = c.employeefName;
-document.getElementById('outputLastname').innerHTML = c.employeelName;
+document.getElementById('outputName').innerHTML = c.employeeName;
+document.getElementById('outputEmployeeId').innerHTML = c.employeeId;
 document.getElementById('outputJobTitle').innerHTML = c.jobTitle;
 document.getElementById('outputDepartment').innerHTML = c.department;
 document.getElementById('outputReviewingSupervisor').innerHTML = c.reviewingSupervisor;
@@ -97,6 +98,8 @@ document.getElementById('outputReviewPeriod').innerHTML = c.reviewPeriod;
 document.getElementById('outputPeriodSupervised').innerHTML = c.periodSupervised;
 document.getElementById('outputTimeInPosition').innerHTML = c.timeInPosition;
 },1000)
+
+console.log(c)
 
 // Render Criteria
 function onlyUnique(value, index, self) {
@@ -120,7 +123,8 @@ function onlyUnique(value, index, self) {
             let qarr =  c.questionsToSendArr.filter(i => cat.includes(i.category))
          
             qs = qarr.map(i=>{
-           return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select onchange='addAnswer("${i.itemId}", event)' name='${i.div}' class="form-select"><option>---</option> <option>Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
+           return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select onchange='addAnswer("${i.itemId}", event)' name='${i.div}' class="form-select"><option>---</option> 
+           <option value="Exceptional Performance">Exceptional Performance (outstanding achievements that far exceed goals in all performance elements)</option>
            <option value='Exceeds Expectations'>Exceeds Expectations (performance that consistently goes beyond meeting goals)</option>
            <option value='Fully Meets Expectations'>Fully Meets Expectations (commendable performance that meets goals)</option>
            <option value='Partially Meets Expectations'>Partially Meets Expectations (inconsistent aspects of performance requiring improvement to meet some goals)</option>
@@ -203,264 +207,37 @@ console.log(c.questionsToSendArr)
     c.questionsToSendArr[foundIndex].answer = answer;
 
     console.log(c.questionsToSendArr)
+    var catIndex = anObjArr.categories.findIndex(i => i.category === c.questionsToSendArr[foundIndex].category);
+    let arrFilter = anObjArr.categories.filter(i=> i.category.includes(c.questionsToSendArr[foundIndex].category))
+let questionOnly =  {
+                    question: c.questionsToSendArr[foundIndex].question,
+                    resp: c.questionsToSendArr[foundIndex].answer
+                }
+let categoryObj ={
+            category: c.questionsToSendArr[foundIndex].category,
+            criteria:[
+                {
+                    question: c.questionsToSendArr[foundIndex].question,
+                    resp: c.questionsToSendArr[foundIndex].answer
+                }
+            ]
+        }
+        console.log(arrFilter)
+    if(anObjArr.categories.length == 0){
+        anObjArr.categories.push(categoryObj)
+        console.log(anObjArr)
+    } else{
+       if(arrFilter.length == 0){
+        anObjArr.categories.push(categoryObj)
+        console.log(anObjArr) 
+       } else{
+        anObjArr.categories[catIndex].criteria.push(questionOnly)
+        console.log(anObjArr) 
+       }
+    }
 
 }
 
-
-  
-function setData(event, a)
-{
-    let name = event.target.name;
-    let value = event.target.value;
-console.log(name)
-    // console.log(name)
-    if(name == 'wrkQualityDiv'){
-     if( anObjArr.categories.length > 0){
-         if(anObjArr.categories.filter(e => e.category === 'WORK QUALITY').length > 0){
-       
-
-        
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'WORK QUALITY'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-    } else{
-        anObjArr.categories.push(
-            {
-        
-        category: 'WORK QUALITY',
-        criteria: []
-
-
-        })
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'WORK QUALITY'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-        console.log(anObjArr)
-    }  
-    }else{
-        anObjArr.categories.push(
-            {
-        
-        category: 'WORK QUALITY',
-        criteria: []
-
-
-        })
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'WORK QUALITY'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-        console.log(anObjArr)
-
-     }
-    }
-
-
-    // productivityDiv
-
-    if(name == 'productivityDiv'){
-     if( anObjArr.categories.length > 0){
-         if(anObjArr.categories.filter(e => e.category === 'PRODUCTIVITY').length > 0){
-       
-
-        
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'PRODUCTIVITY'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-    } else{
-        anObjArr.categories.push(
-            {
-        
-        category: 'PRODUCTIVITY',
-        criteria: []
-
-
-        })
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'PRODUCTIVITY'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-        console.log(anObjArr)
-    }
-    } else{
-        anObjArr.categories.push(
-            {
-        
-        category: 'PRODUCTIVITY',
-        criteria: []
-
-
-        })
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'PRODUCTIVITY'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-        console.log(anObjArr)
-
-     }
-    
-    }
-
-    
-
-    if(name == 'functTechDiv'){
-     if( anObjArr.categories.length > 0){
-         if(anObjArr.categories.filter(e => e.category === 'FUNCTIONAL/TECHNICAL KNOWLEDGE').length > 0){
-       console.log('this')
-
-        
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'FUNCTIONAL/TECHNICAL KNOWLEDGE'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-    } else{
-        console.log('that')
-        anObjArr.categories.push(
-            {
-        
-        category: 'FUNCTIONAL/TECHNICAL KNOWLEDGE',
-        criteria: []
-
-
-        })
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'FUNCTIONAL/TECHNICAL KNOWLEDGE'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-        console.log(anObjArr)
-
-    }
-
-     } else{
-        // anObjArr.categories.push(
-        //     {
-        
-        // category: 'FUNCTIONAL/TECHNICAL KNOWLEDGE',
-        // criteria: []
-
-
-        // })
-
-    //     objIndex = anObjArr.categories.findIndex((obj => obj.category == 'FUNCTIONAL/TECHNICAL KNOWLEDGE'));
-
-    //   anObjArr.categories[objIndex].criteria.push({
-    //         question: a,
-    //         resp: value
-
-
-    //     })
-        console.log(anObjArr)
-
-     }
-    }
-
-
-    // customerFocusDiv
-
-    if(name == 'customerFocusDiv'){
-     if( anObjArr.categories.length > 0){
-         if(anObjArr.categories.filter(e => e.category === 'CUSTOMER FOCUS').length > 0){
-       
-
-        
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'CUSTOMER FOCUS'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-    } else{
-        anObjArr.categories.push(
-            {
-        
-        category: 'CUSTOMER FOCUS',
-        criteria: []
-
-
-        })
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'CUSTOMER FOCUS'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-        console.log(anObjArr)
-    }
-    } else{
-        anObjArr.categories.push(
-            {
-        
-        category: 'CUSTOMER FOCUS',
-        criteria: []
-
-
-        })
-
-        objIndex = anObjArr.categories.findIndex((obj => obj.category == 'CUSTOMER FOCUS'));
-
-      anObjArr.categories[objIndex].criteria.push({
-            question: a,
-            resp: value
-
-
-        })
-        console.log(anObjArr)
-
-     }
-    
-    }
-
-
-}
 
 
    
@@ -478,11 +255,11 @@ console.log(name)
             <div class="form-group row">
                 <div class="col-md-6">
                     <label for="inputReviewingSupervisor"><b> Name</b></label>
-                    <p id="outputFirstname">First Name</p>
+                    <p id="outputName">First Name</p>
                 </div>
                 <div class="col-md-6">
                     <label for="inputReviewPeriod"><b>Employee ID</b></label>
-                    <p id="outputLastname">Employee ID</p>
+                    <p id="outputEmployeeId">Employee ID</p>
                 </div>
             </div>
     

@@ -246,7 +246,7 @@ const hideCustomQuestion = ()=>{
     let employeeObj = {
         
         employeeName:'',
-        employeeNo:'',
+        employeeId:'',
         jobTitle:'',
         department:'',
         reviewingSupervisor:'',
@@ -644,12 +644,12 @@ unique.map(g=>{
  
 
    if (name == 'inputName'){
-       employeeObj.employeefName = value;
+       employeeObj.employeeName = value;
        document.getElementById('outputFullname').innerHTML = value;
    }
 
    if (name == 'inputEmployeeId'){
-    employeeObj.employeelName = value;
+    employeeObj.employeeId = value;
 document.getElementById('outputEmployeeId').innerHTML = value;
 }
 
