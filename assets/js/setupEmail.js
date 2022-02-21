@@ -17,7 +17,7 @@ const sendEmail = ()=>{
                         CC: senderObj.senderCC,
                        
                            Subject : `${senderObj.senderName} - ${senderObj.senderTitle} has requested a Performance Evaluation for ${employeeObj.employeeName}.`,
-                           Body : `<a href='http://127.0.0.1:5503/EPEoutput.html?c=${empJSON}&d=${JSON.stringify(senderObj)}'>Click to go</a>`
+                           Body : `<a href='https://masonmerrell22.github.io/perf-eval/EPEoutput.html?c=${empJSON}&d=${JSON.stringify(senderObj)}'>Click to go</a>`
                           
                        })
                        successArr.push('sent')
@@ -49,7 +49,7 @@ const returnToSender = ()=>{
                 
                
                    Subject : `Evaluation Completed by Mason`,
-                   Body : `<a href='http://127.0.0.1:5503/views/download-document.html?c=${JSON.stringify(anObjArr)}'>Click to download the completed evaluation.</a>`
+                   Body : `<a href='https://masonmerrell22.github.io/perf-eval/views/download-document.html?c=${JSON.stringify(anObjArr)}'>Click to download the completed evaluation.</a>`
                   
                })
             
