@@ -5,6 +5,7 @@
 <html>
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
 </head>
 
@@ -65,11 +66,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <h3>Manually enter in the employee information:</h3>
- 
-        <input type="text" id="employeeFName" placeholder="first name"><br>
-        <input type="text" id="employeeLName" placeholder="last name"><br>
-        <input type="text" id="employeeEmail" placeholder="email">
+        <p><b>Manually enter in the employee information:</b></p>
+        <div class="form-group row">
+        <div class="col-lg-12">
+        
+        <input type="text" class="form-control" id="employeeFName" placeholder="First Name"><br>
+        <input type="text" class="form-control" id="employeeLName" placeholder="Last Name"><br>
+        <input type="text" class="form-control" id="employeeEmail" placeholder="Email Address">
+        </div>
+        </div>
+       
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -89,9 +95,10 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
           <input type="file" id="fileToUpload" class="form-control">
         </div>
+        <p><b>Click <a download href="./example.docx">HERE</a> to download fillable CSV template.</b></p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

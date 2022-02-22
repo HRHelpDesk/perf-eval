@@ -531,7 +531,7 @@ unique.map(g=>{
 
 
   const useSuggestedQuestions = ()=>{
-    if (confirm("This action will clear the current criteria and replace with suggested criteria. Are you sure you would like to do this?") == true) {
+    if (window.confirm("This action will clear the current criteria and replace with suggested criteria. Are you sure you would like to do this?") == true) {
         epeCats.map(i=>{
             let cat = i.name;
              let qs = [];
@@ -608,7 +608,7 @@ unique.map(g=>{
 
   const clearQuestionDiv = ()=>{
     let text;
-    if (confirm("Are you sure you would like to clear the current Criteria?") == true) {
+    if (window.confirm("Are you sure you would like to clear the current Criteria?") == true) {
         document.getElementById('epeQuestions').innerHTML = ''
         employeeObj.questionsToSendArr = [];
    
