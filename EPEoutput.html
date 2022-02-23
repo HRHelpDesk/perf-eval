@@ -36,9 +36,9 @@ function generate() {
             });
 
             // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
-            doc.render(anObjArr);
+            doc[0].render(anObjArr);
 
-            var out = doc.getZip().generate({
+            var out = doc[0].getZip().generate({
                 type: "blob",
                 mimeType:
                     "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -55,33 +55,68 @@ function generate() {
 
 
 
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+  charactersLength));
+   }
+   return result;
+  }
 
-
-    
-
-            var url = new URL(window.location.href);
-var c = JSON.parse(url.searchParams.get("c"));
-console.log(c)
-var d = JSON.parse(url.searchParams.get("d"));
-      let anObjArr = {
-        emp_Name: c.employeeName,
-        employee_id_no : c.employeeId,
-        job_title: c.jobTitle,
-        department: c.department,
-        rev_sup:c.reviewingSupervisor,
-        rev_period: c.reviewPeriod,
-        per_sup: c.periodSupervised,
-        t_o_p: c.timeInPosition,
+var url = new URL(window.location.href);
+var initialRef = url.searchParams.get("d");
+let c;
+let anObjArr = {
+        referenceNumber: '',
+        emp_Name: '',
+        employee_id_no : '',
+        job_title: '',
+        department: '',
+        rev_sup:'',
+        rev_period: '',
+        per_sup:'',
+        t_o_p: '',
         part_two_a: '',
         overall_rating: '',
         part_4_a:'',
         part_4_b:'',
         categories:[],
-        senderEmail: d.senderEmail,
+        senderEmail:'',
         signature: '',
         date_sign: ''
     }
- window.onload = ()=>{
+  let rsp = $.get(`http://localhost:3004/find-evaluation?refno=${initialRef}`, (data)=>{
+console.log(data)
+ c = data
+ console.log(c[0].employeeName)
+
+
+ anObjArr = {
+     
+    referenceNumber: makeid(15),
+        emp_Name: c[0].employeeName,
+        employee_id_no : c[0].employeeId,
+        job_title: c[0].jobTitle,
+        department: c[0].department,
+        rev_sup:c[0].reviewingSupervisor,
+        rev_period: c[0].reviewPeriod,
+        per_sup: c[0].periodSupervised,
+        t_o_p: c[0].timeInPosition,
+        part_two_a: '',
+        overall_rating: '',
+        part_4_a:'',
+        part_4_b:'',
+        categories:[],
+        senderEmail: c[0].senderEmail,
+        signature: '',
+        date_sign: ''
+    }
+ 
+   
+setTimeout(()=>{
 
 
 
@@ -89,14 +124,14 @@ var d = JSON.parse(url.searchParams.get("d"));
 
 //Emmployee Information
 setTimeout(()=>{
-document.getElementById('outputName').innerHTML = c.employeeName;
-document.getElementById('outputEmployeeId').innerHTML = c.employeeId;
-document.getElementById('outputJobTitle').innerHTML = c.jobTitle;
-document.getElementById('outputDepartment').innerHTML = c.department;
-document.getElementById('outputReviewingSupervisor').innerHTML = c.reviewingSupervisor;
-document.getElementById('outputReviewPeriod').innerHTML = c.reviewPeriod;
-document.getElementById('outputPeriodSupervised').innerHTML = c.periodSupervised;
-document.getElementById('outputTimeInPosition').innerHTML = c.timeInPosition;
+document.getElementById('outputName').innerHTML = c[0].employeeName;
+document.getElementById('outputEmployeeId').innerHTML = c[0].employeeId;
+document.getElementById('outputJobTitle').innerHTML = c[0].jobTitle;
+document.getElementById('outputDepartment').innerHTML = c[0].department;
+document.getElementById('outputReviewingSupervisor').innerHTML = c[0].reviewingSupervisor;
+document.getElementById('outputReviewPeriod').innerHTML = c[0].reviewPeriod;
+document.getElementById('outputPeriodSupervised').innerHTML = c[0].periodSupervised;
+document.getElementById('outputTimeInPosition').innerHTML = c[0].timeInPosition;
 },1000)
 
 console.log(c)
@@ -107,9 +142,9 @@ function onlyUnique(value, index, self) {
               }
            
    
-              console.log(c.questionsToSendArr)
-  c.questionsToSendArr.push()
-        let arrCats =  c.questionsToSendArr.map(i=> {return i.category})
+              console.log(c[0].questionsToSendArr)
+  c[0].questionsToSendArr.push()
+        let arrCats =  c[0].questionsToSendArr.map(i=> {return i.category})
         console.log(arrCats)
         var unique = arrCats.filter(onlyUnique);
      
@@ -119,8 +154,8 @@ function onlyUnique(value, index, self) {
         let cat = g;
          let qs = [];
        
-         c.questionsToSendArr.map(i=>{
-            let qarr =  c.questionsToSendArr.filter(i => cat.includes(i.category))
+         c[0].questionsToSendArr.map(i=>{
+            let qarr =  c[0].questionsToSendArr.filter(i => cat.includes(i.category))
          
             qs = qarr.map(i=>{
            return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select onchange='addAnswer("${i.itemId}", event)' name='${i.div}' class="form-select"><option>---</option> 
@@ -140,7 +175,7 @@ function onlyUnique(value, index, self) {
 
 
 //Goal Setting
-if (c.section4){
+if (c[0].section4){
        document.getElementById('showPartFour').innerHTML = ` <div>
      
        <hr>
@@ -162,7 +197,8 @@ if (c.section4){
    } else {
     document.getElementById('showPartFour').innerHTML = ``
    }
-    }
+    }, 3000)
+})
 function textAreaData(event){
     let name = event.target.name;
     let value = event.target.value;
@@ -200,25 +236,25 @@ function textAreaData(event){
 
 const addAnswer = (a,event)=>{
     let answer = event.target.value;
-    var foundIndex = c.questionsToSendArr.findIndex(i => i.itemId === a);
+    var foundIndex = c[0].questionsToSendArr.findIndex(i => i.itemId === a);
 console.log(name);
-console.log(c.questionsToSendArr)
+console.log(c[0].questionsToSendArr)
 
-    c.questionsToSendArr[foundIndex].answer = answer;
+    c[0].questionsToSendArr[foundIndex].answer = answer;
 
-    console.log(c.questionsToSendArr)
-    var catIndex = anObjArr.categories.findIndex(i => i.category === c.questionsToSendArr[foundIndex].category);
-    let arrFilter = anObjArr.categories.filter(i=> i.category.includes(c.questionsToSendArr[foundIndex].category))
+    console.log(c[0].questionsToSendArr)
+    var catIndex = anObjArr.categories.findIndex(i => i.category === c[0].questionsToSendArr[foundIndex].category);
+    let arrFilter = anObjArr.categories.filter(i=> i.category.includes(c[0].questionsToSendArr[foundIndex].category))
 let questionOnly =  {
-                    question: c.questionsToSendArr[foundIndex].question,
-                    resp: c.questionsToSendArr[foundIndex].answer
+                    question: c[0].questionsToSendArr[foundIndex].question,
+                    resp: c[0].questionsToSendArr[foundIndex].answer
                 }
 let categoryObj ={
-            category: c.questionsToSendArr[foundIndex].category,
+            category: c[0].questionsToSendArr[foundIndex].category,
             criteria:[
                 {
-                    question: c.questionsToSendArr[foundIndex].question,
-                    resp: c.questionsToSendArr[foundIndex].answer
+                    question: c[0].questionsToSendArr[foundIndex].question,
+                    resp: c[0].questionsToSendArr[foundIndex].answer
                 }
             ]
         }
