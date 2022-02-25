@@ -242,7 +242,7 @@ const hideCustomQuestion = ()=>{
     document.getElementById('customQuestion').style.display = 'none';
     }
   
-
+    let date = new Date()
     let employeeObj = {
         
         employeeName:'',
@@ -254,7 +254,8 @@ const hideCustomQuestion = ()=>{
         periodSupervised:'',
         timeInPosition:'',
         questionsToSendArr:[],
-        section4:null
+        section4:null,
+        dateCreated: date
     }
 
   const addQuestion = ()=>{

@@ -8,7 +8,8 @@ let senderObj =
 let successArr = [];
 const sendEmail = ()=>{
         let empJSON = JSON.stringify(employeeObj)
-        let sendToDB = $.post('http://localhost:3004/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: makeid(12)}, (d)=>{
+        let referenceNumber = makeid(12)
+        let sendToDB = $.post('http://localhost:3004/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber}, (d)=>{
                 console.log(d)
                         })
         employeeArr.forEach(i=>{
@@ -59,7 +60,7 @@ const returnToSender = ()=>{
                 
                
                    Subject : `Evaluation Completed by Mason`,
-                   Body : `<a href='http://127.0.0.1:5503/perf-eval/views/download-document.html?c=${initialRef}d=${anObjArr.referenceNumber}'>Click to download the completed evaluation.</a>`
+                   Body : `<a href='http://127.0.0.1:5503/download-document.html?c=${initialRef}&d=${anObjArr.referenceNumber}'>Click to download the completed evaluation.</a>`
                   
                })
 
