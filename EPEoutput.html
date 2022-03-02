@@ -88,7 +88,7 @@ let anObjArr = {
         signature: '',
         date_sign: ''
     }
-  let rsp = $.get(`http://localhost:3004/find-evaluation?refno=${initialRef}`, (data)=>{
+  let rsp = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${initialRef}`, (data)=>{
 console.log(data)
  c = data
  console.log(c[0].employeeName)
