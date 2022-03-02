@@ -1,3 +1,10 @@
+<?php
+/**
+ * Template Name: Perf-eval-output .000000002
+ */
+?>
+
+
 <!DOCTYPE>
 <html>
 
@@ -15,7 +22,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
         <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip-utils.js"></script>
         
-<script src='/assets/js/data/createDocument.js'></script>
+<script src='https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/data/createDocument.js'></script>
 
 </head>
 <script>
@@ -384,10 +391,10 @@ let categoryObj ={
         </div>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script><script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/upload.js"></script>
             <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/navigation.js"></script>
-            <script src='/assets/js/pizzip.js'></script>
+            <script src='https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/pizzip.js'></script>
             <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/addEmployee.js"></script>
     <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/data/createDocument.js"></script>
-    <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/setupEmail.js"></script>
+    <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/setupEmail-1.js"></script>
     <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/smtp.js"></script>
 </body>
 </html>

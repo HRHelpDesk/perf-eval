@@ -9,7 +9,7 @@ let successArr = [];
 const sendEmail = ()=>{
         let empJSON = JSON.stringify(employeeObj)
         let referenceNumber = makeid(12)
-        let sendToDB = $.post('http://localhost:3004/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber}, (d)=>{
+        let sendToDB = $.post('https://pe-apis.herokuapp.com/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber}, (d)=>{
                 console.log(d)
                         })
         employeeArr.forEach(i=>{
@@ -21,7 +21,7 @@ const sendEmail = ()=>{
                         CC: senderObj.senderCC,
                        
                            Subject : `${senderObj.senderName} - ${senderObj.senderTitle} has requested a Performance Evaluation for ${employeeObj.employeeName}.`,
-                           Body : `<a href='https://masonmerrell22.github.io/perf-eval/EPEoutput.html?&d=${referenceNumber}'>Click to go</a>`
+                           Body : `<a href='https://helpdeskforhr.com/perf-eval-output?&d=${referenceNumber}'>Click to go</a>`
                           
                        })
                        successArr.push('sent')
@@ -46,7 +46,7 @@ const confirm = ()=>{
 
 const returnToSender = ()=>{
         let emailOk;
-        let sendToDB = $.post('http://localhost:3004/add-result', {c: JSON.stringify(anObjArr), refNo:initialRef}, (d)=>{
+        let sendToDB = $.post('https://pe-apis.herokuapp.com/add-result', {c: JSON.stringify(anObjArr), refNo:initialRef}, (d)=>{
                 emailOk = true;
                         })
 
@@ -60,7 +60,7 @@ const returnToSender = ()=>{
                 
                
                    Subject : `Evaluation Completed by Mason`,
-                   Body : `<a href='http://masonmerrell22.github.io/perf-eval/views/download-document.html?c=${initialRef}&d=${anObjArr.referenceNumber}'>Click to download the completed evaluation.</a>`
+                   Body : `<a href='https://helpdeskforhr.com/perf-eval-download-doc?c=${initialRef}&d=${anObjArr.referenceNumber}'>Click to download the completed evaluation.</a>`
                   
                })
 
