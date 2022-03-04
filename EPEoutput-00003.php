@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Perf-eval-output .000000002
+ * Template Name: Perf-eval-output .000000003
  */
 ?>
 
@@ -73,8 +73,10 @@ function makeid(length) {
    return result;
   }
 
-var url = new URL(window.location.href);
+  var url = new URL(window.location.href);
 var initialRef = url.searchParams.get("d");
+var responderRefNo = url.searchParams.get("c");
+
 let c;
 let anObjArr = {
         referenceNumber: '',
@@ -93,17 +95,23 @@ let anObjArr = {
         categories:[],
         senderEmail:'',
         signature: '',
-        date_sign: ''
+        date_sign: '',
+        responderName: '',
+        isCompleted: null
     }
-  let rsp = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${initialRef}`, (data)=>{
+  let rsp = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${initialRef}`,{responseReferenceNo:responderRefNo } , (data)=>{
 console.log(data)
- c = data
- console.log(c[0].employeeName)
+ c = data;
+
+ let responderObject = c[0].Responses.filter(i =>{
+   return i.referenceNumber == responderRefNo
+ })
+ console.log(responderObject[0])
 
 
  anObjArr = {
      
-    referenceNumber: makeid(15),
+    referenceNumber: responderObject[0].referenceNumber,
         emp_Name: c[0].employeeName,
         employee_id_no : c[0].employeeId,
         job_title: c[0].jobTitle,
@@ -119,11 +127,15 @@ console.log(data)
         categories:[],
         senderEmail: c[0].senderEmail,
         signature: '',
-        date_sign: ''
+        date_sign: '',
+        responderName: responderObject[0].responderName,
+        isCompleted: responderObject[0].isComplete
     }
  
    
 setTimeout(()=>{
+
+if(anObjArr.isCompleted != true){
 
 
 
@@ -139,6 +151,7 @@ document.getElementById('outputReviewingSupervisor').innerHTML = c[0].reviewingS
 document.getElementById('outputReviewPeriod').innerHTML = c[0].reviewPeriod;
 document.getElementById('outputPeriodSupervised').innerHTML = c[0].periodSupervised;
 document.getElementById('outputTimeInPosition').innerHTML = c[0].timeInPosition;
+document.getElementById('responderNameOutput').innerHTML = responderObject[0].responderName;
 },1000)
 
 console.log(c)
@@ -203,6 +216,13 @@ if (c[0].section4){
  </div>`
    } else {
     document.getElementById('showPartFour').innerHTML = ``
+   }
+   document.getElementById('evaluationStation').style.display = `block`;
+
+ } else{
+    document.getElementById('alreadyDoneMessage').style.display = `block`;
+
+
    }
     }, 3000)
 })

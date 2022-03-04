@@ -8,8 +8,13 @@ let senderObj =
 let successArr = [];
 const sendEmail = ()=>{
         let empJSON = JSON.stringify(employeeObj)
+let JSONemp  = JSON.stringify(employeeArr)
+
+
         let referenceNumber = makeid(12)
-        let sendToDB = $.post('https://pe-apis.herokuapp.com/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber}, (d)=>{
+
+
+        let sendToDB = $.post('http://localhost:3004/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber, epmArr: JSONemp}, (d)=>{
                 console.log(d)
                         })
         employeeArr.forEach(i=>{
@@ -21,7 +26,7 @@ const sendEmail = ()=>{
                         CC: senderObj.senderCC,
                        
                            Subject : `${senderObj.senderName} - ${senderObj.senderTitle} has requested a Performance Evaluation for ${employeeObj.employeeName}.`,
-                           Body : `<a href='https://helpdeskforhr.com/perf-eval-output?&d=${referenceNumber}'>Click to go</a>`
+                           Body : `<a href='https://helpdeskforhr.com/perf-eval-output?&d=${referenceNumber}&c=${i.id}'>Click to go</a>`
                           
                        })
                        successArr.push('sent')
@@ -29,7 +34,7 @@ const sendEmail = ()=>{
                        
         })
 
-        return confirm()
+        // return confirm()
        
         
 }

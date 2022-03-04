@@ -21,12 +21,70 @@
 
 </head>
 
+<script>
+var url = new URL(window.location.href);
+var initialRef = url.searchParams.get("c");
+  let evaluationResponses;
+   let rsp = $.get(`http://localhost:3004/find-evaluation?refno=${initialRef}`, (data)=>{
+    evaluationResponses = data
+    })
+setTimeout(()=>{
+  evaluationResponses[0].Responses.map(i=>{
+    let status;
+    let color;
+    let enable;
+    if(i.isComplete == true){
+      status = 'Complete'
+      color = 'green'
+      enable = false
+    } else {
+      status = 'Pending'
+      color = 'tomato'
+      enable = true
+    }
+    if (i.date_sign == ''){
+      i.date_sign = 'NA'
+    }
+    document.getElementById('itemTable').innerHTML += `
+    <tr>
+      <td>${i.referenceNumber}</td>
+      <td>${i.responderName}</td>
+      <td style='color:${color}'>${status}</td>
+      <td>${i.date_sign}</td>
+      <td><button disabled=${enable}>Download Document</button></td>
+      </tr>`
+  })
+},1000)
+  
+</script>
+
 <body>
      <!--Top Bar-->
   <div class="topnav">
     <img src='https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/img/PECLogo.png' style="padding: 10px; margin-left: 20px;" width="450px" height="auto"/>
      
    </div>
+
+   <div style="padding: 50px;">
+   <div style="background-color: white; padding: 20px;">
+
+   <table class="table">
+    <thead>
+      <tr>
+       
+        <th scope="col">Reference No.</th>
+        <th scope="col">Name</th>
+        <th scope="col">Status</th>
+        <th scope="col">Date Completed</th>
+        <th scope="col">Document</th>
+      </tr>
+    </thead>
+    <tbody id="itemTable">
+     
+    </tbody>
+  </table>
+  </div>
+  </div>
 <!---->
 </body>
 </html>
