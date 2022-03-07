@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.6, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{display:inline;}
+	.st2{fill:none;stroke:#010101;stroke-width:0.25;stroke-miterlimit:10;}
+	.st3{fill:#FFF200;}
+	.st4{fill:#FFFFFF;}
+	.st5{fill:#00DD24;}
+	.st6{fill:#777777;}
+	.st7{fill:#00BDFF;}
+	.st8{fill:#DB0000;}
+	.st9{fill:none;}
+	.st10{fill:#606060;}
+	.st11{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st12{fill:none;stroke:#000000;stroke-width:2;stroke-miterlimit:10;}
+	.st13{opacity:0.3;}
+	.st14{opacity:0.5;}
+</style>
+<g id="guide_4_" class="st0">
+	<g id="guide_17_" class="st1">
+		
+			<rect x="0.13" y="-0.04" transform="matrix(6.123234e-17 -1 1 6.123234e-17 0.1732 64.0868)" class="st2" width="64" height="64"/>
+		<circle class="st2" cx="32.13" cy="31.96" r="32"/>
+		<circle class="st2" cx="32.13" cy="31.96" r="23"/>
+		<line class="st2" x1="64.13" y1="63.96" x2="0.13" y2="-0.04"/>
+		<line class="st2" x1="0.13" y1="63.96" x2="64.13" y2="-0.04"/>
+		<rect x="16.13" y="-0.04" class="st2" width="32" height="64"/>
+		<line class="st2" x1="32.13" y1="63.96" x2="32.13" y2="-0.04"/>
+		<rect x="0.13" y="15.96" class="st2" width="64" height="32"/>
+		<line class="st2" x1="0.13" y1="31.96" x2="64.13" y2="31.96"/>
+		<rect x="9.13" y="8.96" transform="matrix(6.123234e-17 -1 1 6.123234e-17 0.1732 64.0868)" class="st2" width="46" height="46"/>
+		<circle class="st2" cx="32.13" cy="31.96" r="16"/>
+		<circle class="st2" cx="32.13" cy="31.96" r="9"/>
+	</g>
+</g>
+<g id="Color">
+	<g>
+		<path class="st7" d="M38.76,7.8h-21.7c-0.65,0-1.17,0.51-1.17,1.15v45.02c0,0.63,0.53,1.15,1.17,1.15H50.2
+			c0.65,0,1.17-0.51,1.17-1.15V20.13L38.76,7.8z"/>
+		<polygon class="st7" points="38.76,20.13 38.76,7.8 51.37,20.13 		"/>
+	</g>
+</g>
+<g id="Line">
+	<g>
+		<path class="st11" d="M38.76,7.8h-21.7c-0.65,0-1.17,0.51-1.17,1.15v45.02c0,0.63,0.53,1.15,1.17,1.15H50.2
+			c0.65,0,1.17-0.51,1.17-1.15V20.13L38.76,7.8z"/>
+		<polygon class="st11" points="38.76,20.13 38.76,7.8 51.37,20.13 		"/>
+	</g>
+</g>
+<g id="Shadow" class="st13">
+	<path d="M51.37,20.13l-9.3-9.09v44.08h8.13c0.65,0,1.17-0.51,1.17-1.15V20.13z"/>
+</g>
+<g id="Highlight" class="st14">
+	<path class="st4" d="M22.87,7.8h-5.82c-0.65,0-1.17,0.51-1.17,1.15v45.02c0,0.63,0.53,1.15,1.17,1.15h5.82V7.8z"/>
+</g>
+</svg>

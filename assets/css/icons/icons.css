@@ -5,8 +5,30 @@
     vertical-align: middle;
     cursor: pointer;
     }
+    .icon-tracker {
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+        vertical-align: middle;
+        cursor: pointer;
+        }
 .icon--trash--can {
     background-image: url(./trash-can.svg);
+    background-size: auto 100%;
+    }
+
+.icon--document {
+    background-image: url(./document.svg);
+    background-size: auto 100%;
+    }
+
+.icon--reset {
+background-image: url(./reset-document.svg);
+background-size: auto 100%;
+}
+
+.icon--send--email {
+    background-image: url(./forward-message.svg);
     background-size: auto 100%;
     }
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.6, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 64 64" style="enable-background:new 0 0 64 64;" xml:space="preserve">
+<style type="text/css">
+	.st0{display:none;}
+	.st1{display:inline;}
+	.st2{fill:none;stroke:#010101;stroke-width:0.25;stroke-miterlimit:10;}
+	.st3{fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g id="guide_4_" class="st0">
+	<g id="guide_17_" class="st1">
+		
+			<rect x="0.13" y="-0.04" transform="matrix(6.123234e-17 -1 1 6.123234e-17 0.1732 64.0868)" class="st2" width="64" height="64"/>
+		<circle class="st2" cx="32.13" cy="31.96" r="32"/>
+		<circle class="st2" cx="32.13" cy="31.96" r="23"/>
+		<line class="st2" x1="64.13" y1="63.96" x2="0.13" y2="-0.04"/>
+		<line class="st2" x1="0.13" y1="63.96" x2="64.13" y2="-0.04"/>
+		<rect x="16.13" y="-0.04" class="st2" width="32" height="64"/>
+		<line class="st2" x1="32.13" y1="63.96" x2="32.13" y2="-0.04"/>
+		<rect x="0.13" y="15.96" class="st2" width="64" height="32"/>
+		<line class="st2" x1="0.13" y1="31.96" x2="64.13" y2="31.96"/>
+		<rect x="9.13" y="8.96" transform="matrix(6.123234e-17 -1 1 6.123234e-17 0.1732 64.0868)" class="st2" width="46" height="46"/>
+		<circle class="st2" cx="32.13" cy="31.96" r="16"/>
+		<circle class="st2" cx="32.13" cy="31.96" r="9"/>
+	</g>
+</g>
+<g id="Line">
+	<g>
+		<g>
+			<path d="M50.2,56.12H17.06c-1.2,0-2.17-0.96-2.17-2.15V8.95c0-1.18,0.98-2.15,2.17-2.15h21.7c0.26,0,0.51,0.1,0.7,0.29
+				l12.61,12.33c0.19,0.19,0.3,0.45,0.3,0.71v33.84C52.37,55.15,51.4,56.12,50.2,56.12z M17.06,8.8c-0.1,0-0.17,0.07-0.17,0.15
+				v45.02c0,0.08,0.08,0.15,0.17,0.15H50.2c0.09,0,0.17-0.07,0.17-0.15V20.55L38.36,8.8H17.06z"/>
+		</g>
+		<g>
+			<path d="M51.37,21.13H38.76c-0.55,0-1-0.45-1-1V7.8c0-0.4,0.24-0.77,0.61-0.92c0.37-0.15,0.8-0.07,1.09,0.21l12.61,12.33
+				c0.29,0.28,0.38,0.72,0.23,1.09S51.78,21.13,51.37,21.13z M39.76,19.13h9.16l-9.16-8.96V19.13z"/>
+		</g>
+	</g>
+</g>
+</svg>
