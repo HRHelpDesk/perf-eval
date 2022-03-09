@@ -33,12 +33,21 @@ let reviewList;
 let select = document.getElementById('reviewOptions');
 var url = new URL(window.location.href);
 var initialRef = url.searchParams.get("c");
+console.log(initialRef)
+if(initialRef != null){
 let rsp = $.get(`http://localhost:3004/find-evaluation?refno=${initialRef}`, (data)=>{
     evaluationResponses = data
     })
+  }
 let str = ''
+
 window.onload = ()=>{
+  setTimeout(()=>{
+
+
+  console.log(evaluationResponses)
 if (localStorage.getItem('review-list')){
+
   reviewList = JSON.parse(localStorage.getItem('review-list'))
 console.log(reviewList)
 let refArr = [];
@@ -46,6 +55,9 @@ let refArr = [];
 reviewList.forEach(i=>{
   refArr.push(i.refNo)
 })
+
+
+if(initialRef != null){
 if(!refArr.includes(initialRef)){
   reviewList.push({
    refNo:  evaluationResponses[0].referenceNo,
@@ -60,6 +72,16 @@ str += `<option value='${i.refNo}'>${i.name}</option>`
 console.log(str)
 document.getElementById('reviewOptions').innerHTML = str;
 document.getElementById('reviewOptions').style.display = 'block';
+}}else {
+  if(initialRef == null){
+  setTimeout(()=>{
+    let valueofselect = document.getElementById('reviewOptions').value
+  console.log(valueofselect)
+  setEval(valueofselect)
+ 
+  },1000)
+  }
+
 }
 
   reviewList.forEach(i=>{
@@ -69,7 +91,37 @@ document.getElementById('reviewOptions').style.display = 'block';
   console.log(str)
   document.getElementById('reviewOptions').innerHTML = str;
   document.getElementById('reviewOptions').style.display = 'block';
+
+
+  reviewList.forEach(i=>{
+    //HERE
+let ref;
+    let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${i.refNo}`, (data)=>{
+  if(data){
+    ref = data
+  } else{
+    ref = null
+  }
+     
+ 
+    })
+    setTimeout(()=>{
+
+
+console.log(ref)
+    if(ref.length == 0){
+     reviewList = reviewList.filter(function( obj ) {
+  return obj.refNo !== i.refNo;
+
+
+});
+$(`#reviewOptions option[value='${i.refNo}']`).remove();
+    }
+    localStorage.setItem('review-list', JSON.stringify(reviewList))
+  },1000)
+  })
 } else{
+  if(evaluationResponses != null){
   let arr = []
   arr.push({
    refNo:  evaluationResponses[0].referenceNo,
@@ -78,8 +130,12 @@ document.getElementById('reviewOptions').style.display = 'block';
   localStorage.setItem('review-list', JSON.stringify(arr))
 }
 }
+},1000)
+}
+
 
 setTimeout(()=>{
+  if(evaluationResponses != null){
   evaluationResponses[0].Responses.map(i=>{
     let status;
     let color;
@@ -107,11 +163,61 @@ setTimeout(()=>{
   })
   document.getElementById('personReviewed').innerHTML = evaluationResponses[0].employeeName
   selectElement('reviewOptions', initialRef)
+} else {
+  
+}
+selectElement('reviewOptions', initialRef)
 },1000)
+
+
 
 
 const changeEval = (event)=>{
 let value = event.target.value;
+console.log(value)
+var newRef;
+document.getElementById('itemTable').innerHTML = ``;
+let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}`, (data)=>{
+  newRef = data
+  console.log(data)
+    })
+  setTimeout(()=>{
+    console.log(newRef)
+    newRef[0].Responses.map(i=>{
+    let status;
+    let color;
+    let enable;
+    if(i.isComplete == true){
+      status = 'Complete'
+      color = 'green'
+      enable = false
+    } else {
+      status = 'Pending'
+      color = 'tomato'
+      enable = true
+    }
+    if (i.date_sign == ''){
+      i.date_sign = 'NA'
+    }
+  
+    document.getElementById('itemTable').innerHTML += `
+    <tr>
+      <td>${i.referenceNumber}</td>
+      <td>${i.responderName}</td>
+      <td style='color:${color}'>${status}</td>
+      <td>${i.date_sign}</td>
+      <td><span title="Download Document"  class='icon-tracker icon--document' disabled=${enable}></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+      </tr>`
+  })
+  document.getElementById('personReviewed').innerHTML = newRef[0].employeeName
+  
+},1000)
+
+}
+
+
+const setEval = (a)=>{
+let value = a;
 console.log(value)
 var newRef;
 document.getElementById('itemTable').innerHTML = ``;

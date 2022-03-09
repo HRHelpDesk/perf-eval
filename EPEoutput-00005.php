@@ -1,6 +1,6 @@
 <?php
 /**
- * Template Name: Perf-eval-output .000000003
+ * Template Name: Perf-eval-output .000000005
  */
 ?>
 
@@ -312,7 +312,9 @@ let categoryObj ={
      
    </div>
 <!---->
+
 <div class="epe-zone">
+    <div id="evaluationStation" style="display: none;">
         <div style="text-align: left; padding: 50px;">
     
             <div class="form-group row">
@@ -397,6 +399,7 @@ let categoryObj ={
                 <div class="col-md-6">
                     <label for="inputFirstname"> Signature:</label>
                     <input onkeyup="textAreaData(event)" style="font-family:cursive" type="text" class="form-control" name="signature" placeholder="Full Name">
+                    <p><b id="responderNameOutput"></b></p>
                 </div>
                 <div class="col-md-6">
                     <label for="inputLastname">Date:</label>
@@ -409,12 +412,19 @@ let categoryObj ={
            
             <button onclick="returnToSender()">Send Back</button>
         </div>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script><script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/upload.js"></script>
+        </div>
+
+        <div id="alreadyDoneMessage" style="display: none;">
+            Our records show you have already completed this reference! No need to do it again. If you feel this might be an error please reach out to the person who sent it.
+            </div>
+            <div id="completeMessage">
+            </div>
+        </body>
+        </html>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script><script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/upload.js"></script>
             <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/navigation.js"></script>
             <script src='https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/pizzip.js'></script>
             <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/addEmployee.js"></script>
     <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/data/createDocument.js"></script>
-    <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/setupEmail-1.js"></script>
+    <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/setupEmail-2.js"></script>
     <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/smtp.js"></script>
-</body>
-</html>
