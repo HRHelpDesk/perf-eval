@@ -7,15 +7,16 @@ let senderObj =
 }
 let successArr = [];
 let sentConfirmationToSender = false;
+
+let referenceNumber = makeid(12)
 const sendEmail = ()=>{
         let empJSON = JSON.stringify(employeeObj)
 let JSONemp  = JSON.stringify(employeeArr)
 
 
-        let referenceNumber = makeid(12)
        
 
-        let sendToDB = $.post('http://localhost:3004/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber, epmArr: JSONemp}, (d)=>{
+        let sendToDB = $.post('https://pe-apis.herokuapp.com/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber, epmArr: JSONemp}, (d)=>{
                 console.log(d)
                         })
                 employeeArr.forEach(i=>{
@@ -49,7 +50,7 @@ let JSONemp  = JSON.stringify(employeeArr)
 
 
 const confirm = ()=>{
-        let sendConfirmationEmail = $.post('http://localhost:3004/send-confimation', {reNo: referenceNumber, senderName: senderObj.senderName}, (d)=>{
+        let sendConfirmationEmail = $.post('https://pe-apis.herokuapp.com/send-confirmation', {reNo: referenceNumber, senderName: senderObj.senderName}, (d)=>{
                 console.log(d)
                 sentConfirmationToSender = true
                         })
