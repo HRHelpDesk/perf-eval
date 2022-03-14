@@ -50,12 +50,8 @@ let JSONemp  = JSON.stringify(employeeArr)
 
 
 const confirm = ()=>{
-        let sendConfirmationEmail = $.post('https://pe-apis.herokuapp.com/send-confirmation', {reNo: referenceNumber, senderName: senderObj.senderName}, (d)=>{
-                console.log(d)
-                sentConfirmationToSender = true
-                        })
-                        console.log(sendConfirmationEmail)
-        if (sentConfirmationToSender == true && successArr.length == employeeArr.length){
+ 
+        if (successArr.length == employeeArr.length){
                 document.getElementById('successPage').style.display = 'block';
 
                 document.getElementById('epeHub').style.display = 'none';
