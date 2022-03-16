@@ -10,36 +10,27 @@ let sentConfirmationToSender = false;
 
 let referenceNumber = makeid(12)
 const sendEmail = ()=>{
+        document.getElementById('epeHub').style.display = 'none';
+        document.getElementById('loadingDiv').style.display = 'block';
         let empJSON = JSON.stringify(employeeObj)
 let JSONemp  = JSON.stringify(employeeArr)
 
 
        
 
-        let sendToDB = $.post('https://pe-apis.herokuapp.com/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber, epmArr: JSONemp}, (d)=>{
-                console.log(d)
+       $.post('https://pe-apis.herokuapp.com/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber, epmArr: JSONemp}, (err, data)=>{
+               if(err){
+                       console.log(err)
+               } else{
+                       console.log(data)
+                       confirm()
+               }
                         })
-                employeeArr.forEach(i=>{
-        
-                        Email.send({
-                        SecureToken : "1eb316ac-0aee-4c6c-b398-e2b8b78cd84d",
-                        To : i.email,
-                        From : senderObj.senderEmail,
-                        CC: senderObj.senderCC,
-                       
-                           Subject : `${senderObj.senderName} - ${senderObj.senderTitle} has requested a Performance Evaluation for ${employeeObj.employeeName}.`,
-                           Body : `Hi ${i.fName}
-                           <a href='https://helpdeskforhr.com/perf-eval-output?&d=${referenceNumber}&c=${i.id}'>Click to go</a>`
-                          
-                       })
-                       successArr.push('sent')
-                       console.log(empJSON)
-                       
-        })
+   
 
         
               
-         confirm()
+       
 
     
        
@@ -54,7 +45,7 @@ const confirm = ()=>{
         if (successArr.length == employeeArr.length){
                 document.getElementById('successPage').style.display = 'block';
 
-                document.getElementById('epeHub').style.display = 'none';
+                
         }
 }
 
