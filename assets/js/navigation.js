@@ -40,7 +40,7 @@ const EPE = (event)=>{
 const returnToPickHub = ()=>{
   window.scrollTo(0,0)
   document.getElementById('emailSetup').style.display = 'none';
-
+  document.getElementById('senderSetup').style.display = 'none';
   document.getElementById('pickHub').style.display = 'block';
   document.getElementById('evaluationType').innerHTML = '<b></b>'
 }
@@ -98,6 +98,7 @@ if(routing === 'PIP'){
 
 
 const returnToStart =()=>{
+  document.getElementById('senderSetup').style.display = 'none';
   document.getElementById('epeHub').style.display = 'none';
   document.getElementById('pickHub').style.display = 'block';
  
