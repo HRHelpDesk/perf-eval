@@ -10,6 +10,9 @@ let sentConfirmationToSender = false;
 
 let referenceNumber = makeid(12)
 const sendEmail = ()=>{
+     
+        if(window.confirm("Are you sure your ready to send? Emails will be immediately sent to your list.") == true){
+        
         document.getElementById('epeHub').style.display = 'none';
         document.getElementById('loadingDiv').style.display = 'block';
         let empJSON = JSON.stringify(employeeObj)
@@ -33,7 +36,8 @@ let JSONemp  = JSON.stringify(employeeArr)
        
 
     
-       
+  
+}     
         
 }
 
@@ -58,11 +62,15 @@ const returnToSender = ()=>{
 
 
      if (emailOk = true){
+             //  1eb316ac-0aee-4c6c-b398-e2b8b78cd84d
         Email.send({
-                SecureToken : "1eb316ac-0aee-4c6c-b398-e2b8b78cd84d",
+                Host : "smtp.elasticemail.com",
+                Username : "support@helpdeskforhr.com",
+                Password : "112C97D6CCB95C5D7CC533AA389B6BC3FEDB",
                 To : anObjArr.senderEmail,
+                From: 'support@helpdeskforhr.com',
                 CC: anObjArr.senderCC,
-                From : 'support@helpdeskforhr.com',
+            
                 
                
                    Subject : `Evaluation Completed by Mason`,

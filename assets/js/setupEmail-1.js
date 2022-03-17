@@ -53,10 +53,10 @@ const returnToSender = ()=>{
 
      if (emailOk = true){
         Email.send({
-                SecureToken : "1eb316ac-0aee-4c6c-b398-e2b8b78cd84d",
+                SecureToken : "12eaa500-6a02-4b8c-8d08-e8e7d2847024",
                 To : anObjArr.senderEmail,
                 CC: anObjArr.senderCC,
-                From : 'support@helpdeskforhr.com',
+                
                 
                
                    Subject : `Evaluation Completed by Mason`,

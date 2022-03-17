@@ -10,16 +10,7 @@ const goToCSVSection = ()=>{
     document.getElementById('nextButton').style.display = 'block';
     document.getElementById('inputNamesSection').style.display = 'block';
   
-     employeeArr =JSON.parse(localStorage.getItem('PE-Employee-List'))
-  console.log(employeeArr)
-     employeeArr.map(i=>{
-  document.getElementById('employeeTable').innerHTML += ` <tr>
-  <th scope="row">${i.id}</th>
-  <td>${i.fName}</td>
-  <td>${i.lName}</td>
-  <td>${i.email}<span class='delete-btn' onclick='deleteEmployee("${i.id}")'>delete</span></td>
-  </tr>`
-  })
+ 
   }
 
 
@@ -47,6 +38,7 @@ const EPE = (event)=>{
 
 }
 const returnToPickHub = ()=>{
+  window.scrollTo(0,0)
   document.getElementById('emailSetup').style.display = 'none';
 
   document.getElementById('pickHub').style.display = 'block';
@@ -60,6 +52,22 @@ const returnToSenderSetup = ()=>{
 }
 
 const emailSetup = ()=>{
+  window.scrollTo(0,0)
+  if(localStorage.getItem('PE-Employee-List')){
+    
+  employeeArr =JSON.parse(localStorage.getItem('PE-Employee-List'))
+  console.log(employeeArr)
+  document.getElementById('employeeTable').innerHTML = ''
+     employeeArr.map(i=>{
+  document.getElementById('employeeTable').innerHTML += ` <tr>
+  <th scope="row">${i.id}</th>
+  <td>${i.fName}</td>
+  <td>${i.lName}</td>
+  <td>${i.email}<span class='delete-btn icon icon--trash--can' onclick='deleteEmployee("${i.id}")'>&nbsp &nbsp </span></td>
+  </tr>`
+  })
+
+}
   document.getElementById('senderSetup').style.display = 'none';
   document.getElementById('epeHub').style.display = 'none';
   document.getElementById('pipHub').style.display = 'none';
@@ -68,6 +76,7 @@ const emailSetup = ()=>{
 }
 
 const LoadBuilder = ()=>{
+  window.scrollTo(0,0)
   if(employeeArr.length < 1){
     alert("You haven't added anyone to send the evaluation to. Please add at least one person before moving on.")
 
@@ -95,17 +104,20 @@ const returnToStart =()=>{
 }
 
 const epeStepOne =()=>{
+  window.scrollTo(0,0)
   document.getElementById('epeStepOne').style.display = 'block';
   document.getElementById('epeStepTwo').style.display = 'none';
 }
 
 const epeStepTwo =()=>{
+  window.scrollTo(0,0)
   document.getElementById('epeStepOne').style.display = 'none';
   document.getElementById('epeStepTwo').style.display = 'block';
   document.getElementById('epeStepThree').style.display = 'none';
 }
 
 const epeStepThree =()=>{
+  window.scrollTo(0,0)
   document.getElementById('epeStepTwo').style.display = 'none';
   document.getElementById('epeStepThree').style.display = 'block';
   document.getElementById('epeStepFour').style.display = 'none';
@@ -114,6 +126,7 @@ const epeStepThree =()=>{
 }
 
 const epeStepFour =()=>{
+  window.scrollTo(0,0)
   document.getElementById('epeStepThree').style.display = 'none';
   document.getElementById('epeStepFour').style.display = 'block';
 }
