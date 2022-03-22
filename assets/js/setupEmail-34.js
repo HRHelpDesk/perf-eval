@@ -13,25 +13,24 @@ const sendEmail = ()=>{
      
         if(window.confirm("Are you sure your ready to send? Emails will be immediately sent to your list.") == true){
         
-        document.getElementById('epeHub').style.display = 'none';
-        document.getElementById('loadingDiv').style.display = 'block';
+       
         let empJSON = JSON.stringify(employeeObj)
 let JSONemp  = JSON.stringify(employeeArr)
 
 
        
 
-       $.post('https://pe-apis.herokuapp.com/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber, epmArr: JSONemp}, (err, data)=>{
+       $.post('http://localhost:300/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber, epmArr: JSONemp}, (err, data)=>{
                if(err){
                        console.log(err)
                } else{
                        console.log(data)
-                       confirm()
+                    
                }
                         })
    
-
-        
+        return confirm()
+                      
               
        
 
@@ -46,11 +45,13 @@ let JSONemp  = JSON.stringify(employeeArr)
 
 const confirm = ()=>{
  
-        if (successArr.length == employeeArr.length){
+       
+                document.getElementById('epeHub').style.display = 'none';
+
                 document.getElementById('successPage').style.display = 'block';
 
                 
-        }
+        
 }
 
 

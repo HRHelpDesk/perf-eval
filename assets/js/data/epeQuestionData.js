@@ -349,11 +349,11 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
     //  if (document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text != 'CUSTOM CATEGORY'){
     //     let cat = document.getElementById('epeCatSelect');
     //     console.log('this')
-    //     document.getElementById('epeQuestions').innerHTML += `<div id=${cat.value}><p ><b>${cat.options[cat.selectedIndex].text.toUpperCase()}</b><span onclick="removeCat('${cat.value}')"> x</span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p></div>`
+    //     document.getElementById('epeQuestions').innerHTML += `<div id=${cat.value}><p ><b>${cat.options[cat.selectedIndex].text.toUpperCase()}</b><span onclick="removeCat('${cat.value}')"> </span></p> <p id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> </span></p></div>`
   
     // }
     else {
-        document.getElementById('epeQuestions').innerHTML += `<div id=${catFinder}><p ><b>${document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase()}</b><span onclick="removeCat('${catFinder}')"> x</span></p> <p id=${index}>${itemToAdd}<span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p></div>`
+        document.getElementById('epeQuestions').innerHTML += `<div id=${catFinder}><p ><b>${document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase()}</b><span onclick="removeCat('${catFinder}')"> </span></p> <p id=${index}>${itemToAdd}<span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${index}', '${item+'Div'}')"> </span></p></div>`
         employeeObj.questionsToSendArr.push({
             index: index,
             category: document.getElementById('epeCatSelect').options[document.getElementById('epeCatSelect').selectedIndex].text.toUpperCase(),
@@ -371,7 +371,7 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
         if(document.getElementById(cat+'Div').innerHTML.indexOf(itemToAdd) > -1){
             alert('This question has already been added.')
         } else{
-        document.getElementById(cat+'Div').innerHTML += `<p class="cat-hide" id=${index}>${itemToAdd}<span onclick="removeQuestion('${index}', '${item+'Div'}')"> x</span></p>`
+        document.getElementById(cat+'Div').innerHTML += `<p class="cat-hide" id=${index}>${itemToAdd}<span class='delete-btn icon icon--trash--can' onclick="removeQuestion('${index}', '${item+'Div'}')"> </span></p>`
         employeeObj.questionsToSendArr.push({
             index: index,
             category: cat.toUpperCase(),
@@ -386,7 +386,7 @@ if(document.getElementById('epeCatSelect').options[document.getElementById('epeC
     }   else {
         
         console.log(cat.toUpperCase())
-        document.getElementById('epeQuestions').innerHTML += `<div id=${cat+'Div'}><p class="cat-hide" ><b>${cat.toUpperCase()}</b><span onclick="removeCat('${cat+'Div'}')"> x</span></p> <p id=${index}>${itemToAdd}<span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${index}', '${cat+'Div'}')"> x</span></p></div>`
+        document.getElementById('epeQuestions').innerHTML += `<div id=${cat+'Div'}><p class="cat-hide" ><b>${cat.toUpperCase()}</b><span onclick="removeCat('${cat+'Div'}')"> </span></p> <p id=${index}>${itemToAdd}<span class='delete-btn hide-icon icon icon--trash--can' onclick="removeQuestion('${index}', '${cat+'Div'}')"> </span></p></div>`
         employeeObj.questionsToSendArr.push({
             index: index,
             category: cat.toUpperCase(),
@@ -728,7 +728,7 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) === index;
   }
 const loadCriteria = ()=>{
-  
+  if(window.confirm('This action will delete any of your current criteria. Are you sure you would like to do this? ')){
 
     document.getElementById('epeQuestions').innerHTML = ``
 
@@ -789,7 +789,7 @@ const loadCriteria = ()=>{
       
     })
 
-
+  }
 
 }
 

@@ -37,6 +37,20 @@ const EPE = (event)=>{
 
 
 }
+
+
+const PE360 = (event)=>{
+
+  document.getElementById('senderSetup').style.display = 'block';
+
+   document.getElementById('pickHub').style.display = 'none';
+
+   routing = '360';
+   document.getElementById('evaluationType').innerHTML = '<b>360-Degree Performance Evaluation</b>'
+   console.log(routing)
+
+
+}
 const returnToPickHub = ()=>{
   window.scrollTo(0,0)
   document.getElementById('emailSetup').style.display = 'none';
@@ -71,6 +85,7 @@ const emailSetup = ()=>{
   document.getElementById('senderSetup').style.display = 'none';
   document.getElementById('epeHub').style.display = 'none';
   document.getElementById('pipHub').style.display = 'none';
+  document.getElementById('360Hub').style.display = 'none';
   document.getElementById('emailSetup').style.display = 'block';
 
 }
@@ -85,11 +100,42 @@ const LoadBuilder = ()=>{
 if(routing === 'EPE'){
   document.getElementById('epeHub').style.display = 'block';
   document.getElementById('emailSetup').style.display = 'none';
+  employeeObj = {
+    reviewType: 'EPE',    
+    employeeName:'',
+    employeeId:'',
+    jobTitle:'',
+    department:'',
+    reviewingSupervisor:'',
+    reviewPeriod:'',
+    periodSupervised:'',
+    timeInPosition:'',
+    questionsToSendArr:[],
+    section4:null,
+    dateCreated: date
+}
+console.log(employeeObj)
 }
 
 if(routing === 'PIP'){
   document.getElementById('pipHub').style.display = 'block';
   document.getElementById('emailSetup').style.display = 'none';
+}
+
+if(routing === '360'){
+  document.getElementById('360Hub').style.display = 'block';
+  document.getElementById('emailSetup').style.display = 'none';
+  employeeObj = {
+  reviewType: '360',
+    employeeName:'',
+    employeeId:'',
+    department:'',
+    reviewPeriod:'',
+    questionsToSendArr:[],
+    dateCreated: date
+}
+
+console.log(employeeObj)
 }
 }
 
@@ -134,12 +180,7 @@ const epeStepFour =()=>{
 
 
 
-const PE360 = (e)=>{
-  e.preventDefault();
-  console.log('PE360')
-  document.getElementById('employeeUploadSection').style.display = 'none';
-  document.getElementById('render').innerHTML = `<button onclick="LoadPage()">BACK</button><p>PE360</p>`
-}
+
 
 const PIP = ()=>{
 

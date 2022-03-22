@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link href="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/tabs.css" rel="stylesheet"/>
+        <link href="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/style.css" rel="stylesheet"/>
+        <link href="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/cards.css" rel="stylesheet"/>
+        <link href="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/upload-form.css" rel="stylesheet"/>
+        <link href="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/footer.css" rel="stylesheet"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    </head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.28.6/docxtemplater.js"></script>
+        <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
+        <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip-utils.js"></script>
+        
+<script src='https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/data/createDocument.js'></script>
+</head>
+
+<script>
+
+
+
+
+
+    let anObjArr = {
+        referenceNumber: '',
+    emp_Name: '',
+    employee_id_no : '',
+    department: '',
+    rev_period: '',
+    additional_comments:'',
+    categories:[],
+    senderEmail:'',
+    signature: '',
+    date_sign: '',
+    responderName: '',
+    isCompleted: null
+}
+
+const addName = ()=>{
+    if(document.getElementById('showName').value == 'Yes'){
+        anObjArr.responderName = responderObject[0].responderName;
+        console.log(anObjArr)
+    } else {
+        anObjArr.responderName = "NA";
+        console.log(anObjArr)
+    }
+}
+
+
+  var url = new URL(window.location.href);
+var initialRef = url.searchParams.get("c");
+var responderRefNo = url.searchParams.get("d");
+let evaltype = url.searchParams.get("type");
+let c;
+let responderObject = []
+  let rsp = $.get(`http://localhost:3004/find-evaluation?refno=${initialRef}&type=${evaltype}`,{responseReferenceNo:responderRefNo } , (data)=>{
+console.log(data)
+ c = data;
+
+  responderObject = c[0].Responses.filter(i =>{
+   return i.referenceNumber == responderRefNo
+ })
+ console.log(responderObject[0])
+
+
+ anObjArr = {
+     
+    referenceNumber: responderObject[0].referenceNumber,
+        emp_Name: c[0].employeeName,
+        department: c[0].department,
+        rev_period: c[0].reviewPeriod,
+        categories:[],
+        senderEmail: c[0].senderEmail,
+        responderName: responderObject[0].responderName,
+        isCompleted: responderObject[0].isComplete
+    }
+})
+
+
+function textAreaData(event){
+    let name = event.target.name;
+    let value = event.target.value;
+    console.log(value)
+    if(name == 'additionalComments'){
+        anObjArr.additional_comments = value;
+        console.log(anObjArr)
+    }
+    
+    
+}
+
+
+setTimeout(()=>{
+
+if(anObjArr.isCompleted != true){
+
+
+
+
+
+//Emmployee Information
+setTimeout(()=>{
+document.getElementById('outputName').innerHTML = c[0].employeeName;
+document.getElementById('outputDepartment').innerHTML = c[0].department;
+document.getElementById('outputReviewPeriod').innerHTML = c[0].reviewPeriod;
+},1000)
+
+console.log(c)
+
+// Render Criteria
+function onlyUnique(value, index, self) {
+                return self.indexOf(value) === index;
+              }
+           
+   
+              console.log(c[0].questionsToSendArr)
+  c[0].questionsToSendArr.push()
+        let arrCats =  c[0].questionsToSendArr.map(i=> {return i.category})
+        console.log(arrCats)
+        var unique = arrCats.filter(onlyUnique);
+     
+        console.log(unique)
+     unique.map(g=>{
+       
+        let cat = g;
+         let qs = [];
+       
+         c[0].questionsToSendArr.map(i=>{
+            let qarr =  c[0].questionsToSendArr.filter(i => cat.includes(i.category))
+         
+            qs = qarr.map(i=>{
+           return `<div><div style="display:inline-block; width:80%;"><p  id='${i.index}'>${i.question}</p></div> <div style="display:inline-block; width:17%; margin-left:15px;"  ><select onchange='addAnswer("${i.itemId}", event)' name='${i.div}' class="form-select">
+            <option>---</option>
+                <option>Strongly Agree</option>
+                <option>Agree</option>
+                <option>Disagree</option>
+                <option>Strongly Disagree</option>
+                <option>NA</option></select></div></div>`
+            }).join("")
+         
+        })
+       
+             document.getElementById('sampleQuestionairre').innerHTML += `<div ><p><b>${g}</b></p>${qs}</div>`
+         
+      })
+    }
+    },3000)
+
+    const addAnswer = (a,event)=>{
+    let answer = event.target.value;
+    var foundIndex = c[0].questionsToSendArr.findIndex(i => i.itemId === a);
+console.log(name);
+console.log(c[0].questionsToSendArr)
+
+    c[0].questionsToSendArr[foundIndex].answer = answer;
+
+    console.log(c[0].questionsToSendArr)
+    var catIndex = anObjArr.categories.findIndex(i => i.category === c[0].questionsToSendArr[foundIndex].category);
+    let arrFilter = anObjArr.categories.filter(i=> i.category.includes(c[0].questionsToSendArr[foundIndex].category))
+let questionOnly =  {
+                    question: c[0].questionsToSendArr[foundIndex].question,
+                    resp: c[0].questionsToSendArr[foundIndex].answer
+                }
+let categoryObj ={
+            category: c[0].questionsToSendArr[foundIndex].category,
+            criteria:[
+                {
+                    question: c[0].questionsToSendArr[foundIndex].question,
+                    resp: c[0].questionsToSendArr[foundIndex].answer
+                }
+            ]
+        }
+        console.log(arrFilter)
+    if(anObjArr.categories.length == 0){
+        anObjArr.categories.push(categoryObj)
+        console.log(anObjArr)
+    } else{
+       if(arrFilter.length == 0){
+        anObjArr.categories.push(categoryObj)
+        console.log(anObjArr) 
+       } else{
+        anObjArr.categories[catIndex].criteria.push(questionOnly)
+        console.log(anObjArr) 
+       }
+    }
+
+}
+    
+</script>
+
+
+<body>
+      <!--Top Bar-->
+  <div class="topnav">
+    <img src='https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/img/PECLogo.png' style="padding: 10px; margin-left: 20px;" width="450px" height="auto"/>
+     
+   </div>
+   <div class="epe-zone">
+   <div id="evaluationStation" style="display: block;">
+    <div style="text-align: left; padding: 50px;">
+
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="inputReviewingSupervisor"><b>Person Being Reviewed</b></label>
+                <p style="margin-top: 0px; " id="outputName">Person Being Reviewed</p>
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputReviewingSupervisor"><b>Would you like your name to show on the final document?</b></label><br>
+                <select onchange="addName()" id="showName" style="margin-top: 10px; width: 50%;" class="form-control"><option>Yes</option>
+                    <option>No</option></select>
+            </div>
+           
+        </div>
+
+        <div style="margin-top: 20px;" class="form-group row">
+           
+            <div  class="col-md-6">
+                <label for="inputReviewingSupervisor"><b>Department</b></label>
+                <p id="outputDepartment">Department</p>
+            </div>
+
+            <div class="col-md-6">
+                <label for="inputReviewPeriod"><b>Review Period</b></label>
+                <p id="outputReviewPeriod"> Period</p>
+            </div>
+         
+        </div>
+
+       
+
+   
+        <hr>
+      
+        <div id='sampleQuestionairre'>
+
+        </div>
+
+        <div>
+         
+            <hr>
+            <p><b>Please provide additional comments in the space below:</b></p>
+            <hr>
+        
+             <textarea onkeyup="textAreaData(event)" name="additionalComments" class="questions-div"></textarea>
+        </div>
+
+      
+    
+        </div>
+       
+        <button onclick="returnToSender()">Send Back</button>
+    </div>
+    </div>
+<!---->
+</body>
+</html>

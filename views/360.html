@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    -->
+<!-- 
+        <link href="../assets/css/tabs.css" rel="stylesheet"/>
+        <link href="../assets/css/style.css" rel="stylesheet"/>
+        <link href="../assets/css/cards.css" rel="stylesheet"/>
+        <link href="../assets/css/upload-form.css" rel="stylesheet"/>
+        <link href="../assets/css/footer.css" rel="stylesheet"/>
+        <link href="../assets/css/icons/icons.css" rel="stylesheet"/>  -->
+    </head>
+
+    <body>
+<div class="epe-zone">
+    <div style="text-align: start; padding: 50px;" id="360StepOne">
+        <h3>Step One: Enter Information for Employee Review</h3>
+        <div class="col-md-10 mx-auto">
+        <div class="form-group row">
+            <div class="col-md-6">
+                <label for="inputFirstname"> Name of Person to be Reviewed</label>
+                <input onkeyup="setData(event)" type="text" class="form-control" name="inputName" placeholder="First and Last Name">
+            </div>
+            <div class="col-md-6">
+                <label for="inputLastname">Employee ID</label>
+                <input type="text" onkeyup="setData(event)" class="form-control" name="inputEmployeeId" placeholder="Employee ID">
+            </div>
+        </div>
+    
+        <div class="form-group row">
+          
+            <div class="col-md-6">
+                <label for="inputDepartment">Department</label>
+                <input type="text" onkeyup="setData(event)" class="form-control" name="inputDepartment" placeholder="Department">
+            </div>
+                
+            <div class="col-md-6">
+                <label for="inputReviewPeriod">Review Period</label>
+                <input type="text" onkeyup="setData(event)" class="form-control" name="inputReviewPeriod" placeholder="Review Period">
+            </div>
+        </div>
+    
+        <div class="form-group row">
+        
+        
+        </div>
+    
+    
+               <div class="btn-group">
+                <button type="button" id="prevBtn" onclick="emailSetup()">Previous</button>
+                <button type="button" id="nextBtn" onclick="ToStepTwo360()">Next</button>
+              </div>
+        </div>
+        
+    </div>
+
+    <div style="display: none;" id="360StepTwo">
+        <div style="text-align: left; padding: 50px;">
+            <h3>Step Two: Setup Criteria for Review</h3>
+            <div class="question-select-div">
+             <select id="pe360QuestionSelect" class="question-select form-select">
+                 <option>---Criteria to Add---</option>
+             </select>
+             <button onclick="addQuestionPE360()" style="display: inline !important;">Add</button>
+            </div>
+            <div><button class="mid-btns" onclick="showCustomQuestionPE360()">Add Custom Criterion</button> <button onclick="useSuggestedQuestionsPE360()" class="mid-btns">Use Suggested Criteria</button> <button class="mid-btns" style="background-color: tomato;" onclick="clearQuestionDivPE360()">Clear</button></div>
+            <div><button class="mid-btns-second-row" onclick="saveCritera()">Save Current Criteria</button> <button class="mid-btns-second-row" onclick="loadCriteria()">Load Previous Criteria</button></div>
+        <div id="customQuestionPE360" class="custom-question-div">
+           <hr>
+            <a class="x" onclick="hideCustomQuestionPE360()">X</a>
+            <select onchange="checkForCustomCatPE360()" id="pe360CatSelect" class="form-select"><option>---Criterion Category---</option><option>CUSTOM CATEGORY</option></select>
+            <br>
+            <div id="customCatDivPE360" style="display: none;" ><input id="customCatpe360" class="form-control" placeholder="Enter Custom Category"/></div>
+            <textarea id="customQuestionHtmlPE360" placeholder="Enter your question here..." class="questions-div"></textarea>
+            <button onclick="addCustomQuestionPE360()">Add Criterion</button>
+            <hr>
+        </div>
+             <div id="pe360Questions" class="questions-div">
+        
+             </div>
+            <div>
+            </div>
+            <div class="btn-group">
+                <button type="button" id="prevBtn" onclick="ToStepOne360()">Previous</button>
+                <button type="button" id="nextBtn" onclick="ToStepThree360()">Next</button>
+              </div>
+            </div>
+            
+        
+           </div>
+
+
+           <div style="display: none;" id="360StepThree">
+            <div style="text-align: left; padding: 50px;">
+                <h3>PREVIEW OF EVALUATION</h3>
+        
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="inputReviewingSupervisor"><b>Name</b></label>
+                        <p id="outputFullname">Person Being Reviewed:</p>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputReviewPeriod"><b>Employee ID</b></label>
+                        <p id="outputEmployeeId">Employee ID</p>
+                    </div>
+                </div>
+        
+                <div class="form-group row">
+                   
+                    <div class="col-md-6">
+                        <label for="inputReviewingSupervisor"><b>Department</b></label>
+                        <p id="outputDepartment">Department</p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="inputReviewPeriod"><b>Review Period</b></label>
+                        <p id="outputReviewPeriod"> </p>
+                    </div>
+                 
+                </div>
+        
+               
+        
+           
+                <hr>
+        
+                <div id='pe360SampleQuestionairre'>
+        
+                </div>
+                <div>
+         
+                    <hr>
+                    <p><b>Please provide additional comments in the space below:</b></p>
+                    <hr>
+                
+                     <textarea disabled class="questions-div"></textarea>
+                </div>
+              
+              <div class="btn-group">
+                <button type="button" id="prevBtn" onclick="ToStepTwo360()">Previous</button>
+                <button type="button" id="nextBtn" onclick="sendEmail()">Confirm and Send Email(s)</button>
+              </div>
+              
+            
+                </div>
+                </div>
+</div>
+    </body>
+    <script src="../assets/js/PE360/360-navigation.js"></script>
+    <script src="../assets/js/PE360/PE360-form.js"></script>
+</html>
