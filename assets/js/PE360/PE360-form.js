@@ -14,6 +14,56 @@ const questionsPE360 = [
         question:'Helps others improve the quality of their work',
         category:'QUALITY OF WORK'
     },
+    {
+        index: '04',
+        question:'Communicates well orally and in written form',
+        category:'COMMUNICATION'
+    },
+    {
+        index: '05',
+        question:'Displays good listening skills',
+        category:'COMMUNICATION'
+    },
+    {
+        index: '06',
+        question:'Shares information freely with others',
+        category:'COMMUNICATION'
+    },
+    {
+        index: '07',
+        question:'Contributes positively to team',
+        category:'TEAMWORK'
+    },
+    {
+        index: '08',
+        question:'Helps define team roles to maximize output',
+        category:'TEAMWORK'
+    },
+    {
+        index: '09',
+        question:'Can be counted on to complete tasks correctly',
+        category:'TEAMWORK'
+    },
+    {
+        index: '10',
+        question:'Presents a positive image to outsiders',
+        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP'
+    },
+    {
+        index: '11',
+        question:'Is friendly and easy to work with',
+        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP'
+    },
+    {
+        index: '12',
+        question:'Adapts well to change',
+        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP'
+    },
+    {
+        index: '13',
+        question:'Has high professional and ethical standards',
+        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP'
+    }
     
     
 ]
@@ -337,3 +387,25 @@ const hideCustomQuestionPE360 = ()=>{
          
       })
       }
+
+
+
+const set360Data = (event)=>{
+    let value =  event.target.value;
+    let name =  event.target.name;
+
+    if (name == 'inputName360'){
+      employeeObj.employeeName = value;
+      document.getElementById('outputFullname360').innerHTML = value;
+  }
+
+  if (name == 'inputDepartment360'){
+      employeeObj.department = value;
+      document.getElementById('outputDepartment360').innerHTML = value;
+  }
+
+  if (name == 'inputReviewPeriod360'){
+      employeeObj.reviewPeriod = value;
+      document.getElementById('outputReviewPeriod360').innerHTML = value;
+  }
+}

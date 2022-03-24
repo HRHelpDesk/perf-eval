@@ -23,6 +23,28 @@
 </head>
 
 <script>
+  var newRef;
+  const DownloadDocument = (a, b)=>{
+    let document;
+    console.log(newRef[0].Responses)
+  let object = newRef[0].Responses.filter(e=>e.referenceNumber.includes(b))
+  console.log(object[0].isComplete)
+
+  if (object[0].isComplete == false){
+    alert('The reviewer has not yet been completed the evaluation.')
+  } else{
+    
+  if(a == '360'){
+    console.log('360')
+  }
+
+  if(a == 'EPE'){
+    console.log('EPE')
+  }
+
+
+}
+  }
   function selectElement(id, valueToSelect) {    
     let element = document.getElementById(id);
     element.value = valueToSelect;
@@ -33,9 +55,10 @@ let reviewList;
 let select = document.getElementById('reviewOptions');
 var url = new URL(window.location.href);
 var initialRef = url.searchParams.get("c");
+var type = url.searchParams.get("type");
 console.log(initialRef)
 if(initialRef != null){
-let rsp = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${initialRef}`, (data)=>{
+let rsp = $.get(`http://localhost:3004/find-evaluation?refno=${initialRef}&type=${type}`, (data)=>{
     evaluationResponses = data
     })
   }
@@ -61,13 +84,22 @@ if(initialRef != null){
 if(!refArr.includes(initialRef)){
   reviewList.push({
    refNo:  evaluationResponses[0].referenceNo,
-   name: evaluationResponses[0].employeeName
+   name: evaluationResponses[0].employeeName,
+   type: evaluationResponses[0].reviewType
   })
   localStorage.setItem('review-list', JSON.stringify(reviewList))
 
   reviewList.forEach(i=>{
+    let revType;
+    if(i.type == '360'){
+      revType = '360 PERFORMANCE EVALUATION'
+    }
 
-str += `<option value='${i.refNo}'>${i.name}</option>`
+    if(i.type == 'EPE'){
+      revType = 'EMPLOYEE PERFORMANCE EVALUATION'
+    }
+
+str += `<option value='${i.refNo},${i.type}'>${i.name} (${revType})</option>`
 })
 console.log(str)
 document.getElementById('reviewOptions').innerHTML = str;
@@ -76,8 +108,10 @@ document.getElementById('reviewOptions').style.display = 'block';
   if(initialRef == null){
   setTimeout(()=>{
     let valueofselect = document.getElementById('reviewOptions').value
-  console.log(valueofselect)
-  setEval(valueofselect)
+
+let values = valueofselect.split(',')
+  console.log(values)
+  setEval(values[0],values[1])
  
   },1000)
   }
@@ -85,8 +119,16 @@ document.getElementById('reviewOptions').style.display = 'block';
 }
 
   reviewList.forEach(i=>{
+   
+    let revType;
+    if(i.type == '360'){
+      revType = '360 PERFORMANCE EVALUATION'
+    }
 
-    str += `<option value='${i.refNo}'>${i.name}</option>`
+    if(i.type == 'EPE'){
+      revType = 'EMPLOYEE PERFORMANCE EVALUATION'
+    }
+    str += `<option value='${i.refNo},${i.type}'>${i.name} (${revType})</option>`
   })
   console.log(str)
   document.getElementById('reviewOptions').innerHTML = str;
@@ -96,7 +138,7 @@ document.getElementById('reviewOptions').style.display = 'block';
   reviewList.forEach(i=>{
     //HERE
 let ref;
-    let rsp2 = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${i.refNo}`, (data)=>{
+    let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${i.refNo}&type=${i.type}`, (data)=>{
   if(data){
     ref = data
   } else{
@@ -125,7 +167,8 @@ $(`#reviewOptions option[value='${i.refNo}']`).remove();
   let arr = []
   arr.push({
    refNo:  evaluationResponses[0].referenceNo,
-   name: evaluationResponses[0].employeeName
+   name: evaluationResponses[0].employeeName,
+   type: evaluationResponses[0].reviewType
   })
   localStorage.setItem('review-list', JSON.stringify(arr))
 }
@@ -152,13 +195,14 @@ setTimeout(()=>{
     if (i.date_sign == ''){
       i.date_sign = 'NA'
     }
+  
     document.getElementById('itemTable').innerHTML += `
     <tr>
       <td>${i.referenceNumber}</td>
       <td>${i.responderName}</td>
       <td style='color:${color}'>${status}</td>
       <td>${i.date_sign}</td>
-      <td><span title="Download Document"  class='icon-tracker icon--document' disabled=${enable}></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+      <td><span title="Download Document" onclick=DownloadDocument('${i.type}','${i.referenceNumber}') class='icon-tracker icon--document' disabled=${enable}></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
       </tr>`
   })
   document.getElementById('personReviewed').innerHTML = evaluationResponses[0].employeeName
@@ -174,10 +218,12 @@ selectElement('reviewOptions', initialRef)
 
 const changeEval = (event)=>{
 let value = event.target.value;
+let values = value.split(',')
 console.log(value)
-var newRef;
+ newRef;
+console.log(type)
 document.getElementById('itemTable').innerHTML = ``;
-let rsp2 = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${value}`, (data)=>{
+let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${values[0]}&type=${values[1]}`, (data)=>{
   newRef = data
   console.log(data)
     })
@@ -206,7 +252,7 @@ let rsp2 = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${value}`,
       <td>${i.responderName}</td>
       <td style='color:${color}'>${status}</td>
       <td>${i.date_sign}</td>
-      <td><span title="Download Document"  class='icon-tracker icon--document' disabled=${enable}></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+      <td><span title="Download Document" onclick=DownloadDocument('${values[1]}','${i.referenceNumber}') class='icon-tracker icon--document' disabled=${enable}></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
       </tr>`
   })
   document.getElementById('personReviewed').innerHTML = newRef[0].employeeName
@@ -216,12 +262,14 @@ let rsp2 = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${value}`,
 }
 
 
-const setEval = (a)=>{
+const setEval = (a, b)=>{
 let value = a;
+
+let values = value.split(',')
 console.log(value)
-var newRef;
+ newRef;
 document.getElementById('itemTable').innerHTML = ``;
-let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}`, (data)=>{
+let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}&type=${b}`, (data)=>{
   newRef = data
   console.log(data)
     })
@@ -249,8 +297,9 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}`, (data)=
       <td>${i.referenceNumber}</td>
       <td>${i.responderName}</td>
       <td style='color:${color}'>${status}</td>
+      <td>${i.reviewType}</td>
       <td>${i.date_sign}</td>
-      <td><span title="Download Document"  class='icon-tracker icon--document' disabled=${enable}></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+      <td><span title="Download Document" onclick=DownloadDocument('${b}','${i.referenceNumber}') class='icon-tracker icon--document' disabled=${enable}></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
       </tr>`
   })
   document.getElementById('personReviewed').innerHTML = newRef[0].employeeName
@@ -268,6 +317,7 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}`, (data)=
    </div>
 
    <div style="padding: 50px;">
+   <p><b> List of review's you have setup:</b></p>
     <div style="margin-bottom: 25px;" class="form-group row">
       <select onchange="changeEval(event)" id="reviewOptions"></select>
       <div class="col-md-6">

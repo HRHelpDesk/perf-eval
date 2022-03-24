@@ -19,17 +19,27 @@ let JSONemp  = JSON.stringify(employeeArr)
 
 
        
-
-       $.post('http://localhost:300/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber, epmArr: JSONemp}, (err, data)=>{
-               if(err){
-                       console.log(err)
-               } else{
-                       console.log(data)
-                    
+let ok;
+       $.post('http://localhost:3004/setup-eval', {c:empJSON, d:JSON.stringify(senderObj), referenceNumber: referenceNumber, epmArr: JSONemp}, (data, err)=>{
+               if(data){
+                console.log(data)
+                if(data === true){
+                document.getElementById('epeHub').style.display = 'none';
+                document.getElementById('360Hub').style.display = 'none';
+                
+        
+                document.getElementById('successPage').style.display = 'block';
                }
-                        })
+       
+               } else{
+                   
+                  console.log(err)
+               }
+               
+            
+        })
    
-        return confirm()
+       
                       
               
        
@@ -43,21 +53,21 @@ let JSONemp  = JSON.stringify(employeeArr)
 
 
 
-const confirm = ()=>{
+const confirm = (a)=>{
  
-       
+       if(a){
                 document.getElementById('epeHub').style.display = 'none';
 
                 document.getElementById('successPage').style.display = 'block';
 
-                
+       }       
         
 }
 
 
-const returnToSender = ()=>{
+const returnToSender = (a)=>{
         let emailOk;
-        let sendToDB = $.post('https://pe-apis.herokuapp.com/add-result', {c: JSON.stringify(anObjArr), refNo:initialRef}, (d)=>{
+        let sendToDB = $.post('http://localhost:3004/add-result', {c: JSON.stringify(anObjArr), refNo:initialRef, type : a}, (d)=>{
                 emailOk = true;
                         })
 
@@ -75,7 +85,7 @@ const returnToSender = ()=>{
                 
                
                    Subject : `Evaluation Completed by Mason`,
-                   Body : `<a href='https://helpdeskforhr.com/perf-eval-download-doc?c=${initialRef}&d=${anObjArr.referenceNumber}'>Click to download the completed evaluation.</a>`
+                   Body : `<a href='https://helpdeskforhr.com/perf-eval-download-doc?c=${initialRef}&d=${anObjArr.referenceNumber}&type=${a}'>Click to download the completed evaluation.</a>`
                   
                })
 

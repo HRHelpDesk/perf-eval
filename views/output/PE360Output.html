@@ -15,7 +15,7 @@
         <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
         <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip-utils.js"></script>
-        
+       
 <script src='https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/data/createDocument.js'></script>
 </head>
 
@@ -23,6 +23,17 @@
 
 
 
+
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+      result += characters.charAt(Math.floor(Math.random() * 
+  charactersLength));
+   }
+   return result;
+  }
 
 
     let anObjArr = {
@@ -247,15 +258,21 @@ let categoryObj ={
             <hr>
         
              <textarea onkeyup="textAreaData(event)" name="additionalComments" class="questions-div"></textarea>
-        </div>
+      
+             <button onclick="returnToSender('360')">Send Back</button>
+      
+             </div>
 
       
     
         </div>
        
-        <button onclick="returnToSender()">Send Back</button>
+       
     </div>
     </div>
-<!---->
+
 </body>
+
+<script src="../../assets/js/setupEmail-34.js"></script>
+<script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/smtp.js"></script>
 </html>
