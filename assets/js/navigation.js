@@ -39,6 +39,19 @@ const EPE = (event)=>{
 }
 
 
+const UE = (event)=>{
+  document.getElementById('senderSetup').style.display = 'block';
+
+   document.getElementById('pickHub').style.display = 'none';
+
+   routing = 'UE';
+   document.getElementById('evaluationType').innerHTML = '<b>UPWARD EVALUATION</b>'
+   console.log(routing)
+
+
+}
+
+
 const PE360 = (event)=>{
 
   document.getElementById('senderSetup').style.display = 'block';
@@ -122,6 +135,20 @@ if(routing === 'PIP'){
   document.getElementById('emailSetup').style.display = 'none';
 }
 
+if(routing === 'UE'){
+  document.getElementById('UEHub').style.display = 'block';
+  document.getElementById('emailSetup').style.display = 'none';
+  employeeObj = {
+    reviewType: 'UE',
+      employeeName:'',
+      department:'',
+      reviewPeriod:'',
+      questionsToSendArr:[],
+      additionalComments:'',
+      dateCreated: date
+  }
+}
+
 if(routing === '360'){
   document.getElementById('360Hub').style.display = 'block';
   document.getElementById('emailSetup').style.display = 'none';
@@ -132,6 +159,7 @@ if(routing === '360'){
     department:'',
     reviewPeriod:'',
     questionsToSendArr:[],
+    additionalComments:'',
     dateCreated: date
 }
 
@@ -194,12 +222,7 @@ const PIP = ()=>{
 }
   
 
-const UE = (e)=>{
-  console.log('UE')
-  document.getElementById('employeeUploadSection').style.display = 'none';
-  document.getElementById('render').innerHTML = `<button onclick="LoadPage()">BACK</button><p>PIP</p>`
 
-}
   
 
 

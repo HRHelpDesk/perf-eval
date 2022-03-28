@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+
+
+    </head>
+
+    <body>
+        <div class="epe-zone">
+            <div style="text-align: start; padding: 50px;" id="ueStepOne">
+                <h3>Step One: Enter Information for Employee Review</h3>
+                <div class="col-md-10 mx-auto">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="inputFirstname"> First and Last Name of Person to be Reviewed</label>
+                        <input onkeyup="setUeData(event)" type="text" class="form-control" name="inputNameUe" placeholder="Full Name">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputDepartment">Department</label>
+                        <input type="text" onkeyup="setUeData(event)" class="form-control" name="inputDepartmentUe" placeholder="Department">
+                    </div>
+                </div>
+            
+                <div class="form-group row">
+                    
+                    <div class="col-md-6">
+                        <label for="inputReviewPeriod">Review Period</label>
+                        <input type="text" onkeyup="setUeData(event)" class="form-control" name="inputReviewPeriodUe" placeholder="Example: Jan 2021 - Jan 2022">
+                    </div>
+                   
+                </div>
+            
+            
+                       <div class="btn-group">
+                        <button type="button" id="prevBtn" onclick="emailSetup()">Previous</button>
+                        <button type="button" id="nextBtn" onclick="ToStepTwoUE()">Next</button>
+                      </div>
+                </div>
+                
+            </div>
+
+            <div style="display: none;" id="ueStepTwo">
+                <div style="text-align: left; padding: 50px;">
+                    <h3>Step Two: Setup Criteria for Review</h3>
+                    <div class="question-select-div">
+                     <select id="ueQuestionSelect" class="question-select form-select">
+                         <option>---Criteria to Add---</option>
+                     </select>
+                     <button onclick="addQuestionUE()" style="display: inline !important;">Add</button>
+                    </div>
+                    <div><button class="mid-btns" onclick="showCustomQuestionUE()">Add Custom Criterion</button> <button onclick="useSuggestedQuestionsUe()" class="mid-btns">Use Suggested Criteria</button> <button class="mid-btns" style="background-color: tomato;" onclick="clearQuestionDiv()">Clear</button></div>
+                    <div><button class="mid-btns-second-row" onclick="saveCritera()">Save Current Criteria</button> <button class="mid-btns-second-row" onclick="loadCriteria()">Load Previous Criteria</button></div>
+                <div id="customQuestionUE" class="custom-question-div">
+                   <hr>
+                    <a class="x" onclick="hideCustomQuestionUE()">X</a>
+                    <div id="customQuestionDivUE" style="display: none;" ><input id="customCat" class="form-control" placeholder="Enter Custom Category"/></div>
+                    <textarea id="customQuestionHtmlUe" placeholder="Enter your question here..." class="questions-div"></textarea>
+                    <button onclick="addCustomQuestionUE()">Add Criterion</button>
+                    <hr>
+                </div>
+                     <div id="ueQuestions" class="questions-div">
+                
+                     </div>
+                    <div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" id="prevBtn" onclick="ToStepOneUE()">Previous</button>
+                        <button type="button" id="nextBtn" onclick="ToStepThreeUE()">Next</button>
+                      </div>
+                    </div>
+                    </div>
+                    <div style="display: none;" id="ueStepThree">
+                        <div style="text-align: left; padding: 50px;">
+                            <h3>PREVIEW OF EVALUATION</h3>
+                             <p>One of the goals of our organization is to continuously improve performance at all levels. We are asking for your candid feedback on the performance of <b><span id="outputFullnameUe"></span></b></p>
+                             <p>This form is designed to provide your supervisor with feedback to make your work environment better. To ensure confidentiality, we have not asked for your name, and would prefer not to know who you are, but we do value your honesty. Thank you very much for your participation.</p>
+                             <p>A summary of all feedback received will be prepared for the individual reviewed so that they can use the feedback to learn and develop in their current role with our organization. Your individual feedback will be averaged into all the responses received in order to protect your anonymity and ensure that the results each person receives are completely confidential. HR will also prepare an overall summary to assess areas for additional company-provided training.</p>
+                             <p>Thank you for your contribution to this very important process.</p>
+
+                            <p><b>Evaluation period:</b> <span id="outputReviewPeriodUe"> </span></p> 
+                         
+                       
+                            <hr>
+                    
+                            <div id='ueSampleQuestionairre'>
+                    
+                            </div>
+                            <div>
+                     
+                                <hr>
+                                <p><b>Please provide additional comments in the space below:</b></p>
+                                <hr>
+                            
+                                 <textarea disabled class="questions-div"></textarea>
+                            </div>
+                          
+                          <div class="btn-group">
+                            <button type="button" id="prevBtn" onclick="ToStepTwoUE()">Previous</button>
+                            <button type="button" id="nextBtn" onclick="sendEmail()">Confirm and Send Email(s)</button>
+                          </div>
+                          
+                        
+                            </div>
+                            </div>
+                   </div>
+
+        </div>
+    </body>
+    <script src="../assets/js/UpwardEvaluation/UE-Navigation.js"></script>
+    <script src="../assets/js/UpwardEvaluation/UE-form.js"></script>
+</html>
