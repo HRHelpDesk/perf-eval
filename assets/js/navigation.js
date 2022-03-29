@@ -74,11 +74,33 @@ const returnToPickHub = ()=>{
 
 const returnToSenderSetup = ()=>{
   document.getElementById('emailSetup').style.display = 'none';
+  document.getElementById('pipHub').style.display = 'none';
 
   document.getElementById('senderSetup').style.display = 'block';
 }
 
 const emailSetup = ()=>{
+
+  if(routing === 'PIP'){
+    document.getElementById('pipHub').style.display = 'block';
+    document.getElementById('senderSetup').style.display = 'none';
+    employeeObj = {
+    reviewType: '360',
+      employeeName:'',
+      employeeId:'',
+      department:'',
+      reviewPeriod:'',
+      questionsToSendArr:[],
+      additionalComments:'',
+      dateCreated: date
+  }
+  
+  console.log(employeeObj)
+  } else{
+
+ 
+
+
   window.scrollTo(0,0)
   if(localStorage.getItem('PE-Employee-List')){
     
@@ -99,8 +121,9 @@ const emailSetup = ()=>{
   document.getElementById('epeHub').style.display = 'none';
   document.getElementById('pipHub').style.display = 'none';
   document.getElementById('360Hub').style.display = 'none';
+  document.getElementById('ueHub').style.display = 'none';
   document.getElementById('emailSetup').style.display = 'block';
-
+  }
 }
 
 const LoadBuilder = ()=>{
@@ -151,6 +174,23 @@ if(routing === 'UE'){
 
 if(routing === '360'){
   document.getElementById('360Hub').style.display = 'block';
+  document.getElementById('emailSetup').style.display = 'none';
+  employeeObj = {
+  reviewType: '360',
+    employeeName:'',
+    employeeId:'',
+    department:'',
+    reviewPeriod:'',
+    questionsToSendArr:[],
+    additionalComments:'',
+    dateCreated: date
+}
+
+console.log(employeeObj)
+}
+
+if(routing === 'PIP'){
+  document.getElementById('PIPHub').style.display = 'block';
   document.getElementById('emailSetup').style.display = 'none';
   employeeObj = {
   reviewType: '360',

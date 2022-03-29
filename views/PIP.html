@@ -7,7 +7,125 @@
     </head>
 
     <body>
-        <h3>PIP</h3>
+        <div class="epe-zone">
+            <div style="text-align: start; padding: 50px;" id="pipStepOne">
+                <h3>Step One: Enter Information for Employee being Reviewed</h3>
+                <div class="col-md-10 mx-auto">
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="inputFirstname"> First and Last Name of Person to be Reviewed</label>
+                        <input onkeyup="setPipData(event)" type="text" class="form-control" name="inputNameUe" placeholder="Full Name">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inputDepartment">Department</label>
+                        <input type="text" onkeyup="setPipData(event)" class="form-control" name="inputDepartmentUe" placeholder="Department">
+                    </div>
+                </div>
+            
+                <div class="form-group row">
+                    
+                    <div class="col-md-6">
+                        <label for="inputReviewPeriod">Supervisor</label>
+                        <input type="text" onkeyup="setPipData(event)" class="form-control" name="inputReviewPeriodUe" placeholder="Example: Jan 2021 - Jan 2022">
+                    </div>
+                   
+                </div>
+            
+            
+                       <div class="btn-group">
+                        <button type="button" id="prevBtn" onclick="returnToSenderSetup()">Previous</button>
+                        <button type="button" id="nextBtn" onclick="ToStepTwoPIP()">Next</button>
+                      </div>
+                </div>
+                
+            </div>
+
+            <div style="text-align: start; padding: 50px; display: none;" id="pipStepTwo">
+                <h2>Part 2: Purpose</h2>
+                <p>The purpose of this Performance Improvement Plan (PIP) is to define serious areas of concern, gaps in your work performance, reiterate (Company’s) expectations, and allow you the opportunity to demonstrate improvement and commitment.</p>
+             <hr>
+                <p><b>Areas of Concern:</b>(List specific areas where the employee failed to meet expectations)</p>
+                <hr>
+                <textarea class="questions-div"></textarea>
+
+
+                <hr>
+                <p><b>Observations, Previous Discussions, or Additional Training Provided:</b>(List any previous times the issues have been addressed, the context, and the outcome of discussions or training)</p>
+                <hr>
+                <textarea class="questions-div"></textarea>
+                <div class="btn-group">
+                    <button type="button" id="prevBtn" onclick="ToStepOnePIP()">Previous</button>
+                    <button type="button" id="nextBtn" onclick="ToStepThreePIP()">Next</button>
+                  </div>
+                </div>
+
+                <div style="text-align: start; padding: 50px; display: none;" id="pipStepThree">
+                    <h2>Part 3: Improvement Goals</h2>
+                    <p>List the goals related to areas of concern to be improved and addressed:</p>
+                 <hr>
+                 <div id="goalBuilderSection">
+                 <div class="form-group row">
+                    
+                    <div class="col-md-6">
+                        <label for="inputReviewPeriod"><b>Goal 1</b></label>
+                        <input type="text" onkeyup="setPipData(event)" class="form-control" name="inputReviewPeriodUe" placeholder="Example: Jan 2021 - Jan 2022">
+                    </div>
+                 
+                </div>
+            </div>
+                <button style="width: 250px; margin-top: 15px; display: block !important;" type="button" id="nextBtn" onclick="ToStepTwoPIP()">Add Another Goal</button>
+
+                <div class="btn-group">
+                    <button type="button" id="prevBtn" onclick="ToStepTwoPIP()">Previous</button>
+                    <button type="button" id="nextBtn" onclick="ToStepFourPIP()">Next</button>
+                  </div>
+                </div>
+
+                <div style="text-align: start; padding: 50px; display: none;" id="pipStepFour">
+                    <h2>Part 4: Activity Goals:</h2>
+                    <p>Listed below are activities that will help you reach each goal:</p>
+                 <hr>
+                 <div id="activityGoalSection">
+
+                 </div>
+
+
+                    <div class="btn-group">
+                        <button type="button" id="prevBtn" onclick="ToStepThreePIP()">Previous</button>
+                        <button type="button" id="nextBtn" onclick="ToStepFivePIP()">Next</button>
+                      </div>
+                    </div>
+
+                    <div style="text-align: start; padding: 50px; display: none;" id="pipStepFive">
+                        <h2>Part 5: Progress Checkpoints:</h2>
+                        <p>The following schedule will be used to evaluate your progress in meeting your Improvement activities.</p>
+                     <hr>
+                     <div style="background-color: white; padding: 20px;">
+                     <table class="table">
+                        <thead>
+                        <tr>
+       
+                            <th scope="col">Goal #</th>
+                            <th scope="col">Activity</th>
+                            <th scope="col">Checkpoint Date</th>
+                            <th scope="col">Type of Follow-up (memo/call/meeting)</th>
+                            <th scope="col">Progress Expected</th>
+                            <th scope="col">Notes</th>
+                          </tr>
+                        </thead>
+                        <tbody id="activityGoalProgressSection">
+                    
+                    </tbody>
+                    </table>
+                    </div>
+                        <div class="btn-group">
+                            <button type="button" id="prevBtn" onclick="ToStepFourPIP()">Previous</button>
+                            <button type="button" id="nextBtn" onclick="ToStepFivePIP()">Next</button>
+                          </div>
+                        </div>
+               
+            </div>
     </body>
-    
+    <script src="../assets/js/PIP/PIP-Form.js"></script>
+    <script src="../assets/js/PIP/PIP-Navigation.js"></script>
 </html>
