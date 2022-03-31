@@ -46,13 +46,13 @@
              <hr>
                 <p><b>Areas of Concern:</b>(List specific areas where the employee failed to meet expectations)</p>
                 <hr>
-                <textarea class="questions-div"></textarea>
+                <textarea onkeyup="setPipData(event)" name="areasOfConcernTextarea" class="questions-div"></textarea>
 
 
                 <hr>
                 <p><b>Observations, Previous Discussions, or Additional Training Provided:</b>(List any previous times the issues have been addressed, the context, and the outcome of discussions or training)</p>
                 <hr>
-                <textarea class="questions-div"></textarea>
+                <textarea onkeyup="setPipData(event)" name="observationsTextarea" class="questions-div"></textarea>
                 <div class="btn-group">
                     <button type="button" id="prevBtn" onclick="ToStepOnePIP()">Previous</button>
                     <button type="button" id="nextBtn" onclick="ToStepThreePIP()">Next</button>
@@ -67,13 +67,23 @@
                  <div class="form-group row">
                     
                     <div class="col-md-6">
-                        <label for="inputReviewPeriod"><b>Goal 1</b></label>
-                        <input type="text" onkeyup="setPipData(event)" class="form-control" name="inputReviewPeriodUe" placeholder="Example: Jan 2021 - Jan 2022">
+                        <label for="inputReviewPeriod"><b>Add Goals Here: </b></label>
+                        <input type="text" onkeyup="setPipData(event)" class="form-control" id="inputGoalTitle" placeholder="Goal Title">
+                    </div>
+                    <button onclick="addGoal()" style="width: 250px; margin-top: 15px; display: block !important;" type="button" id="nextBtn" onclick="ToStepTwoPIP()">Add Another Goal</button>
+
+
+                    <div>
+                        <hr>
+                        <p><b>GOAL ACTIVITIES:</b></p>
+<hr>
+                        <div id="goalActivitySection"></div>
+                    </div>
+                    <div id="deleteBtnDiv" style="text-align: end; display: none;"><button onclick="deleteGoal()" type="button" id="" >Delete Goal</button>
                     </div>
                  
                 </div>
             </div>
-                <button style="width: 250px; margin-top: 15px; display: block !important;" type="button" id="nextBtn" onclick="ToStepTwoPIP()">Add Another Goal</button>
 
                 <div class="btn-group">
                     <button type="button" id="prevBtn" onclick="ToStepTwoPIP()">Previous</button>
@@ -81,23 +91,10 @@
                   </div>
                 </div>
 
-                <div style="text-align: start; padding: 50px; display: none;" id="pipStepFour">
-                    <h2>Part 4: Activity Goals:</h2>
-                    <p>Listed below are activities that will help you reach each goal:</p>
-                 <hr>
-                 <div id="activityGoalSection">
+             
 
-                 </div>
-
-
-                    <div class="btn-group">
-                        <button type="button" id="prevBtn" onclick="ToStepThreePIP()">Previous</button>
-                        <button type="button" id="nextBtn" onclick="ToStepFivePIP()">Next</button>
-                      </div>
-                    </div>
-
-                    <div style="text-align: start; padding: 50px; display: none;" id="pipStepFive">
-                        <h2>Part 5: Progress Checkpoints:</h2>
+                    <div style="text-align: start; padding: 50px; display: none;" id="pipStepFour">
+                        <h2>Part 4: Progress Checkpoints:</h2>
                         <p>The following schedule will be used to evaluate your progress in meeting your Improvement activities.</p>
                      <hr>
                      <div style="background-color: white; padding: 20px;">
@@ -118,10 +115,10 @@
                     </tbody>
                     </table>
                     </div>
-                        <div class="btn-group">
-                            <button type="button" id="prevBtn" onclick="ToStepFourPIP()">Previous</button>
-                            <button type="button" id="nextBtn" onclick="ToStepFivePIP()">Next</button>
-                          </div>
+                    <div class="btn-group">
+                        <button type="button" id="prevBtn" onclick="ToStepThreePIP()">Previous</button>
+                        <button type="button" id="nextBtn" onclick="ToStepFivePIP()">Next</button>
+                      </div>
                         </div>
                
             </div>

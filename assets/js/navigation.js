@@ -85,13 +85,13 @@ const emailSetup = ()=>{
     document.getElementById('pipHub').style.display = 'block';
     document.getElementById('senderSetup').style.display = 'none';
     employeeObj = {
-    reviewType: '360',
+    reviewType: 'PIP',
       employeeName:'',
-      employeeId:'',
       department:'',
-      reviewPeriod:'',
-      questionsToSendArr:[],
-      additionalComments:'',
+      supervisorName:'',
+      areasOfConcern:'',
+      observationsAdditionalComments:'',
+      goalsArr:[],
       dateCreated: date
   }
   
