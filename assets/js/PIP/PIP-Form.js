@@ -4,6 +4,29 @@ const setPipData = (event)=>{
     let name = event.target.name;
     let value = event.target.value;
 
+    if (name === 'inputNamePIP'){
+        employeeObj.employeeName = value;
+        console.log(employeeObj)
+
+    }
+
+    if (name === 'inputEmailPIP'){
+        employeeObj.employeeEmail = value;
+        console.log(employeeObj)
+
+    }
+
+    if (name === 'inputDepartmentPIP'){
+        employeeObj.department = value;
+        console.log(employeeObj)
+
+    }
+    if (name === 'inputSupervisorPIP'){
+        employeeObj.supervisorName = value;
+        console.log(employeeObj)
+
+    }
+    
     if (name === 'areasOfConcernTextarea'){
         employeeObj.areasOfConcern = value;
         console.log(employeeObj)
@@ -26,8 +49,9 @@ let delBtnIdArr =[];
 const addGoal = ()=>{
 
     let goalTitle =  document.getElementById('inputGoalTitle').value;
-let goalId= 'G00'+goalNumber + 1;
+let goalId = `G00${Number(goalNumber) + 1}`;
     employeeObj.goalsArr.push({
+        goalNumber: goalNumber,
         index: goalId,
         goalTitle:goalTitle,
         startDate:'',
@@ -37,31 +61,31 @@ let goalId= 'G00'+goalNumber + 1;
 
     })
     console.log(employeeObj)
-
+    document.getElementById('goalList').innerHTML += `<p><b>GOAL ${goalNumber + 1}: ${goalTitle}</b></p>`
     document.getElementById('goalActivitySection').innerHTML += `
     <div id="${deletableElement}">
-    <p>Goal ${goalNumber + 1}: ${goalTitle}</p>
+    <p><b>GOAL ${goalNumber + 1}: ${goalTitle}</b></p>
     <div class="form-group row">
     <div class="col-md-6">
-        <label for=""> Start Date:</label>
-        <input class="form-control" type="text" onkeyup="setGoalData(event, ${goalNumber} ,'startDate')"/>
+    <label for=""><b> START DATE:</b></label>
+        <input id="${goalId}StartDate" class="form-control" type="text" onkeyup="setGoalData(event, ${goalNumber} ,'startDate')"/>
         </div>
     <div class="col-md-6">
-        <label for="">Projected Completed Date:</label>
-        <input class="form-control" type="text" onchange="setGoalData(event, ${goalNumber} ,'projectedCompletedDate')"/>
+    <label for=""><b>PROJECTED COMPLETED DATE:</b></label>
+        <input id="${goalId}ProjectedCompletedDate" class="form-control" type="text" onchange="setGoalData(event, ${goalNumber} ,'projectedCompletedDate')"/>
         </div>
 </div>
     
-    <p>Activity:</p>
-    <textarea class="questions-div" onchange="setGoalData(event, ${goalNumber} ,'activity')"></textarea>
+    <p style="margin-top:15px;"><b>ACTIVITY:</b></p>
+    <textarea id="${goalId}Activity"  class="questions-div-render" onchange="setGoalData(event, ${goalNumber} ,'activity')"></textarea>
 
-    <p>How to Accomplish:</p>
-    <textarea class="questions-div" onchange="setGoalData(event, ${goalNumber} ,'howToAccomplish')"></textarea>
+    <p><b>HOW TO ACCOMPLISH:</b></p>
+    <textarea id="${goalId}HowToAccomplish" class="questions-div-render" onchange="setGoalData(event, ${goalNumber} ,'howToAccomplish')"></textarea>
     <hr>
     </div>
    
     `
-goalNumber = goalNumber +1;
+goalNumber = Number(goalNumber) +1;
 console.log(goalNumber)
 
 document.getElementById('inputGoalTitle').value = ''

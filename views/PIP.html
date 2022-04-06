@@ -14,19 +14,24 @@
                 <div class="form-group row">
                     <div class="col-md-6">
                         <label for="inputFirstname"> First and Last Name of Person to be Reviewed</label>
-                        <input onkeyup="setPipData(event)" type="text" class="form-control" name="inputNameUe" placeholder="Full Name">
+                        <input onkeyup="setPipData(event)" type="text" class="form-control" name="inputNamePIP" placeholder="Full Name">
                     </div>
                     <div class="col-md-6">
-                        <label for="inputDepartment">Department</label>
-                        <input type="text" onkeyup="setPipData(event)" class="form-control" name="inputDepartmentUe" placeholder="Department">
+                        <label for="inputReviewPeriod">Email Address</label>
+                        <input type="text" onkeyup="setPipData(event)" class="form-control" name="inputEmailPIP" placeholder="Email Address">
                     </div>
+                   
                 </div>
             
                 <div class="form-group row">
+                    <div class="col-md-6">
+                        <label for="inputDepartment">Department</label>
+                        <input type="text" onkeyup="setPipData(event)" class="form-control" name="inputDepartmentPIP" placeholder="Department">
+                    </div>
                     
                     <div class="col-md-6">
                         <label for="inputReviewPeriod">Supervisor</label>
-                        <input type="text" onkeyup="setPipData(event)" class="form-control" name="inputReviewPeriodUe" placeholder="Example: Jan 2021 - Jan 2022">
+                        <input type="text" onkeyup="setPipData(event)" class="form-control" name="inputSupervisorPIP" placeholder="Supervisor's Name">
                     </div>
                    
                 </div>
@@ -70,14 +75,16 @@
                         <label for="inputReviewPeriod"><b>Add Goals Here: </b></label>
                         <input type="text" onkeyup="setPipData(event)" class="form-control" id="inputGoalTitle" placeholder="Goal Title">
                     </div>
-                    <button onclick="addGoal()" style="width: 250px; margin-top: 15px; display: block !important;" type="button" id="nextBtn" onclick="ToStepTwoPIP()">Add Another Goal</button>
+                    <button onclick="addGoal()" style="width: 250px; margin-top: 15px; display: block !important;" type="button" id="nextBtn" onclick="ToStepTwoPIP()">Add Goal</button>
 
 
                     <div>
                         <hr>
-                        <p><b>GOAL ACTIVITIES:</b></p>
+                        <p><b>GOAL LIST:</b></p>
 <hr>
-                        <div id="goalActivitySection"></div>
+                        <div id="goalList">
+
+                        </div>
                     </div>
                     <div id="deleteBtnDiv" style="text-align: end; display: none;"><button onclick="deleteGoal()" type="button" id="" >Delete Goal</button>
                     </div>
@@ -91,35 +98,53 @@
                   </div>
                 </div>
 
+                
+
              
 
                     <div style="text-align: start; padding: 50px; display: none;" id="pipStepFour">
-                        <h2>Part 4: Progress Checkpoints:</h2>
-                        <p>The following schedule will be used to evaluate your progress in meeting your Improvement activities.</p>
+                        <h2>Part 4: Goal Activities</h2>
+                        <p>Please fill in the data pertaining to each goal.</p>
                      <hr>
-                     <div style="background-color: white; padding: 20px;">
-                     <table class="table">
-                        <thead>
-                        <tr>
-       
-                            <th scope="col">Goal #</th>
-                            <th scope="col">Activity</th>
-                            <th scope="col">Checkpoint Date</th>
-                            <th scope="col">Type of Follow-up (memo/call/meeting)</th>
-                            <th scope="col">Progress Expected</th>
-                            <th scope="col">Notes</th>
-                          </tr>
-                        </thead>
-                        <tbody id="activityGoalProgressSection">
-                    
-                    </tbody>
-                    </table>
-                    </div>
+                     <div id="goalActivitySection"></div>
                     <div class="btn-group">
                         <button type="button" id="prevBtn" onclick="ToStepThreePIP()">Previous</button>
                         <button type="button" id="nextBtn" onclick="ToStepFivePIP()">Next</button>
                       </div>
                         </div>
+
+
+                        <div style="text-align: start; padding: 50px; display: none;" id="pipStepFive">
+                            <h2>Part 5: Review, Send and Download</h2>
+                            <p>Please review your Performance Improvement Plan and then send and/or download the document.</p>
+                         <hr>
+                         <div id="pipPreviewPt1">
+    
+                         </div>
+    
+                         <div id="pipPreviewPt2">
+    
+                        </div>
+                        <p style="font-size: 24px;"><b>Part 3: Improvement Goals</b></p>
+                        <hr>
+                        <p><b>Goals related to areas of concern to be improved and addressed:</b></p>
+                        <hr>
+                        
+                        <div id="pipPreviewPt3">
+    
+                        </div>
+                        <p style="font-size: 24px;"><b>Part 4: Sending Confimation</b></p>
+                        <hr>
+                        <p><b>Please confirm you would like to send the emails to these addresses:</b></p>
+                        <hr>
+                         <div id="outputReviewPIP" style="background-color: white; color: black; padding: 20px;">
+                         
+                        </div>
+                        <div class="btn-group">
+                            <button type="button" id="prevBtn" onclick="ToStepFourPIP()">Previous</button>
+                            <button type="button" id="nextBtn" onclick="sendEmail()">Send Emails</button>
+                          </div>
+                            </div>
                
             </div>
     </body>

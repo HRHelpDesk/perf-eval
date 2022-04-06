@@ -89,6 +89,7 @@ const emailSetup = ()=>{
       employeeName:'',
       department:'',
       supervisorName:'',
+      employeeEmail:'',
       areasOfConcern:'',
       observationsAdditionalComments:'',
       goalsArr:[],
@@ -121,7 +122,7 @@ const emailSetup = ()=>{
   document.getElementById('epeHub').style.display = 'none';
   document.getElementById('pipHub').style.display = 'none';
   document.getElementById('360Hub').style.display = 'none';
-  document.getElementById('ueHub').style.display = 'none';
+  document.getElementById('UEHub').style.display = 'none';
   document.getElementById('emailSetup').style.display = 'block';
   }
 }
@@ -164,6 +165,7 @@ if(routing === 'UE'){
   employeeObj = {
     reviewType: 'UE',
       employeeName:'',
+      
       department:'',
       reviewPeriod:'',
       questionsToSendArr:[],
