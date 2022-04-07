@@ -15,39 +15,27 @@
         
     </head>
 <script>
-     let anObjArr = {
-        emp_Name:'',
-        employee_id_no :'',
-        job_title: '',
-        department: '',
-        rev_sup:'',
-        rev_period: '',
-        per_sup:'',
-        t_o_p: '',
-        part_two_a: '',
-        overall_rating: '',
-        part_4_a:'',
-        part_4_b:'',
-        categories: '',
-        signature: '',
-        date_sign: ''
-        
-       
-    }
+  
        var url = new URL(window.location.href);
         var initialRef = url.searchParams.get("c");
         var responseRef = url.searchParams.get("d");
-        console.log(responseRef)
-        let rsp = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${initialRef}`, (data)=>{
+        var evalType = url.searchParams.get("type");
+        
+
+        console.log(evalType)
+
+        if(evalType === 'EPE'){
+            let doc = "epe-sample.docx";
+            let rsp = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${initialRef}&type=${evalType}`, (data)=>{
          console.log( data[0].Responses)
        let response = data[0].Responses.filter(i=> i.referenceNumber == responseRef)
        console.log(response)
-       anObjArr = {
+      let  obj = {
         emp_Name:response[0].emp_Name,
         employee_id_no :response[0].employee_id_no,
         job_title: response[0].job_title,
         department: response[0].department,
-        rev_sup:response[0].rev_sup,
+        rev_sup:response[0].responderName,
         rev_period: response[0].rev_period,
         per_sup:response[0].per_sup,
         t_o_p: response[0].t_o_p,
@@ -63,10 +51,91 @@
     }
 
 
-    generate()
-
-    return closeWindow()
+    generate(doc, obj)
     });    
+        }
+
+        if(evalType == '360'){
+            let doc = "PE360-sample.docx";
+            let rsp = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${initialRef}&type=${evalType}`, (data)=>{
+         console.log( data[0].Responses)
+       let response = data[0].Responses.filter(i=> i.referenceNumber == responseRef)
+       console.log(response)
+      let  obj = {
+        emp_Name:response[0].emp_Name,
+        department: response[0].department,
+        rev_period: response[0].rev_period,
+        additional_comments: response[0].additional_comments,
+        categories: response[0].categories,
+        
+       
+    }
+
+    generate(doc, obj)
+});
+        }
+
+        if(evalType == 'UE'){
+            let doc = "ue-sample.docx";
+            let rsp = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${initialRef}&type=${evalType}`, (data)=>{
+         console.log( data[0])
+       let response = data[0].Responses.filter(i=> i.referenceNumber == responseRef)
+       console.log(response)
+      let  obj = {
+        emp_Name:response[0].emp_Name,
+        department: response[0].department,
+        rev_period: response[0].rev_period,
+        additional_comments: response[0].additional_comments,
+        categories: response[0].categories,
+        sender_Name: data[0].senderName,
+        sender_Email: data[0].senderEmail,
+        
+       
+    }
+
+    generate(doc, obj)
+});
+        }
+
+
+        if(evalType == 'PIP'){
+            let doc = "pip-sample.docx";
+            let rsp = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${initialRef}&type=${evalType}`, (data)=>{
+         console.log( data[0])
+       let response = data[0].Responses.filter(i=> i.referenceNumber == responseRef)
+       
+
+       let goalsArr = [];
+       
+       data[0].goalsArr.forEach(i => {
+          goalsArr.push({goalName: i.goalTitle})
+           
+       });
+       console.log(goalsArr)
+
+      let  obj = {
+        emp_name:data[0].employeeName,
+        sup_name: data[0].supervisor,
+        date: data[0].dateCreated,
+        department: data[0].department,
+        areas_of_concern: data[0].areasOfConcern,
+        observations: data[0].observationsAdditionalComments,
+        goals:goalsArr,
+        goaldata: data[0].goalsArr,
+
+        
+       
+    }
+
+    generate(doc, obj)
+});
+        }
+
+        
+
+
+
+    // //     
       
 
    
@@ -91,9 +160,9 @@
         function loadFile(url, callback) {
     PizZipUtils.getBinaryContent(url, callback);
 }
-function generate() {
+function generate(a,b) {
     loadFile(
-        "https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/example.docx",
+        a,
         function (error, content) {
             if (error) {
                 throw error;
@@ -105,7 +174,7 @@ function generate() {
             });
 
             // Render the document (Replace {first_name} by John, {last_name} by Doe, ...)
-            doc.render(anObjArr);
+            doc.render(b);
 
             var out = doc.getZip().generate({
                 type: "blob",
@@ -117,7 +186,11 @@ function generate() {
             });
             // Output the document using Data-URI
             saveAs(out, "output.docx");
+            // return closeWindow()
         }
+     
+
+ 
     );
 }
 

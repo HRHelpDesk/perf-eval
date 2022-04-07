@@ -1,11 +1,11 @@
 <html>
 
 <head>
-    <link href="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/tabs.css" rel="stylesheet"/>
-        <link href="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/style.css" rel="stylesheet"/>
-        <link href="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/cards.css" rel="stylesheet"/>
-        <link href="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/upload-form.css" rel="stylesheet"/>
-        <link href="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/footer.css" rel="stylesheet"/>
+    <link href="../../assets/css/tabs.css" rel="stylesheet"/>
+        <link href="../../assets/css/style.css" rel="stylesheet"/>
+        <link href="../../assets/css/cards.css" rel="stylesheet"/>
+        <link href="../../assets/css/upload-form.css" rel="stylesheet"/>
+        <link href="../../assets/css/footer.css" rel="stylesheet"/>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">    </head>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,7 +14,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.js"></script>
         <script src="https://unpkg.com/pizzip@3.1.1/dist/pizzip-utils.js"></script>
         
-<script src='https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/data/createDocument.js'></script>
+<script src='../../assets/js/data/createDocument.js'></script>
 
 </head>
 <script>
@@ -23,7 +23,7 @@
 }
 function generate() {
     loadFile(
-        "https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/example.docx",
+        "../../example.docx",
         function (error, content) {
             if (error) {
                 throw error;
@@ -89,16 +89,16 @@ let anObjArr = {
         signature: '',
         date_sign: '',
         responderName: '',
-        isCompleted: null
+        isComplete: null
     }
-  let rsp = $.get(`https://pe-apis.herokuapp.com/find-evaluation?refno=${initialRef}`,{responseReferenceNo:responderRefNo } , (data)=>{
-console.log(data)
+  let rsp = $.get(`http://localhost:3004/find-evaluation?refno=${initialRef}&type=EPE`,{responseReferenceNo:responderRefNo } , (data)=>{
+console.log(data[0].Responses)
  c = data;
 
- let responderObject = c[0].Responses.filter(i =>{
+ let responderObject = data[0].Responses.filter(i =>{
    return i.referenceNumber == responderRefNo
  })
- console.log(responderObject[0])
+ console.log(responderObject)
 
 
  anObjArr = {
@@ -121,13 +121,13 @@ console.log(data)
         signature: '',
         date_sign: '',
         responderName: responderObject[0].responderName,
-        isCompleted: responderObject[0].isComplete
+        isComplete: responderObject[0].isComplete
     }
  
    
 setTimeout(()=>{
 
-if(anObjArr.isCompleted != true){
+if(anObjArr.isComplete != true){
 
 
 
@@ -304,7 +304,7 @@ let categoryObj ={
 <body>
   <!--Top Bar-->
   <div class="topnav">
-    <img src='https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/css/img/PECLogo.png' style="padding: 10px; margin-left: 20px;" width="450px" height="auto"/>
+    <img src='../../assets/css/img/PECLogo.png' style="padding: 10px; margin-left: 20px;" width="450px" height="auto"/>
      
    </div>
 <!---->
@@ -407,14 +407,14 @@ let categoryObj ={
         
             </div>
            
-            <button onclick="returnToSender()">Send Back</button>
+            <button onclick="returnToSender('EPE')">Send Back</button>
         </div>
         </div>
 
         <div id="alreadyDoneMessage" style="display: none;">
             Our records show you have already completed this reference! No need to do it again. If you feel this might be an error please reach out to the person who sent it.
             </div>
-            <div id="completeMessage">
+            <div style="display: none;"  id="completeMessage">
                 <div class="comp-box" style="padding: 40px; margin-top: 40px; " id="confirmationDiv">
             <div  style="text-align: center; font-size: 26px; ">
                 <p><b>Thanks for completeing the review!</b></p>
@@ -430,10 +430,10 @@ let categoryObj ={
             </div>
         </body>
         </html>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script><script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/upload.js"></script>
-            <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/navigation.js"></script>
-            <script src='https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/pizzip.js'></script>
-            <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/addEmployee.js"></script>
-    <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/data/createDocument.js"></script>
-    <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/setupEmail-34.js"></script>
-    <script src="https://helpdeskforhr.com/wp-content/themes/thrive-theme-child/perf-eval-new/assets/js/smtp.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script><script src="../../assets/js/upload.js"></script>
+            <script src="../../assets/js/navigation.js"></script>
+            <script src='../../assets/js/pizzip.js'></script>
+            <script src="../../assets/js/addEmployee.js"></script>
+    <script src="../../assets/js/data/createDocument.js"></script>
+    <script src="../../assets/js/setupEmail-34.js"></script>
+    <script src="../../assets/js/smtp.js"></script>

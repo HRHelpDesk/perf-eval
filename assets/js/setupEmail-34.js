@@ -67,31 +67,17 @@ const confirm = (a)=>{
 
 const returnToSender = (a)=>{
         let emailOk;
-        let sendToDB = $.post('http://localhost:3004/add-result', {c: JSON.stringify(anObjArr), refNo:initialRef, type : a}, (d)=>{
+        let sendToDB = $.post('http://localhost:3004/add-result', {c: JSON.stringify(anObjArr), refNo:initialRef, type : a, senderObj: senderObj}, (d)=>{
                 emailOk = true;
+                console.log(d)
+                if(d){
+                        document.getElementById('evaluationStation').style.display = 'none';
+                        document.getElementById('completeMessage').style.display = 'block';
+                }
                         })
 
 
-     if (emailOk = true){
-             //  1eb316ac-0aee-4c6c-b398-e2b8b78cd84d
-        Email.send({
-                Host : "smtp.elasticemail.com",
-                Username : "support@helpdeskforhr.com",
-                Password : "112C97D6CCB95C5D7CC533AA389B6BC3FEDB",
-                To : anObjArr.senderEmail,
-                From: 'support@helpdeskforhr.com',
-                CC: anObjArr.senderCC,
-            
-                
-               
-                   Subject : `Evaluation Completed by Mason`,
-                   Body : `<a href='https://helpdeskforhr.com/perf-eval-download-doc?c=${initialRef}&d=${anObjArr.referenceNumber}&type=${a}'>Click to download the completed evaluation.</a>`
-                  
-               })
-
-               console.log('email sent.')
-            
-        }
+     
 }
 
 const confirmReturn = ()=>{
