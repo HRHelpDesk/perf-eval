@@ -24,30 +24,17 @@
 
 <script>
   var newRef;
-  const DownloadDocument = (a, b)=>{
-    let document;
-    console.log(newRef[0].Responses)
-  let object = newRef[0].Responses.filter(e=>e.referenceNumber.includes(b))
-  console.log(object[0].isComplete)
-
-  if (object[0].isComplete == false){
-    alert('The reviewer has not yet been completed the evaluation.')
-  } else{
-    
-  if(a == '360'){
-    console.log('360')
-  }
-
-  if(a == 'EPE'){
-    console.log('EPE')
-  }
-
-  if(a == 'UE'){
-    console.log('UE')
-  }
-
-
-}
+  const ResetEvaluation = (a, b,c)=>{
+  let resp = $.get('http://localhost:3004/reset-response',{refNo: a,respNo:b, type: c},(data)=>{
+   if(data){
+     console.log(data)
+     alert('Evaluation has been reset.')
+    //  document.getElementById(statusID).innerHTML = 'Pending';
+    //  document.getElementById(statusID).style.color = 'tomato';
+     rerenderEval(a,c)
+   }
+   
+  })
   }
   function selectElement(id, valueToSelect) {    
     let element = document.getElementById(id);
@@ -132,6 +119,10 @@ let values = valueofselect.split(',')
     if(i.type == 'EPE'){
       revType = 'EMPLOYEE PERFORMANCE EVALUATION'
     }
+
+    if(i.type == 'UE'){
+      revType = 'UPWARD EVALUATION'
+    }
     str += `<option value='${i.refNo},${i.type}'>${i.name} (${revType})</option>`
   })
   console.log(str)
@@ -190,11 +181,13 @@ setTimeout(()=>{
     if(i.isComplete == true){
       status = 'Complete'
       color = 'green'
-      enable = false
+      enable = false;
+      pointerEvents = 'initial';
     } else {
       status = 'Pending'
       color = 'tomato'
-      enable = true
+      enable = true;
+      pointerEvents = 'none';
     }
     if (i.date_sign == ''){
       i.date_sign = 'NA'
@@ -206,7 +199,7 @@ setTimeout(()=>{
       <td>${i.responderName}</td>
       <td style='color:${color}'>${status}</td>
       <td>${i.date_sign}</td>
-      <td><span title="Download Document" onclick=DownloadDocument('${i.type}','${i.referenceNumber}') class='icon-tracker icon--document' disabled=${enable}></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+      <td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${evaluationResponses[0].referenceNo}&d=${i.referenceNumber}&type=${evaluationResponses[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${evaluationResponses[0].referenceNo}','${i.referenceNumber}','${evaluationResponses[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
       </tr>`
   })
   document.getElementById('personReviewed').innerHTML = evaluationResponses[0].employeeName
@@ -240,11 +233,13 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${values[0]}&type=
     if(i.isComplete == true){
       status = 'Complete'
       color = 'green'
-      enable = false
+      enable = false;
+      pointerEvents = 'initial';
     } else {
       status = 'Pending'
       color = 'tomato'
       enable = true
+      pointerEvents = 'none';
     }
     if (i.date_sign == ''){
       i.date_sign = 'NA'
@@ -256,7 +251,54 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${values[0]}&type=
       <td>${i.responderName}</td>
       <td style='color:${color}'>${status}</td>
       <td>${i.date_sign}</td>
-      <td><span title="Download Document" onclick=DownloadDocument('${values[1]}','${i.referenceNumber}') class='icon-tracker icon--document' disabled=${enable}></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+      <td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${newRef[0].referenceNo}&d=${i.referenceNumber}&type=${newRef[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+      </tr>`
+  })
+  document.getElementById('personReviewed').innerHTML = newRef[0].employeeName
+  
+},1000)
+
+}
+
+const rerenderEval = (a,b)=>{
+let value = event.target.value;
+let values = [a,b]
+console.log(value)
+ newRef;
+console.log(type)
+document.getElementById('itemTable').innerHTML = ``;
+let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${values[0]}&type=${values[1]}`, (data)=>{
+  newRef = data
+  console.log(data)
+    })
+  setTimeout(()=>{
+    console.log(newRef)
+    newRef[0].Responses.map(i=>{
+    let status;
+    let color;
+    let enable;
+    if(i.isComplete == true){
+      status = 'Complete'
+      color = 'green'
+      enable = false;
+      pointerEvents = 'initial';
+    } else {
+      status = 'Pending'
+      color = 'tomato'
+      enable = true
+      pointerEvents = 'none';
+    }
+    if (i.date_sign == ''){
+      i.date_sign = 'NA'
+    }
+  
+    document.getElementById('itemTable').innerHTML += `
+    <tr>
+      <td>${i.referenceNumber}</td>
+      <td>${i.responderName}</td>
+      <td style='color:${color}'>${status}</td>
+      <td>${i.date_sign}</td>
+      <td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${newRef[0].referenceNo}&d=${i.referenceNumber}&type=${newRef[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
       </tr>`
   })
   document.getElementById('personReviewed').innerHTML = newRef[0].employeeName
@@ -283,14 +325,17 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}&type=${b}
     let status;
     let color;
     let enable;
+    let pointerEvents;
     if(i.isComplete == true){
       status = 'Complete'
       color = 'green'
-      enable = false
+      enable = false;
+      pointerEvents = 'initial';
     } else {
       status = 'Pending'
       color = 'tomato'
-      enable = true
+      enable = true;
+      pointerEvents = 'none';
     }
     if (i.date_sign == ''){
       i.date_sign = 'NA'
@@ -303,7 +348,7 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}&type=${b}
       <td style='color:${color}'>${status}</td>
       <td>${i.reviewType}</td>
       <td>${i.date_sign}</td>
-      <td><span title="Download Document" onclick=DownloadDocument('${b}','${i.referenceNumber}') class='icon-tracker icon--document' disabled=${enable}></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+      <td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${newRef[0].referenceNo}&d=${i.referenceNumber}&type=${newRef[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
       </tr>`
   })
   document.getElementById('personReviewed').innerHTML = newRef[0].employeeName
