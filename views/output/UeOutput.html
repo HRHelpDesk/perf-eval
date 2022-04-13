@@ -46,6 +46,7 @@ function makeid(length) {
     signature: '',
     date_sign: '',
     responderName: '',
+    responderEmail:'',
     isCompleted: null
 }
 
@@ -85,6 +86,7 @@ console.log(data)
         categories:[],
         senderEmail: c[0].senderEmail,
         responderName: responderObject[0].responderName,
+        responderEmail:responderObject[0].responderEmail,
         additional_comments: '',
         isCompleted: responderObject[0].isComplete
     }

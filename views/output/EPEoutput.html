@@ -89,6 +89,7 @@ let anObjArr = {
         signature: '',
         date_sign: '',
         responderName: '',
+        responderEmail:'',
         isComplete: null
     }
   let rsp = $.get(`http://localhost:3004/find-evaluation?refno=${initialRef}&type=EPE`,{responseReferenceNo:responderRefNo } , (data)=>{
@@ -121,6 +122,7 @@ console.log(data[0].Responses)
         signature: '',
         date_sign: '',
         responderName: responderObject[0].responderName,
+        responderEmail:responderObject[0].responderEmail,
         isComplete: responderObject[0].isComplete
     }
  
@@ -420,7 +422,7 @@ let categoryObj ={
                 <p><b>Thanks for completeing the review!</b></p>
                 <p><b>Review has been completed and sent back to <span id="senderNameCompOut"></span></b></p>
                 
-                <img class="animate__animated animate__rotateIn" style="box-shadow: 6px 6px 6px 6px gray; border-radius:110px;" width="200px" height="auto" src="../assets/css/img/check.png"/>
+                <img class="animate__animated animate__rotateIn" style="box-shadow: 6px 6px 6px 6px gray; border-radius:110px;" width="200px" height="auto" src="../../assets/css/img/check.png"/>
                <br></br>
                 <p><b>You may now close this window.</b></p>
                 <div>

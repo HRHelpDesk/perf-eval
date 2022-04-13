@@ -2,67 +2,76 @@ const questionsPE360 = [
     {
         index: '01',
         question:'Sets high standards for quality of work output',
-        category:'QUALITY OF WORK'
+        category:'QUALITY OF WORK',
+        div: 'qualityDiv'
+
     },
+
     {
         index: '02',
-        question:'Displays good listening skills',
-        category:'QUALITY OF WORK'
+        question:'Helps others improve the quality of their work',
+        category:'QUALITY OF WORK',
+        div: 'qualityDiv'
     },
     {
         index: '03',
-        question:'Helps others improve the quality of their work',
-        category:'QUALITY OF WORK'
+        question:'Communicates well orally and in written form',
+        category:'COMMUNICATION',
+        div: 'commDiv'
     },
     {
         index: '04',
-        question:'Communicates well orally and in written form',
-        category:'COMMUNICATION'
+        question:'Displays good listening skills',
+        category:'COMMUNICATION',
+        div: 'commDiv'
     },
     {
         index: '05',
-        question:'Displays good listening skills',
-        category:'COMMUNICATION'
+        question:'Shares information freely with others',
+        category:'COMMUNICATION',
+        div: 'commDiv'
     },
     {
         index: '06',
-        question:'Shares information freely with others',
-        category:'COMMUNICATION'
+        question:'Contributes positively to team',
+        category:'TEAMWORK',
+        div: 'teamwrkDiv'
     },
     {
         index: '07',
-        question:'Contributes positively to team',
-        category:'TEAMWORK'
+        question:'Helps define team roles to maximize output',
+        category:'TEAMWORK',
+        div: 'teamwrkDiv'
     },
     {
         index: '08',
-        question:'Helps define team roles to maximize output',
-        category:'TEAMWORK'
+        question:'Can be counted on to complete tasks correctly',
+        category:'TEAMWORK',
+        div: 'teamwrkDiv'
     },
     {
         index: '09',
-        question:'Can be counted on to complete tasks correctly',
-        category:'TEAMWORK'
+        question:'Presents a positive image to outsiders',
+        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP',
+        div: 'personQualDiv'
     },
     {
         index: '10',
-        question:'Presents a positive image to outsiders',
-        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP'
+        question:'Is friendly and easy to work with',
+        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP',
+        div: 'personQualDiv'
     },
     {
         index: '11',
-        question:'Is friendly and easy to work with',
-        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP'
+        question:'Adapts well to change',
+        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP',
+        div: 'personQualDiv'
     },
     {
         index: '12',
-        question:'Adapts well to change',
-        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP'
-    },
-    {
-        index: '13',
         question:'Has high professional and ethical standards',
-        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP'
+        category:'PERSONAL QUALIFICATIONS AND LEADERSHIP',
+        div: 'personQualDiv'
     }
     
     
@@ -132,10 +141,12 @@ const hideCustomQuestionPE360 = ()=>{
 
     const useSuggestedQuestionsPE360 = ()=>{
         if (window.confirm("This action will clear the current criteria and replace with suggested criteria. Are you sure you would like to do this?") == true) {
+            document.getElementById('pe360Questions').innerHTML = ``
+
             PE360Cats.map(i=>{
                 let cat = i.name;
                  let qs = [];
-               
+
               questionsPE360.map(i=>{
                let qarr = questionsPE360.filter(i => cat.includes(i.category))
             
@@ -190,7 +201,7 @@ const hideCustomQuestionPE360 = ()=>{
              
             })
            
-                 document.getElementById('pe360SampleQuestionairre').innerHTML += `<div ><p><b>${g}</b></p>${qs}</div>`
+                 document.getElementById('pe360SampleQuestionairre').innerHTML = `<div ><p><b>${g}</b></p>${qs}</div>`
              
           })
        
@@ -265,6 +276,7 @@ const hideCustomQuestionPE360 = ()=>{
                 }).join("")
              
             })
+            console.log(g)
            
                  document.getElementById('pe360SampleQuestionairre').innerHTML += `<div ><p class="cat-hide"><b>${g}</b></p>${qs}</div>`
              

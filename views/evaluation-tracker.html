@@ -23,12 +23,55 @@
 </head>
 
 <script>
+     let savedReviews = JSON.parse(localStorage.getItem('review-list'))
+  const deleteEvaluation = (a,b,c)=>{
+   let conf =  window.confirm(`The review and all of the responses for ${a} will be deleted. Are you sure you want to do this?`)
+
+   const index = savedReviews.findIndex(object => {
+  return object.refNo === b;
+});
+
+console.log(index)
+   if(conf){
+    let resp = $.get('http://localhost:3004/delete-evaluation',{refNo: b, type: c},(data)=>{
+   if(data){
+     console.log(data)
+ 
+     savedReviews.splice(index, 1)
+     console.log(reviewList)
+     alert('Evaluation has been deleted.')
+
+  
+    if(savedReviews.length == 0){
+      $('#optionsModal').modal('hide');
+      document.getElementById('trackerData').style.display = 'none';
+      document.getElementById('noData').style.display = 'block';
+    }  
+  
+   }
+ 
+  })
+   }
+  }
   var newRef;
   const ResetEvaluation = (a, b,c)=>{
   let resp = $.get('http://localhost:3004/reset-response',{refNo: a,respNo:b, type: c},(data)=>{
    if(data){
      console.log(data)
      alert('Evaluation has been reset.')
+    //  document.getElementById(statusID).innerHTML = 'Pending';
+    //  document.getElementById(statusID).style.color = 'tomato';
+     rerenderEval(a,c)
+   }
+   
+  })
+  }
+
+  const ResendEvaluation = (a, b,c)=>{
+  let resp = $.get('http://localhost:3004/resend-email',{refNo: a,respNo:b, type: c},(data)=>{
+   if(data.status){
+     console.log(data)
+     alert(`Evaluation has been resent to ${data.email}.`)
     //  document.getElementById(statusID).innerHTML = 'Pending';
     //  document.getElementById(statusID).style.color = 'tomato';
      rerenderEval(a,c)
@@ -50,16 +93,24 @@ var type = url.searchParams.get("type");
 console.log(initialRef)
 if(initialRef != null){
 let rsp = $.get(`http://localhost:3004/find-evaluation?refno=${initialRef}&type=${type}`, (data)=>{
-    evaluationResponses = data
+  console.log(data)
+
+     
+  evaluationResponses = data
+
+
     })
   }
 let str = ''
 
 window.onload = ()=>{
-  setTimeout(()=>{
+ console.log(evaluationResponses)
 
+  setTimeout(()=>{
+  
 
   console.log(evaluationResponses)
+  
 if (localStorage.getItem('review-list')){
 
   reviewList = JSON.parse(localStorage.getItem('review-list'))
@@ -71,7 +122,7 @@ reviewList.forEach(i=>{
 })
 
 
-if(initialRef != null){
+if(evaluationResponses != false){
 if(!refArr.includes(initialRef)){
   reviewList.push({
    refNo:  evaluationResponses[0].referenceNo,
@@ -103,7 +154,7 @@ document.getElementById('reviewOptions').style.display = 'block';
 let values = valueofselect.split(',')
   console.log(values)
   setEval(values[0],values[1])
- 
+
   },1000)
   }
 
@@ -168,11 +219,17 @@ $(`#reviewOptions option[value='${i.refNo}']`).remove();
   localStorage.setItem('review-list', JSON.stringify(arr))
 }
 }
-},1000)
-}
 
-
-setTimeout(()=>{
+ 
+console.log(savedReviews.length)
+if(savedReviews){
+    if(savedReviews.length == 0){
+      document.getElementById('trackerData').style.display = 'none';
+      document.getElementById('noData').style.display = 'block';
+    } else{
+      document.getElementById('trackerData').style.display = 'block';
+      document.getElementById('noData').style.display = 'none';
+      setTimeout(()=>{
   if(evaluationResponses != null){
   evaluationResponses[0].Responses.map(i=>{
     let status;
@@ -195,20 +252,34 @@ setTimeout(()=>{
   
     document.getElementById('itemTable').innerHTML += `
     <tr>
-      <td>${i.referenceNumber}</td>
-      <td>${i.responderName}</td>
-      <td style='color:${color}'>${status}</td>
-      <td>${i.date_sign}</td>
-      <td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${evaluationResponses[0].referenceNo}&d=${i.referenceNumber}&type=${evaluationResponses[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${evaluationResponses[0].referenceNo}','${i.referenceNumber}','${evaluationResponses[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
-      </tr>`
+
+<td>${i.responderName}</td>
+<td style='color:${color}'>${status}</td>
+<td>${i.date_sign}</td>
+<td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${evaluationResponses[0].referenceNo}&d=${i.referenceNumber}&type=${evaluationResponses[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${evaluationResponses[0].referenceNo}','${i.referenceNumber}','${evaluationResponses[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span onclick="ResendEvaluation('${evaluationResponses[0].referenceNo}','${i.referenceNumber}','${evaluationResponses[0].reviewType}')" title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+</tr>`
   })
+  document.getElementById('responseDeleteBtn').innerHTML = `<button onclick="deleteEvaluation('${ evaluationResponses[0].employeeName}','${ evaluationResponses[0].referenceNo}','${ evaluationResponses[0].reviewType}','${ evaluationResponses[0].reviewType}' )" type="button" class="btn btn-danger">Delete Current Evaluation</button>`
+
   document.getElementById('personReviewed').innerHTML = evaluationResponses[0].employeeName
+  document.getElementById('reviewCreationDate').innerHTML = new Date(evaluationResponses[0].dateCreated).toDateString()
+
   selectElement('reviewOptions', initialRef)
 } else {
   
 }
 selectElement('reviewOptions', initialRef)
 },1000)
+    }
+  } else{
+    document.getElementById('trackerData').style.display = 'block';
+    document.getElementById('noData').style.display = 'block';
+  }
+},1000)
+}
+
+
+
 
 
 
@@ -247,14 +318,18 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${values[0]}&type=
   
     document.getElementById('itemTable').innerHTML += `
     <tr>
-      <td>${i.referenceNumber}</td>
+
       <td>${i.responderName}</td>
       <td style='color:${color}'>${status}</td>
       <td>${i.date_sign}</td>
-      <td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${newRef[0].referenceNo}&d=${i.referenceNumber}&type=${newRef[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+      <td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${newRef[0].referenceNo}&d=${i.referenceNumber}&type=${newRef[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span onclick="ResendEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
       </tr>`
   })
+  document.getElementById('responseDeleteBtn').innerHTML = `<button onclick="deleteEvaluation('${ newRef[0].employeeName}','${ newRef[0].referenceNo}','${ newRef[0].reviewType}')" type="button" class="btn btn-danger">Delete Current Evaluation</button>`
+
   document.getElementById('personReviewed').innerHTML = newRef[0].employeeName
+  document.getElementById('reviewCreationDate').innerHTML = new Date(newRef[0].dateCreated).toDateString()
+
   
 },1000)
 
@@ -294,14 +369,18 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${values[0]}&type=
   
     document.getElementById('itemTable').innerHTML += `
     <tr>
-      <td>${i.referenceNumber}</td>
-      <td>${i.responderName}</td>
-      <td style='color:${color}'>${status}</td>
-      <td>${i.date_sign}</td>
-      <td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${newRef[0].referenceNo}&d=${i.referenceNumber}&type=${newRef[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
-      </tr>`
+
+<td>${i.responderName}</td>
+<td style='color:${color}'>${status}</td>
+<td>${i.date_sign}</td>
+<td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${newRef[0].referenceNo}&d=${i.referenceNumber}&type=${newRef[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span onclick="ResendEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+</tr>`
   })
+  document.getElementById('responseDeleteBtn').innerHTML = `<button onclick="deleteEvaluation('${ newRef[0].employeeName}','${ newRef[0].referenceNo}','${ newRef[0].reviewType}')" type="button" class="btn btn-danger">Delete Current Evaluation</button>`
+
   document.getElementById('personReviewed').innerHTML = newRef[0].employeeName
+  document.getElementById('reviewCreationDate').innerHTML = new Date(newRef[0].dateCreated).toDateString()
+
   
 },1000)
 
@@ -343,15 +422,17 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}&type=${b}
   
     document.getElementById('itemTable').innerHTML += `
     <tr>
-      <td>${i.referenceNumber}</td>
-      <td>${i.responderName}</td>
-      <td style='color:${color}'>${status}</td>
-      <td>${i.reviewType}</td>
-      <td>${i.date_sign}</td>
-      <td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${newRef[0].referenceNo}&d=${i.referenceNumber}&type=${newRef[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
-      </tr>`
+
+<td>${i.responderName}</td>
+<td style='color:${color}'>${status}</td>
+<td>${i.date_sign}</td>
+<td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${newRef[0].referenceNo}&d=${i.referenceNumber}&type=${newRef[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span onclick="ResendEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
+</tr>`
   })
+  document.getElementById('responseDeleteBtn').innerHTML = `<button onclick="deleteEvaluation('${ newRef[0].employeeName}','${ newRef[0].referenceNo}','${ newRef[0].reviewType}')" type="button" class="btn btn-danger">Delete Current Evaluation</button>`
+
   document.getElementById('personReviewed').innerHTML = newRef[0].employeeName
+  document.getElementById('reviewCreationDate').innerHTML = new Date(newRef[0].dateCreated).toDateString()
 },1000)
 
 }
@@ -365,34 +446,74 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}&type=${b}
      
    </div>
 
-   <div style="padding: 50px;">
+   <div id="trackerData" style="padding: 50px; display: none;">
    <p><b> List of review's you have setup:</b></p>
     <div style="margin-bottom: 25px;" class="form-group row">
       <select onchange="changeEval(event)" id="reviewOptions"></select>
       <div class="col-md-6">
-          <label for="inputReviewingSupervisor"><b>Person Being Reviewed:</b> <span id="personReviewed"></span></label>
+          <label for="inputReviewingSupervisor"><b>Person Being Reviewed:</b> <span id="personReviewed"></span></label><br>
+          <label for="inputReviewingSupervisor"><b>Date Evaluation was created:</b> <span id="reviewCreationDate"></span></label>
       </div>
      
   </div>
+  <div style="text-align: end; margin-bottom: 10px;"><a type="button"  data-bs-toggle="modal" data-bs-target="#optionsModal"><span title="Help" class='icon-tracker icon--question--mark'></span></a></div>
+
    <div style="background-color: white; padding: 20px;">
   
    <table class="table">
     <thead>
       <tr>
        
-        <th scope="col">Reference No.</th>
+        
         <th scope="col">Reviewer</th>
         <th scope="col">Status</th>
         <th scope="col">Date Completed</th>
-        <th scope="col">Document</th>
+        <th scope="col">Document Options</th>
       </tr>
     </thead>
     <tbody id="itemTable">
      
     </tbody>
   </table>
+
+
   </div>
   </div>
-<!---->
+  <div id="noData" style="padding: 50px; display: none;">
+    <p>There are no evaluations currently saved to this browser.</p>
+    </div>
+  
+
 </body>
+
+<div class="modal fade" id="optionsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Settings</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><b>Legend:</b></p>
+        <p><span class='icon-tracker icon--document' ></span>: You can click this icon to download the review when the status is set to <span style="color: green;">Complete</span>.</span></p>
+        <p><span class='icon-tracker icon--reset' ></span>: You can click this icon to reset the evaluation for the responder incase there is an issue where the responder needs to redo the evaluation. This will change the status back to <span style="color:tomato;">Pending</span>.</p>
+        <p><span class='icon-tracker icon--send--email' ></span>: This button will resend the email to the responder asking them to complete the evaluation. This can be used in the case where the responder doesn't recieve the email or can't find it.</p>
+
+        <hr>
+        <p></p>
+         <p><b>Click to delete this review:</b></p>
+         <p style="font-size: 14px;">This is reccomended after everyone in the 'Responder List' has compeleted their reviews and all documents have been downloaded.</p>
+         <p style="font-size: 14px;">Each review will be deleted automatically after 90 days.</p>
+        <div id="responseDeleteBtn"></div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 </html>
