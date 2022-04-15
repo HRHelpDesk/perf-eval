@@ -23,10 +23,10 @@
 </head>
 
 <script>
-     let savedReviews = JSON.parse(localStorage.getItem('review-list'))
+  
   const deleteEvaluation = (a,b,c)=>{
    let conf =  window.confirm(`The review and all of the responses for ${a} will be deleted. Are you sure you want to do this?`)
-
+   let savedReviews = JSON.parse(localStorage.getItem('review-list'))
    const index = savedReviews.findIndex(object => {
   return object.refNo === b;
 });
@@ -46,6 +46,13 @@ console.log(index)
       $('#optionsModal').modal('hide');
       document.getElementById('trackerData').style.display = 'none';
       document.getElementById('noData').style.display = 'block';
+      localStorage.setItem('review-list', JSON.stringify(savedReviews))
+      rerenderEval(savedReviews[0].refNo,savedReviews[0].type)
+    } else{
+  
+      // rerenderEval(savedReviews[0].refNo,savedReviews[0].type)
+      location.reload();
+      localStorage.setItem('review-list', JSON.stringify(savedReviews))
     }  
   
    }
@@ -79,204 +86,133 @@ console.log(index)
    
   })
   }
+
+  const setEval = (a,b) => {
+  const $select = document.querySelector('#reviewOptions');
+  $select.value = a+','+b
+  rerenderEval(a,b)
+};
+
+
   function selectElement(id, valueToSelect) {    
     let element = document.getElementById(id);
     element.value = valueToSelect;
 }
+
+
+
     let evaluationResponses;
    
 let reviewList;
 let select = document.getElementById('reviewOptions');
 var url = new URL(window.location.href);
 var initialRef = url.searchParams.get("c");
+console.log(initialRef)
 var type = url.searchParams.get("type");
 console.log(initialRef)
-if(initialRef != null){
+window.onload = ()=>{
+ setTimeout(()=>{
+  let localReviewList =localStorage.getItem('review-list')
+  let reviewArr= []
+  if(!localReviewList){
+    localStorage.setItem('review-list', '[]')
+  } 
+  reviewArr = JSON.parse(localStorage.getItem('review-list'))
+
+if(initialRef != undefined){
 let rsp = $.get(`http://localhost:3004/find-evaluation?refno=${initialRef}&type=${type}`, (data)=>{
   console.log(data)
 
-     
+   let selectOptions = [];  
   evaluationResponses = data
-
-
-    })
-  }
-let str = ''
-
-window.onload = ()=>{
- console.log(evaluationResponses)
-
-  setTimeout(()=>{
-  
-
-  console.log(evaluationResponses)
-  
-if (localStorage.getItem('review-list')){
-
-  reviewList = JSON.parse(localStorage.getItem('review-list'))
-console.log(reviewList)
-let refArr = [];
-
-reviewList.forEach(i=>{
-  refArr.push(i.refNo)
-})
-
-
-if(evaluationResponses != false){
-if(!refArr.includes(initialRef)){
-  reviewList.push({
-   refNo:  evaluationResponses[0].referenceNo,
-   name: evaluationResponses[0].employeeName,
-   type: evaluationResponses[0].reviewType
-  })
-  localStorage.setItem('review-list', JSON.stringify(reviewList))
-
-  reviewList.forEach(i=>{
-    let revType;
-    if(i.type == '360'){
-      revType = '360 PERFORMANCE EVALUATION'
-    }
-
-    if(i.type == 'EPE'){
-      revType = 'EMPLOYEE PERFORMANCE EVALUATION'
-    }
-
-str += `<option value='${i.refNo},${i.type}'>${i.name} (${revType})</option>`
-})
-console.log(str)
-document.getElementById('reviewOptions').innerHTML = str;
-document.getElementById('reviewOptions').style.display = 'block';
-}}else {
-  if(initialRef == null){
-  setTimeout(()=>{
-    let valueofselect = document.getElementById('reviewOptions').value
-
-let values = valueofselect.split(',')
-  console.log(values)
-  setEval(values[0],values[1])
-
-  },1000)
-  }
-
-}
-
-  reviewList.forEach(i=>{
-   
-    let revType;
-    if(i.type == '360'){
-      revType = '360 PERFORMANCE EVALUATION'
-    }
-
-    if(i.type == 'EPE'){
-      revType = 'EMPLOYEE PERFORMANCE EVALUATION'
-    }
-
-    if(i.type == 'UE'){
-      revType = 'UPWARD EVALUATION'
-    }
-    str += `<option value='${i.refNo},${i.type}'>${i.name} (${revType})</option>`
-  })
-  console.log(str)
-  document.getElementById('reviewOptions').innerHTML = str;
-  document.getElementById('reviewOptions').style.display = 'block';
-
-
-  reviewList.forEach(i=>{
-    //HERE
-let ref;
-    let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${i.refNo}&type=${i.type}`, (data)=>{
-  if(data){
-    ref = data
-  } else{
-    ref = null
-  }
-     
  
-    })
-    setTimeout(()=>{
+  if (reviewArr.filter(e => e.refNo === initialRef).length > 0) {
+  /* vendors contains the element we're looking for */
+  console.log('The item is already stored.')
+  reviewArr.forEach(i=>{
+    selectOptions.push(`<option value='${i.refNo},${i.type}'>${i.name} (${i.type})</option>`)
 
-
-console.log(ref)
-    if(ref.length == 0){
-     reviewList = reviewList.filter(function( obj ) {
-  return obj.refNo !== i.refNo;
-
-
-});
-$(`#reviewOptions option[value='${i.refNo}']`).remove();
-    }
-    localStorage.setItem('review-list', JSON.stringify(reviewList))
-  },1000)
   })
+
+  document.getElementById('reviewOptionsDiv').innerHTML = `<select class="form-select" onchange="changeEval(event)" id="reviewOptions">${selectOptions.join('')}</select>`
+  document.getElementById('trackerData').style.display = 'block'
+  setTimeout(()=>{
+  setEval(initialRef,type)
+
+},1000)
+} 
+
+else{
+  if(data.length == 0 && reviewArr.length == 0){
+    document.getElementById('noData').style.display = 'block'
+    document.getElementById('trackerData').style.display = 'none'
+
+  } else{
+  
+  let selectOptions = []; 
+  if(data.length != 0){
+    
+  reviewArr.push({
+      refNo:  data[0].referenceNo,
+      name: data[0].employeeName,
+      type: data[0].reviewType
+     })
+     console.log(reviewArr)
+     localStorage.setItem('review-list',JSON.stringify(reviewArr))
+
+  } else{}
+
+     reviewArr.forEach(i=>{
+    selectOptions.push(`<option value='${i.refNo},${i.type}'>${i.name} (${i.type})</option>`)
+  })
+  document.getElementById('trackerData').style.display = 'block'
+  document.getElementById('reviewOptionsDiv').innerHTML = `<select class="form-select" onchange="changeEval(event)" id="reviewOptions">${selectOptions.join('')}</select>`
+
+setTimeout(()=>{
+if(data.length != 0){
+  setEval(initialRef,type)
 } else{
-  if(evaluationResponses != null){
-  let arr = []
-  arr.push({
-   refNo:  evaluationResponses[0].referenceNo,
-   name: evaluationResponses[0].employeeName,
-   type: evaluationResponses[0].reviewType
-  })
-  localStorage.setItem('review-list', JSON.stringify(arr))
-}
+  setEval(reviewArr[0].refNo,reviewArr[0].type)
 }
 
- 
-console.log(savedReviews.length)
-if(savedReviews){
-    if(savedReviews.length == 0){
-      document.getElementById('trackerData').style.display = 'none';
-      document.getElementById('noData').style.display = 'block';
-    } else{
-      document.getElementById('trackerData').style.display = 'block';
-      document.getElementById('noData').style.display = 'none';
-      setTimeout(()=>{
-  if(evaluationResponses != null){
-  evaluationResponses[0].Responses.map(i=>{
-    let status;
-    let color;
-    let enable;
-    if(i.isComplete == true){
-      status = 'Complete'
-      color = 'green'
-      enable = false;
-      pointerEvents = 'initial';
-    } else {
-      status = 'Pending'
-      color = 'tomato'
-      enable = true;
-      pointerEvents = 'none';
-    }
-    if (i.date_sign == ''){
-      i.date_sign = 'NA'
-    }
-  
-    document.getElementById('itemTable').innerHTML += `
-    <tr>
-
-<td>${i.responderName}</td>
-<td style='color:${color}'>${status}</td>
-<td>${i.date_sign}</td>
-<td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${evaluationResponses[0].referenceNo}&d=${i.referenceNumber}&type=${evaluationResponses[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${evaluationResponses[0].referenceNo}','${i.referenceNumber}','${evaluationResponses[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span onclick="ResendEvaluation('${evaluationResponses[0].referenceNo}','${i.referenceNumber}','${evaluationResponses[0].reviewType}')" title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
-</tr>`
-  })
-  document.getElementById('responseDeleteBtn').innerHTML = `<button onclick="deleteEvaluation('${ evaluationResponses[0].employeeName}','${ evaluationResponses[0].referenceNo}','${ evaluationResponses[0].reviewType}','${ evaluationResponses[0].reviewType}' )" type="button" class="btn btn-danger">Delete Current Evaluation</button>`
-
-  document.getElementById('personReviewed').innerHTML = evaluationResponses[0].employeeName
-  document.getElementById('reviewCreationDate').innerHTML = new Date(evaluationResponses[0].dateCreated).toDateString()
-
-  selectElement('reviewOptions', initialRef)
-} else {
-  
-}
-selectElement('reviewOptions', initialRef)
 },1000)
-    }
+
+}
+}
+})
+
+}
+
+else{
+
+  let selectOptions = []; 
+
+  reviewArr.forEach(i=>{
+    selectOptions.push(`<option value='${i.refNo},${i.type}'>${i.name} (${i.type})</option>`)
+  })
+  
+  document.getElementById('reviewOptionsDiv').innerHTML = `<select class="form-select" onchange="changeEval(event)" id="reviewOptions">${selectOptions.join('')}</select>`
+
+setTimeout(()=>{
+  if(reviewArr.length == 0){
+    document.getElementById('noData').style.display = 'block'
+    document.getElementById('trackerData').style.display = 'none'
+
   } else{
-    document.getElementById('trackerData').style.display = 'block';
-    document.getElementById('noData').style.display = 'block';
+    document.getElementById('trackerData').style.display = 'block'
+
+  rerenderEval(reviewArr[0].refNo,reviewArr[0].type)
   }
 },1000)
+
 }
+},1000)
+}
+
+
+
+
+
 
 
 
@@ -336,9 +272,9 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${values[0]}&type=
 }
 
 const rerenderEval = (a,b)=>{
-let value = event.target.value;
+
 let values = [a,b]
-console.log(value)
+
  newRef;
 console.log(type)
 document.getElementById('itemTable').innerHTML = ``;
@@ -387,55 +323,10 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${values[0]}&type=
 }
 
 
-const setEval = (a, b)=>{
-let value = a;
 
-let values = value.split(',')
-console.log(value)
- newRef;
-document.getElementById('itemTable').innerHTML = ``;
-let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}&type=${b}`, (data)=>{
-  newRef = data
-  console.log(data)
-    })
-  setTimeout(()=>{
-    console.log(newRef)
-    newRef[0].Responses.map(i=>{
-    let status;
-    let color;
-    let enable;
-    let pointerEvents;
-    if(i.isComplete == true){
-      status = 'Complete'
-      color = 'green'
-      enable = false;
-      pointerEvents = 'initial';
-    } else {
-      status = 'Pending'
-      color = 'tomato'
-      enable = true;
-      pointerEvents = 'none';
-    }
-    if (i.date_sign == ''){
-      i.date_sign = 'NA'
-    }
-  
-    document.getElementById('itemTable').innerHTML += `
-    <tr>
 
-<td>${i.responderName}</td>
-<td style='color:${color}'>${status}</td>
-<td>${i.date_sign}</td>
-<td><a style='pointer-events: ${pointerEvents}' target='_blank' href='http://127.0.0.1:5503/views/output/download-document.html?c=${newRef[0].referenceNo}&d=${i.referenceNumber}&type=${newRef[0].reviewType}'><span title="Download Document" class='icon-tracker icon--document' disabled=${enable}></a></span>&nbsp;&nbsp;<span title="Reset Evaluation" class='icon-tracker icon--reset' onclick="ResetEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" disabled=${enable}></span>&nbsp;&nbsp;<span onclick="ResendEvaluation('${newRef[0].referenceNo}','${i.referenceNumber}','${newRef[0].reviewType}')" title="Resend Email To Reviewer" class='icon-tracker icon--send--email' disabled=${enable}></span></td>
-</tr>`
-  })
-  document.getElementById('responseDeleteBtn').innerHTML = `<button onclick="deleteEvaluation('${ newRef[0].employeeName}','${ newRef[0].referenceNo}','${ newRef[0].reviewType}')" type="button" class="btn btn-danger">Delete Current Evaluation</button>`
 
-  document.getElementById('personReviewed').innerHTML = newRef[0].employeeName
-  document.getElementById('reviewCreationDate').innerHTML = new Date(newRef[0].dateCreated).toDateString()
-},1000)
 
-}
   
 </script>
 
@@ -449,11 +340,21 @@ let rsp2 = $.get(`http://localhost:3004/find-evaluation?refno=${value}&type=${b}
    <div id="trackerData" style="padding: 50px; display: none;">
    <p><b> List of review's you have setup:</b></p>
     <div style="margin-bottom: 25px;" class="form-group row">
-      <select onchange="changeEval(event)" id="reviewOptions"></select>
-      <div class="col-md-6">
-          <label for="inputReviewingSupervisor"><b>Person Being Reviewed:</b> <span id="personReviewed"></span></label><br>
-          <label for="inputReviewingSupervisor"><b>Date Evaluation was created:</b> <span id="reviewCreationDate"></span></label>
+      <div id="reviewOptionsDiv">
+          
       </div>
+     
+
+      <div style="margin-top:10px" class="form-group row">
+            <div class="col-md-6">
+              <label for="inputReviewingSupervisor"><b>Person Being Reviewed:</b> </label><br>
+                <p  id="personReviewed"></p>
+            </div>
+            <div class="col-md-6">
+              <label for="inputReviewingSupervisor"><b>Date Evaluation was created:</b></label>
+                <p id="reviewCreationDate"> </p>
+            </div>
+        </div>
      
   </div>
   <div style="text-align: end; margin-bottom: 10px;"><a type="button"  data-bs-toggle="modal" data-bs-target="#optionsModal"><span title="Help" class='icon-tracker icon--question--mark'></span></a></div>
