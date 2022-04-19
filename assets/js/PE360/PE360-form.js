@@ -201,7 +201,7 @@ const hideCustomQuestionPE360 = ()=>{
              
             })
            
-                 document.getElementById('pe360SampleQuestionairre').innerHTML = `<div ><p><b>${g}</b></p>${qs}</div>`
+                 document.getElementById('pe360SampleQuestionairre').innerHTML += `<div ><p><b>${g}</b></p>${qs}</div>`
              
           })
        
